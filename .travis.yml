@@ -1,0 +1,11 @@
+language: node_js
+node_js: node
+services:
+- mongodb
+deploy:
+  provider: heroku
+  api_key:
+    secure: CyfNd9xz3LzUs3aJPH9hBv6/q/HrT3ZxKyALlEOBth9FDp562PzEkTqSXxQNsCpk8Vokfdg+bjZORfY+6bzAjsFgPCwfFWob49L55cYyAXCa7xZFvg3O6N5f43PC6NtAbKy0dol5FY84XoJq0bTWBpT5UXzJgFEbyvrWLEX+zuxUyOgQ5m7YHfX/g2/QjoSJ14Rr0nU97h4KXmmS/qJKc1Jl/dp3raL77aVxz1A3ti+UgT3SJwORQz4VDVs8shHho4MTr3D1wJQe2MhV3LTL469hhVJmeHCZtHWo/V58bv8slBBe5Tnh/TMMpgB2XLU1nhk0iITxHkBhRF9mFdAE2jLOWKbTcoI9pxrJYAe4/Kebkm6QlCDxr4k2p4buG8l45UyDvdfPYCQSV/DldyI9bCqnK1TaZBgsztpli6w6/N6tJ3P/ic7RzVVmpSynPmXK5se8wzxeYRlHPmfAGm1lZNVJZN+007SwyUcJ8q7wI4R0V5BQHZwrUwCL+jI3Z1PbYDHDoF+347OSbFkV6YrijzP6Dibc4nhgEsAMjay0ZODBfdWYEeie8Q0YOlZ87WYSsbGpII6aUXMfKkJm6SBL4HXwi7veIYHLADX4vLMPW8XEhlRmuiBnfdbAY+gIqvhPeEEzZP0VytlAGMp4ZL21kTbtxxAbkCFGXCSfJFERjOE=
+  app: desolate-harbor-39480
+  on:
+    repo: pcyu/capstone-node
