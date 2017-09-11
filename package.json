@@ -1,11 +1,11 @@
 {
-  "name": "base-a",
+  "name": "capstone-node",
   "version": "1.0.0",
-  "description": "*Base A* gets your next project up and running quickly with common starter files and configurations.",
+  "description": "CRUD capstone lehgo",
   "main": "config.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "server.js"
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
