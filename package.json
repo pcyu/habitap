@@ -4,7 +4,7 @@
   "description": "CRUD capstone lehgo",
   "main": "config.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha ./test",
     "start": "node server.js"
   },
   "repository": {
@@ -24,6 +24,8 @@
   "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-preset-latest": "^6.24.1",
+    "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "gulp": "^3.9.1",
     "gulp-babel": "^7.0.0",
     "gulp-clean-css": "^3.7.0",
@@ -36,6 +38,7 @@
     "gulp-sourcemaps": "^2.6.1",
     "gulp-uglify": "^3.0.0",
     "gulp-wait": "0.0.2",
-    "jquery": "^3.2.1"
+    "jquery": "^3.2.1",
+    "mocha": "^3.2.0"
   }
 }
