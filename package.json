@@ -4,7 +4,7 @@
   "description": "CRUD capstone lehgo",
   "main": "config.js",
   "scripts": {
-    "test": "mocha ./test",
+    "test": "mocha",
     "start": "node server.js"
   },
   "repository": {

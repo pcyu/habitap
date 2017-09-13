@@ -15,3 +15,5 @@ app.get('/heartbeat', function(req, res) {
 app.listen(PORT, function() {
   console.log(`The server at port ${PORT} is listening.`);
 });
+
+exports.app = app;
