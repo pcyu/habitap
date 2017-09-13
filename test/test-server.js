@@ -1,4 +1,3 @@
-24 lines (18 sloc)  445 Bytes
 var chai = require('chai');
 var chaiHttp = require('chai-http');
 var server = require('../server.js');
