@@ -1,7 +1,9 @@
 const express = require('express');
-const {PORT} = require('./config');
+const {PORT, DATABASE_URL} = require('./config');
+const {Habit} = require('./models');
 const app = express();
 
+app.use(bodyParser.json());
 app.use( '/', express.static(__dirname + '/public') );
 app.use( '/node_modules', express.static(__dirname + '/node_modules') );
 app.use( '/src', express.static(__dirname + '/src') );
