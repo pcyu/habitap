@@ -40,7 +40,7 @@ function getRecentUserMessage(callbackFn) {
 // this function stays the same when we connect
 // to real API later
 function displayMessage(data) {
-    for (index in data.user) {
+    for (let index in data.user) {
 	   $('body').append(
         '<p>' + data.user[index].text + '</p>');
     }
