@@ -19,7 +19,9 @@
   },
   "homepage": "https://github.com/samuraijane/base-a#readme",
   "dependencies": {
-    "express": "^4.15.4"
+    "body-parser": "^1.15.2",
+    "express": "^4.15.4",
+    "mongoose": "^4.7.2"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",
