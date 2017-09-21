@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 // this is our schema to represent a restaurant
-const habitSchema = mongoose.Schema({
+const personSchema = mongoose.Schema({
   name: {type: String, required: true},
   habit: [{
     id: String,
@@ -44,6 +44,6 @@ const habitSchema = mongoose.Schema({
 
 // note that all instance methods and virtual properties on our
 // schema must be defined *before* we make the call to `.model`.
-const Habit = mongoose.model('Habit', habitSchema);
+const Person = mongoose.model('person', personSchema);
 
-module.exports = {Habit};
+module.exports = {Person};
