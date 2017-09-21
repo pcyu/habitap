@@ -1,41 +1,134 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
-const morgan = require('morgan');
 
-
-const express = require('express');
-const {PORT, DATABASE_URL} = require('./config');
-const app = express();
-app.use(morgan('common'));
-app.use(bodyParser.json());
-
-app.use( '/', express.static(__dirname + '/public') );
-app.use( '/node_modules', express.static(__dirname + '/node_modules') );
-app.use( '/src', express.static(__dirname + '/src') );
-
-const {Person} = require('./models');
-
-app.get('/heartbeat', function(req, res) {
-  res.json({
-    is: 'working'
-  })
-});
-
-const personRouter = require('./personRouter');
-app.use('/person', personRouter);
-
-app.listen(PORT, function() {
-  console.log(`The server at port ${PORT} is listening.`);
-});
-
+// Mongoose internally uses a promise-like object,
+// but its better to make Mongoose use built in es6 promises
 mongoose.Promise = global.Promise;
 
+// config.js is where we control constants for entire
+// app like PORT and DATABASE_URL
+const {PORT, DATABASE_URL} = require('./config');
+const {Person} = require('./models');
+
+const app = express();
+app.use(bodyParser.json());
+
+
+// GET requests to /restaurants => return 10 restaurants
+app.get('/person', (req, res) => {
+  Person
+    .find()
+    // we're limiting because restaurants db has > 25,000
+    // documents, and that's too much to process/return
+    .limit(10)
+    // success callback: for each restaurant we got back, we'll
+    // call the `.apiRepr` instance method we've created in
+    // models.js in order to only expose the data we want the API return.
+    .then(people => {
+      res.json({
+        people: people.map(
+          (person) => person.apiRepr())
+      });
+    })
+    .catch(
+      err => {
+        console.error(err);
+        res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+// can also request by ID
+app.get('/person/:id', (req, res) => {
+  Person
+    // this is a convenience method Mongoose provides for searching
+    // by the object _id property
+    .findById(req.params.id)
+    .then(people =>res.json(people.apiRepr()))
+    .catch(err => {
+      console.error(err);
+        res.status(500).json({message: 'Internal server error'})
+    });
+});
+
+
+app.post('/person', (req, res) => {
+
+  const requiredFields = ['name', 'borough', 'cuisine'];
+  for (let i=0; i<requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if (!(field in req.body)) {
+      const message = `Missing \`${field}\` in request body`
+      console.error(message);
+      return res.status(400).send(message);
+    }
+  }
+
+  Person
+    .create({
+      name: req.body.name,
+      borough: req.body.borough,
+      cuisine: req.body.cuisine,
+      grades: req.body.grades,
+      address: req.body.address})
+    .then(
+      people => res.status(201).json(people.apiRepr()))
+    .catch(err => {
+      console.error(err);
+      res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+
+app.put('/person/:id', (req, res) => {
+  // ensure that the id in the request path and the one in request body match
+  if (!(req.params.id && req.body.id && req.params.id === req.body.id)) {
+    const message = (
+      `Request path id (${req.params.id}) and request body id ` +
+      `(${req.body.id}) must match`);
+    console.error(message);
+    return res.status(400).json({message: message});
+  }
+
+  // we only support a subset of fields being updateable.
+  // if the user sent over any of the updatableFields, we udpate those values
+  // in document
+  const toUpdate = {};
+  const updateableFields = ['name', 'borough', 'cuisine', 'address'];
+
+  updateableFields.forEach(field => {
+    if (field in req.body) {
+      toUpdate[field] = req.body[field];
+    }
+  });
+
+  Person
+    // all key/value pairs in toUpdate will be updated -- that's what `$set` does
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate})
+    .then(people => res.status(204).end())
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+app.delete('/person/:id', (req, res) => {
+  Person
+    .findByIdAndRemove(req.params.id)
+    .then(people => res.status(204).end())
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+// catch-all endpoint if client makes request to non-existent endpoint
+app.use('*', function(req, res) {
+  res.status(404).json({message: 'Not Found'});
+});
+
+// closeServer needs access to a server object, but that only
+// gets created when `runServer` runs, so we declare `server` here
+// and then assign a value to it in run
 let server;
 
 // this function connects to our database, then starts the server
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
+
   return new Promise((resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
       if (err) {
@@ -75,4 +168,4 @@ if (require.main === module) {
   runServer().catch(err => console.error(err));
 };
 
-module.exports = {runServer, app, closeServer};
+module.exports = {app, runServer, closeServer};
