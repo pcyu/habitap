@@ -4,10 +4,11 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const {PORT, DATABASE_URL} = require('./config');
+const app = express();
+
 
 app.use(morgan('common'));
 app.use(bodyParser.json());
-const app = express();
 
 const {Person} = require('./models');
 const personRouter = require('./personRouter');
