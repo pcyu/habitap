@@ -3,8 +3,6 @@ const express = require('express');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
-
-const express = require('express');
 const {PORT, DATABASE_URL} = require('./config');
 app.use(morgan('common'));
 app.use(bodyParser.json());
