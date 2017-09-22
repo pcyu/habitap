@@ -4,20 +4,20 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 
 const {PORT, DATABASE_URL} = require('./config');
+
 app.use(morgan('common'));
 app.use(bodyParser.json());
-
+const app = express();
 
 const {Person} = require('./models');
+const personRouter = require('./personRouter');
+app.use('/person', personRouter);
 
 app.get('/heartbeat', function(req, res) {
   res.json({
     is: 'working'
   })
 });
-
-const personRouter = require('./personRouter');
-app.use('/person', personRouter);
 
 app.listen(PORT, function() {
   console.log(`The server at port ${PORT} is listening.`);
