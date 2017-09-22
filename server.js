@@ -1,13 +1,11 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors');
 const morgan = require('morgan');
 
 
 const express = require('express');
 const {PORT, DATABASE_URL} = require('./config');
-const app = express();
 app.use(morgan('common'));
 app.use(bodyParser.json());
 
