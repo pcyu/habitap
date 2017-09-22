@@ -1,18 +1,18 @@
 const bodyParser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
-const morgan = require('morgan');
+
+mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
+const personRouter = require('./personRouter');
+
 const app = express();
-
-
-app.use(morgan('common'));
 app.use(bodyParser.json());
 
-const {Person} = require('./models');
-const personRouter = require('./personRouter');
-app.use('/person', personRouter);
+app.use( '/', express.static(__dirname + '/public') );
+app.use( '/node_modules', express.static(__dirname + '/node_modules') );
+app.use( '/src', express.static(__dirname + '/src') );
 
 app.get('/heartbeat', function(req, res) {
   res.json({
@@ -20,23 +20,18 @@ app.get('/heartbeat', function(req, res) {
   })
 });
 
-app.listen(PORT, function() {
-  console.log(`The server at port ${PORT} is listening.`);
-});
-
-mongoose.Promise = global.Promise;
+app.use('/persons', personRouter);
 
 let server;
 
-// this function connects to our database, then starts the server
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
-  return new Promise((resolve, reject) => {
+  let promise = new Promise( (resolve, reject) => {
     mongoose.connect(databaseUrl, err => {
-      if (err) {
+      if(err) {
         return reject(err);
       }
       server = app.listen(port, () => {
-        console.log(`Your app is listening on port ${port}`);
+        console.log(`The server is listening on port ${port}`);
         resolve();
       })
       .on('error', err => {
@@ -45,28 +40,28 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
       });
     });
   });
+  return promise;
 }
 
-// this function closes the server, and returns a promise. we'll
-// use it in our integration tests later.
 function closeServer() {
-  return mongoose.disconnect().then(() => {
-     return new Promise((resolve, reject) => {
-       console.log('Closing server');
-       server.close(err => {
-           if (err) {
-               return reject(err);
-           }
-           resolve();
-       });
-     });
-  });
+  return mongoose.disconnect()
+    .then( () => {
+      let promise = new Promise( (resolve, reject) => {
+        console.log('Closing server...');
+        server.close(err => {
+          if(err) {
+            return reject(err);
+          }
+          resolve();
+        })
+      });
+      return promise;
+    });
 }
 
-// if server.js is called directly (aka, with `node server.js`), this block
-// runs. but we also export the runServer command so other code (for instance, test code) can start the server as needed.
-if (require.main === module) {
-  runServer().catch(err => console.error(err));
-};
+if(require.main === module) {
+  runServer()
+  .catch(err => console.error(err));
+}
 
-module.exports = {runServer, app, closeServer};
+module.exports = {app, runServer, closeServer};
