@@ -79,30 +79,28 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:id', jsonParser, (req, res) => {  //p002
-  const requiredFields = ['name', 'habits', 'id'];
-  for (let i=0; i<requiredFields.length; i++) {
-    const field = requiredFields[i];
-    if (!(field in req.body)) {
-      const message = `Missing \`${field}\` in request body`
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
-  if (req.params.id !== req.body.id) {
-    const message = `Request path id (${req.params.id}) and request body id (${req.body.id}) must match`;
+router.put('/:id', (req, res) => {  //p002
+  if(req.params.id !== req.body.id) {
+    const message = `The request path (${req.params.id}) and the request body id (${req.body.id}) must match.`;
     console.error(message);
-    return res.status(400).send(message);
+    return res.status(400).json({message: message});
   }
-  console.log(`Updating habits \`${req.params.id}\``);
-
-  Person.update({
-    name: req.body.name,
-    habits: req.body.habits,
-    id: req.params.id
+  const toUpdate = {};
+  const updateableFields = ['name', 'habits', 'id'];
+  updateableFields.forEach(field => {
+    if(field in req.body) {
+      toUpdate[field] = req.body[field];
+    }
   });
-
-  res.status(204).end();
+  Person
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate})
+    .exec()
+    .then( person => res.json(204).end() )
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({message: 'Internal server error'})
+    });
 });
+
 
 module.exports = router;
