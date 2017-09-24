@@ -1,5 +1,4 @@
     { 
-        "id": "1",
         "name": "Peter Yu",
         "habits": 
             [
@@ -46,7 +45,6 @@
             ]
     }
     { 
-        "id": "2",
         "name": "Simon Yu",
         "habits": 
             [
@@ -93,7 +91,6 @@
             ]
     }
     { 
-        "id": "3",
         "name": "Heather Yu",
         "habits": 
             [
