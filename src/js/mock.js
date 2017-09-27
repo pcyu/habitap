@@ -47,8 +47,13 @@ function getRecentStatusUpdates(callbackFn) {
 
 // this function stays the same when we connect
 // to real API later
+<<<<<<< HEAD
 function displayStatusUpdates(data) {
     for (index in data.statusUpdates) {
+=======
+function displayMessage(data) {
+    for (let index in data.user) {
+>>>>>>> 30b79c090a571d12277c9d8325b98db09da8eb21
 	   $('body').append(
         '<p>' + data.statusUpdates[index].text + '</p>');
     }
