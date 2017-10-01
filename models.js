@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 
 const personSchema = mongoose.Schema({
-  id: String,
   name: String,
   habits: [
     {
@@ -23,6 +22,6 @@ personSchema.methods.apiRepr = function() {
   };
 }
 
-const Person = mongoose.model('Persons', personSchema);
+const Person = mongoose.model('Person', personSchema);
 
 module.exports = {Person};
