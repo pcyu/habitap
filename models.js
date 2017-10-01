@@ -16,11 +16,12 @@ const personSchema = mongoose.Schema({
 
 personSchema.methods.apiRepr = function() {
   return {
+    id: this.id,
     name: this.name,
     habits: this.habits
   };
 }
 
-const Person = mongoose.model('Person', personSchema);
+const Person = mongoose.model('Persons', personSchema);
 
 module.exports = {Person};
