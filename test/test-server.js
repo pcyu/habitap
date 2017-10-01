@@ -80,7 +80,7 @@ describe('Habitap API resource', function() {
   });
 
   beforeEach(function() {
-    return seedDreamData();
+    return seedUserData();
   });
 
   afterEach(function() {
@@ -117,7 +117,7 @@ describe('GET endpoint', function() {
         // `.then()` calls below, so declare it here so can modify in place
         let res;
         return chai.request(app)
-          .get('/')
+          .get('/persons')
           .then(function(_res) {
             // so subsequent .then blocks can access resp obj.
             res = _res;
