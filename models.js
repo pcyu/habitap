@@ -16,7 +16,6 @@ const personSchema = mongoose.Schema({
 
 personSchema.methods.apiRepr = function() {
   return {
-    id: this._id,
     name: this.name,
     habits: this.habits
   };

@@ -25,20 +25,20 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-/* ===================== FOR TEST =================== */
-router.get('/test', (req, res) => {
-  Person
-    .find()
-    .sort({created: -1})
-    .exec()
-    .then(persons => {
-      res.json(persons.map(person => person.apiRepr()));
-    })
-    .catch(err => {
-      console.error(err);
-      res.status(500).json({error: 'something went terribly wrong'});
-    });
-});
+// /* ===================== FOR TEST =================== */
+// router.get('/test', (req, res) => {
+//   Person
+//     .find()
+//     .sort({created: -1})
+//     .exec()
+//     .then(persons => {
+//       res.json(persons.map(person => person.apiRepr()));
+//     })
+//     .catch(err => {
+//       console.error(err);
+//       res.status(500).json({error: 'something went terribly wrong'});
+//     });
+// });
 
 router.get('/', (req, res) => {
   Person
