@@ -1,9 +1,11 @@
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const express = require('express');
-var flash = require('connect-flash');
+const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
-var passport = require('passport');
+const passport = require('passport');
+const session = require('express-session');
 
 mongoose.Promise = global.Promise;
 
@@ -11,21 +13,24 @@ const {PORT, DATABASE_URL} = require('./config/database');
 const personRouter = require('./personRouter');
 
 const app = express();
-app.use(bodyParser.json());
-
 
 app.use( '/', express.static(__dirname + '/public') );
 app.use( '/node_modules', express.static(__dirname + '/node_modules') );
 app.use( '/src', express.static(__dirname + '/src') );
-
-app.get('/heartbeat', function(req, res) {
-  res.json({
-    is: 'working'
-  })
-});
-
 app.use('/persons', personRouter);
+app.use(bodyParser);
+app.use(cookieParser);
+app.use(morgan);
+app.use(session);
 
+app.set('view engine', 'ejs'); // set up ejs for templating
+
+// required for passport
+// app.use(express.session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
+// app.use(passport.initialize());
+// app.use(passport.session()); // persistent login sessions
+// app.use(flash()); // use connect-flash for flash messages stored in session
+  
 let server;
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
@@ -34,7 +39,8 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
       if(err) {
         return reject(err);
       }
-      // require('./config/passport')(passport); // pass passport for configuration
+      require('./config/passport')(passport); // pass passport for configuration
+      
       server = app.listen(port, () => {
         
         console.log(`The server is listening on port ${port}`);
