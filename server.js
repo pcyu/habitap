@@ -1,13 +1,13 @@
 const bodyParser = require('body-parser');
 const express = require('express');
-var flash    = require('connect-flash');
+var flash = require('connect-flash');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 var passport = require('passport');
 
 mongoose.Promise = global.Promise;
 
-const {PORT, DATABASE_URL} = require('./config');
+const {PORT, DATABASE_URL} = require('./config/database');
 const personRouter = require('./personRouter');
 
 const app = express();
@@ -34,7 +34,7 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
       if(err) {
         return reject(err);
       }
-      require('./config/passport')(passport); // pass passport for configuration
+      // require('./config/passport')(passport); // pass passport for configuration
       server = app.listen(port, () => {
         
         console.log(`The server is listening on port ${port}`);

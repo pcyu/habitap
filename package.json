@@ -22,7 +22,7 @@
     "body-parser": "^1.15.2",
     "express" : "~3.4.4", 			
     "ejs" : "~0.8.5", 				
-    "mongoose" : "~3.8.1",
+    "mongoose": "~4.4",
     "morgan": "^1.7.0", 			
     "passport" : "~0.1.17", 		
     "passport-local" : "~0.1.6", 	
