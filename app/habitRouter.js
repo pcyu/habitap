@@ -2,7 +2,20 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const {Person} = require('./models');
+const {Person} = require('./models/habit');
+const path = require('path');
+
+router.get('/heartbeat', (req, res) => {
+  res.json({
+    is: 'workingx'
+  })
+});
+
+router.get('/mock', function(req, res) {
+  res.sendFile(path.join(__dirname+'/src/templates/mock.html'));
+});
+
+// app.get('/',function(req,res){ res.sendFile(path.join(__dirname+'/index.html')); //__dirname : It will resolve to your project folder. });
 
 router.delete('/:id', (req, res) => {
   Person
@@ -40,7 +53,7 @@ router.delete('/:id', (req, res) => {
 //     });
 // });
 
-router.get('/', (req, res) => {
+router.get('/persons', (req, res) => {
   Person
     .find()
     .exec()
@@ -55,7 +68,7 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
+router.get('/persons/:id', (req, res) => {
   Person
     .findById(req.params.id)
     .exec()
@@ -70,7 +83,7 @@ router.get('/:id', (req, res) => {
     });
 });
 
-router.post('/', (req, res) => {
+router.post('/persons', (req, res) => {
   const requiredFields = ['name', 'habits'];
   for(let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
@@ -94,7 +107,7 @@ router.post('/', (req, res) => {
     });
 });
 
-router.put('/:id', (req, res) => {  //p002
+router.put('/persons/:id', (req, res) => {  //p002
   if(req.params.id !== req.body.id) {
     const message = `The request path (${req.params.id}) and the request body id (${req.body.id}) must match.`;
     console.error(message);
