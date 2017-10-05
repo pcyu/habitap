@@ -21,15 +21,13 @@ app.use('/persons', personRouter);
 app.use(bodyParser);
 app.use(cookieParser);
 app.use(morgan);
-app.use(session);
+app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
 
 app.set('view engine', 'ejs'); // set up ejs for templating
 
-// required for passport
-// app.use(express.session({ secret: 'ilovescotchscotchyscotchscotch' })); // session secret
-// app.use(passport.initialize());
-// app.use(passport.session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
+app.use(passport.initialize());
+app.use(passport.session()); // persistent login sessions
+app.use(flash()); // use connect-flash for flash messages stored in session
   
 let server;
 
@@ -40,6 +38,7 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
         return reject(err);
       }
       require('./config/passport')(passport); // pass passport for configuration
+      require('./app/userRouter.js')(app, passport); // load our routes and pass in our app and fully configured passport
       
       server = app.listen(port, () => {
         
