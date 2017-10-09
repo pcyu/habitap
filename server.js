@@ -10,7 +10,7 @@ const session = require('express-session');
 mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config/database');
-const habitRouter = require('./app/habitRouter');
+const habitRouter = require('./habitRouter');
 
 const app = express();
 
@@ -22,12 +22,14 @@ app.use(bodyParser.json());
 
 // app.use(cookieParser);
 // app.use(morgan);
-// app.use(session({ secret: 'ilovescotchscotchyscotchscotch' }));
+// app.use(morgan('common'));
+// app.use(session({ secret: 'habitap' }));
+
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
-  
+
 let server;
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {

@@ -5,17 +5,15 @@ const jsonParser = bodyParser.json();
 const {Person} = require('./app/models/habit');
 const path = require('path');
 
-router.get('/heartbeat', (req, res) => {
-  res.json({
-    is: 'working'
-  })
-});
+// router.get('/heartbeat', (req, res) => {
+//   res.json({
+//     is: 'working'
+//   })
+// });
 
-router.get('/mock', function(req, res) {
-  res.sendFile(path.join(__dirname+'/src/templates/mock.html'));
+router.get('/habit', function(req, res) {
+  res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
 });
-
-// app.get('/',function(req,res){ res.sendFile(path.join(__dirname+'/index.html')); //__dirname : It will resolve to your project folder. });
 
 router.delete('/:id', (req, res) => {
   Person
