@@ -19,6 +19,7 @@ body {
         font-size: 12px;
       }
     }
+    //hamburger menu button
       input + label {
         position: fixed;
         top: 40px;
@@ -42,20 +43,6 @@ body {
         span:last-child {
           top: 16px; 
         }      
-      }
-      input:checked + label { 
-        span {
-          opacity: 0;
-          top: 50%;
-        }
-        span:first-child {
-          opacity: 1;
-          transform: rotate(405deg);
-        }
-        span:last-child {
-          opacity: 1;
-          transform: rotate(-405deg);
-        }
       }
       input ~ nav {
         background: white;
