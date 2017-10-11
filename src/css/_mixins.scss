@@ -1,7 +1,20 @@
-//----------------------------------------------------------------------------
+//------------------------------------------------------------------------------
+//  Placeholders
+//------------------------------------------------------------------------------
+// @mixin input-placeholder {
+//   input::-webkit-input-placeholder {@content}
+//   input:-moz-placeholder           {@content}
+//   input::-moz-placeholder          {@content}
+//   input:-ms-input-placeholder      {@content}
+//   input::-ms-input-placeholder     {@content}
+//   input:placeholder                {@content}
+// }
+
+
+//------------------------------------------------------------------------------
 //  Responsive
-//----------------------------------------------------------------------------
-@mixin responsive($size) {  //c014
+//------------------------------------------------------------------------------
+@mixin responsive($size) {
 	@if $size == taft { @media only screen and (min-width: $taft) { @content; } }
 	@else if $size == wilson { @media only screen and (min-width: $wilson) { @content; } }
   @else if $size == harding { @media only screen and (min-width: $harding) { @content; } }
@@ -22,13 +35,25 @@
 	@else if $size == obama { @media only screen and (min-width: $obama) { @content; } }
 }
 
-//----------------------------------------------------------------------------
+
+//------------------------------------------------------------------------------
+//  Transformations
+//------------------------------------------------------------------------------
+@mixin rotate($degree) {
+  -webkit-transform: rotate($degree);
+  -moz-transform: rotate($degree);
+  -ms-transform: rotate($degree);
+  -o-transform: rotate($degree);
+  transform: rotate($degree);
+}
+
+//------------------------------------------------------------------------------
 //  Transitions
-//----------------------------------------------------------------------------
+//----------------------------------------------------------------------------//
 @mixin transition($time) {
-  -webkit-transition: all $time ease-in-out;
-  -moz-transition: all $time ease-in-out;
-  -ms-transition: all $time ease-in-out;
-  -o-transition: all $time ease-in-out;
-  transition: all $time ease-in-out;
+  -webkit-transition: all $time ease;
+  -moz-transition: all $time ease;
+  -ms-transition: all $time ease;
+  -o-transition: all $time ease;
+  transition: all $time ease;
 }
