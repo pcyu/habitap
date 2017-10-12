@@ -27,7 +27,6 @@ a {
 }
 
 li {
-  transition-delay: .5s;
   opacity: 0;
   .nav-bar & {
     @include responsive(truman) {
