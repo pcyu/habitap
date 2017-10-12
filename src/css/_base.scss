@@ -66,13 +66,9 @@ body {
           right: 20%;
           > li {
             opacity: 0;
-            transition: .5s;
-            transition-delay: 0s;
             @include responsive(truman) {
               display: inline-block;
               opacity: 1;
-              transition: 0s;
-              transition-delay: 0s;
             }
             > a {
               text-decoration: none;
