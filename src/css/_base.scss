@@ -36,6 +36,9 @@ body {
           left: 0;
           display: block;
           background: #020304;
+          @include responsive(truman) {
+            display: none;
+          }
         }
         span:first-child {
           top: 3px; 
@@ -65,6 +68,12 @@ body {
             opacity: 0;
             transition: .5s;
             transition-delay: 0s;
+            @include responsive(truman) {
+              display: inline-block;
+              opacity: 1;
+              transition: 0s;
+              transition-delay: 0s;
+            }
             > a {
               text-decoration: none;
               text-transform: uppercase;
@@ -80,6 +89,9 @@ body {
       input:checked ~ nav { 
         height: 50%;
         transition-delay: 0s;
+        @include responsive(truman) {
+          height: 100px;
+        }
         > ul {
           > li {
             opacity: 1;

@@ -21,12 +21,16 @@ $burger--thickness: 4px;
   &.active {
     border-bottom: 4px solid transparent;
     &:before {
-      transform: rotate(-405deg) translateY(1px) translateX(-3px);
-      -webkit-transform: rotate(-405deg) translateY(1px) translateX(-3px);
+			-webkit-transform: translateY(13px);
+			-ms-transform: translateY(13px);
+			-o-transform: translateY(13px);
+			transform: translateY(13px);
     }
     &:after {
-      transform: rotate(405deg) translateY(-4px) translateX(-5px);
-      -webkit-transform: rotate(405deg) translateY(-4px) translateX(-5px);
+       -webkit-transform: translateY(-13px);
+  -ms-transform: translateY(-13px);
+  -o-transform: translateY(-13px);
+  transform: translateY(-13px);
     }
   }
 
