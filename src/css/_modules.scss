@@ -1,137 +1,41 @@
 //------------------------------------------------------------------------------
 //  Navigation – Logo
 //------------------------------------------------------------------------------
-.navwrap {
-  @include responsive(truman) {  //c011
-    background: white;
-    border-bottom: 1px solid #aaa;
-    border-top: 8px solid #aaa;
-    left: 0;
-    margin: 0 0 24px;
-    position: fixed;
-    top: 0;
-    padding: 16px 0;
-    width: 100%;
-    z-index: 20;
-    &:after {  //c008, c012
-      background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-      bottom: -13px;
-      content: '';
-      height: 12px;
-      position: absolute;
-      width: 100%;
-    }
-  }
-}
-.navlogo {  //c005, c006, c011
-  background: white;
-  border-bottom: 1px solid #aaa;
-  border-top: 8px solid #aaa;
-  left: 0;
-  margin: 0 0 24px;
-  position: fixed;
-  top: 0;
-  padding: 16px 0;
-  width: 100%;
-  z-index: 20;
-  @include responsive(truman) { //c013
-    background: none;
-    border: none;
-    display: inline-block;
-    margin: 0;
-    padding: 0;
-    position: static;
-    width: calc(20% - 2px);
-  }
-  &:after {  //c008, c012
-    background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(255,255,255,0) 100%);
-    bottom: -13px;
-    content: '';
-    height: 12px;
-    position: absolute;
-    width: 100%;
-    @include responsive(truman) {
-      display: none;
-    }
-  }
-}
-
-.nimg {
-  &.logo {
-    margin-left: 5%;
-    width: 60px;
-    @include responsive(truman) {
-      margin-left: 0;
-    }
-  }
-}
-
-
-//------------------------------------------------------------------------------
-//  Navigation – Mobile Icon
-//------------------------------------------------------------------------------
-.navicon {  //c005
-  position: fixed;
-  right: 5%;  //c004
-  top: 32px;
-  z-index: 50;
-  @include responsive(truman) {
-    display: none;
-  }
-}
 
 
 //------------------------------------------------------------------------------
 //  Navigation – Items
 //------------------------------------------------------------------------------
-.navitems {  //c005
-  background: white;
-  height: 2000px;
-  padding: 80px 0 0 26px;
-  position: fixed;
-  right: -300px;
-  top: 0;
-  transition: right 0.6s ease-in-out;
-  width: 180px;
-  z-index: 40;
-  @include responsive(truman) {
-    background: none;
-    display: inline-block;
-    height: auto;
-    padding: 0;
-    position: static;
-    text-align: right;
-    width: calc(80% - 2px);
-  }
-  &.active {
-    right: 0;
+.nav-bar {
+  text-align: center;
+  position: absolute;
+  top: 35%;
+  left: 20%;
+  right: 20%;
+}
+
+a {
+  .nav-bar & {
+    text-decoration: none;
+    text-transform: uppercase;
+    color: #020304;
+    font-weight: 700;
+    font-family: sans-serif;
+    display: block;
+    padding: 10px;
   }
 }
 
 li {
-  .navitems & {
-    color: inherit;
-    cursor: pointer;
-    margin: 10px 0;
-    transition: all 0.3s ease-in-out;
+  transition-delay: .5s;
+  opacity: 0;
+  .nav-bar & {
     @include responsive(truman) {
       display: inline-block;
-      margin: 0 20px;
-      &:last-of-type {
-        margin-right: 0;
-      }
+      opacity: 1;
     }
-    &:hover {
-      color: crimson;
-      padding-left: 5px;
-      @include responsive(truman) {
-        padding-left: 0;
-      }
-    }
-  }
+  } 
 }
-
-
 
 //------------------------------------------------------------------------------
 //  Images
