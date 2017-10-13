@@ -53,3 +53,30 @@ li {
     }
   }
 }
+
+.header_content {
+  color: white;
+  height: auto;
+  position: absolute;
+  right: 50%;
+  text-align: center;
+  top: 50%;
+  transform: translate(50%, -50%);
+}
+
+.header_content:after {
+  background: rgba (0, 0, 0, .3);
+  content: "";
+  height: 200px;
+  position: absolute;
+  left: -10%;
+  top: -10%;
+  width: 120%;
+  z-index: -1;
+}
+
+.overlay {
+  background: blue;
+  height: 100%;
+  width: 20%;
+}
