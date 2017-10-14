@@ -27,12 +27,6 @@ h4 {
   text-transform: uppercase;
 }
 
-header {
-  background-image: url('../src/img/shoes.jpg');
-  background-attachment: scroll;
-  background-position: center center;
-  width: 100%;
-}
 //------------------------------------------------------------------------------
 //  Form
 //------------------------------------------------------------------------------
@@ -110,6 +104,18 @@ img {
 //------------------------------------------------------------------------------
 p + p {
   margin-top: 12px;
+}
+
+p {
+  .overlay & {
+    @include responsive(coolidge) {
+      position: relative;
+      top: 15%;
+    }
+    @include responsive(truman) {
+    top: 25%;
+    }
+  }
 }
 
 //------------------------------------------------------------------------------

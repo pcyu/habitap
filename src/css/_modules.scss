@@ -56,7 +56,7 @@ li {
     height: 700px;
   }
   @include responsive(nixon) {
-    height: 900px;
+    height: 1000px;
   }
 }
 
@@ -64,11 +64,15 @@ li {
   background: rgba(0, 0, 0, .5);
   color: white;
   font-size: 24px;
-  height: 50%;
+  height: 25%;
   left: 0;
   padding-top: 25px;
   position: absolute;
   text-align: center;
   top: 0;
   width: 100%;
+  @include responsive(truman) {
+    height: 100%;
+    width: 25%;
+  }
 }
