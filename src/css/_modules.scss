@@ -46,17 +46,14 @@ li {
 
 .nimg {
   height: 400px;
-  @include responsive(coolidge) {
+  @include responsive(truman) {
     height: 500px;
   }
-  @include responsive(truman) {
+  @include responsive(kennedy) {
     height: 600px;
   }
-  @include responsive(kennedy) {
-    height: 700px;
-  }
   @include responsive(nixon) {
-    height: 1000px;
+    height: 725px;
   }
 }
 
