@@ -46,6 +46,18 @@ li {
 
 .nimg {
   height: 400px;
+  @include responsive(coolidge) {
+    height: 500px;
+  }
+  @include responsive(truman) {
+    height: 600px;
+  }
+  @include responsive(kennedy) {
+    height: 700px;
+  }
+  @include responsive(nixon) {
+    height: 900px;
+  }
 }
 
 .overlay {
