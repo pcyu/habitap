@@ -3,13 +3,17 @@
 //------------------------------------------------------------------------------
 
 .about-caption {
-  height: 200px;
-  width: 200px;
+  grid-column-start: 1;
+  grid-column-end: 2;
+  grid-row-start: 1;
+  grid-row-end: 2;
 }
 
 .about-image {
-  height: 200px;
-  width: 200px;
+  grid-column-start: 2;
+  grid-column-end: 3;
+  grid-row-start: 3;
+  grid-row-end: 4;
 }
 
 //------------------------------------------------------------------------------
