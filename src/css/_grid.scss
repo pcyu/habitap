@@ -1,6 +1,43 @@
  section {
      display: grid;
      background-color: red;
-     grid-template-columns: 50% 50%;
-     grid-template-rows: 50% 50%;  
+     grid-gap: 1em;
+     margin: 15px;
+     grid-template-columns: 1fr 1fr;
+     grid-template-rows: 200px 200px 200px 200px;
  }
+
+ //------------------------------------------------------------------------------
+//  About
+//------------------------------------------------------------------------------
+
+
+.about-image {
+    background-color: green;
+    height: 200px;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.about-caption {
+    background-color: blue;
+    height: 300px;
+    width: auto;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
+
+.about-image2 {
+    background-color: green;
+    height: 200px;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.about-caption2 {
+    background-color: blue;
+    height: 300px;
+    width: auto;
+    grid-row-start: 4;
+    grid-row-end: 5;
+}
