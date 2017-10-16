@@ -1,7 +1,7 @@
  section {
      display: grid;
      background-color: red;
-     grid-gap: 1em;
+     grid-gap: 2em;
      margin: 15px;
      grid-template-columns: 1fr 1fr;
      grid-template-rows: 200px 200px 200px 200px;
@@ -11,6 +11,15 @@
 //  About
 //------------------------------------------------------------------------------
 
+.about-place {
+    height: auto;
+    width: 100%;
+}
+
+// .about-place2 {
+//     height: auto;
+//     width: 100%;
+// }
 
 .about-image {
     background-color: green;
@@ -22,6 +31,7 @@
 .about-caption {
     background-color: blue;
     height: 300px;
+    font-size: 25px;
     width: auto;
     grid-row-start: 2;
     grid-row-end: 3;
@@ -37,6 +47,7 @@
 .about-caption2 {
     background-color: blue;
     height: 300px;
+    font-size: 25px;
     width: auto;
     grid-row-start: 4;
     grid-row-end: 5;
