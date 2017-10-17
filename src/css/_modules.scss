@@ -65,17 +65,18 @@ li {
 
 .overlay {
   background: rgba(0, 0, 0, .5);
+  bottom: 3%;
   color: white;
   font-size: 24px;
-  height: 25%;
   left: 0;
-  padding-top: 25px;
+  padding: 14px 0;
   position: absolute;
   text-align: center;
-  top: 0;
   width: 100%;
-  @include responsive(truman) {
+  @include responsive(nixon) {
+    bottom: 0;
     height: 100%;
+    top: 0;
     width: 25%;
   }
 }

@@ -1,7 +1,7 @@
  section {
      display: grid;
      background-color: red;
-     grid-gap: 2em;
+     grid-gap: 1em;
      margin: 15px;
      grid-template-columns: 1fr 1fr;
      grid-template-rows: 200px 200px 200px 200px;
@@ -13,6 +13,7 @@
 
 .about-place {
     height: auto;
+    overflow: auto;
     width: 100%;
 }
 
@@ -22,7 +23,9 @@
 // }
 
 .about-image {
-    background-color: green;
+    background: url(../src/img/placeholder.jpg);
+    background-size: cover;
+    background-position: center center;
     height: 200px;
     grid-row-start: 1;
     grid-row-end: 2;

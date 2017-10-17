@@ -2,4 +2,34 @@
     margin-top: 50px;
     overflow: hidden;
     position: relative;
+    height: 300px;
+    &:after {
+        background: url('../src/img/climb2.jpg');
+        background-position: left top;
+        background-size: cover;
+        background-repeat: no-repeat;
+        content: "";
+        top: 0;
+        height: 100%;
+        left: 0;
+        position: absolute;
+        width: 100%;
+        z-index: -1;
+    }
+    @include responsive(harding) {
+        height: 460px;
+    }
+    @include responsive(hoover) {
+        height: 600px;
+    }
+    @include responsive(nixon) {
+        &:after {
+            background-position: left center;
+        }
+    }
+    @include responsive(reagan) {
+        &:after {
+            background-position: 0% 45%;
+        }
+    }
 }
