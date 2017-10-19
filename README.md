@@ -2,8 +2,6 @@
 
 Pictures:
 
-https://www.pexels.com/photo/adult-architecture-athlete-boardwalk-221210/
-https://www.pexels.com/photo/runner-103520/
 https://www.pexels.com/photo/backlit-bicycles-clouds-cyclist-533646/
 https://www.pexels.com/photo/adult-adventure-climb-climber-414017/
 

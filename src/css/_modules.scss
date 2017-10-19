@@ -51,16 +51,7 @@ li {
 }
 
 .nimg {
-  height: 400px;
-  @include responsive(truman) {
-    height: 500px;
-  }
-  @include responsive(kennedy) {
-    height: 600px;
-  }
-  @include responsive(nixon) {
-    height: 725px;
-  }
+
 }
 
 .overlay {

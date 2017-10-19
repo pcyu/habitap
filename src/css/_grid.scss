@@ -1,57 +1,63 @@
  section {
+     align-items: center;
      display: grid;
      background-color: red;
-     grid-gap: 1em;
      margin: 15px;
-     grid-template-columns: 1fr 1fr;
-     grid-template-rows: 200px 200px 200px 200px;
+     grid-template-columns: 1fr;
+     justify-items: center;
+     @include responsive(truman) {
+         grid-template-columns: 1fr 1fr;
+     }
  }
 
  //------------------------------------------------------------------------------
 //  About
 //------------------------------------------------------------------------------
 
-.about-place {
-    height: auto;
-    overflow: auto;
-    width: 100%;
+.grid-cell {
+    @include responsive(truman) {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+}
+.grid-image {
+    border: 1px black solid;
+    background-color: green;
 }
 
-// .about-place2 {
-//     height: auto;
-//     width: 100%;
+.grid-caption {
+    font-size: 25px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    width: auto;
+}
+
+.grid-nimg {
+    height: 200px;
+    width: 100%;
+    @include responsive(harding) {
+        height: 250px;
+    }
+    @include responsive(hoover) {
+        height: 300px;
+    }
+    @include responsive(truman) {
+        height: 250px;
+    }
+    @include responsive(kennedy) {
+        height: 300px;
+    }
+  }
+
+// .reverse1 {
+//     @include responsive(truman) {
+//         grid-column: 2;
+//     }
 // }
 
-.about-image {
-    background: url(../src/img/placeholder.jpg);
-    background-size: cover;
-    background-position: center center;
-    height: 200px;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-.about-caption {
-    background-color: blue;
-    height: 300px;
-    font-size: 25px;
-    width: auto;
-    grid-row-start: 2;
-    grid-row-end: 3;
-}
-
-.about-image2 {
-    background-color: green;
-    height: 200px;
-    grid-row-start: 3;
-    grid-row-end: 4;
-}
-
-.about-caption2 {
-    background-color: blue;
-    height: 300px;
-    font-size: 25px;
-    width: auto;
-    grid-row-start: 4;
-    grid-row-end: 5;
+.reverse {
+    @include responsive(truman) {
+        grid-column: 1;
+        grid-row: 2;
+    }
 }
