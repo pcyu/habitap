@@ -49,6 +49,13 @@
     }
   }
 
+.grid-signup {
+        @include responsive(truman) {
+        grid-column-start: 1;
+        grid-column-end: 3;
+    }
+}
+
 .reverse {
     @include responsive(truman) {
         grid-column: 1;
