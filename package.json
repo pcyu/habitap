@@ -29,10 +29,10 @@
     "method-override": "^2.3.10",
     "mongoose": "~4.4",
     "morgan": "^1.7.0",
-    "passport": "~0.1.17",
+    "passport": "~0.3.2",
     "passport-facebook": "~1.0.2",
     "passport-google-oauth": "~0.1.5",
-    "passport-local": "~0.1.6",
+    "passport-local" : "~1.0.0",
     "passport-twitter": "~1.0.2"
   },
   "devDependencies": {
