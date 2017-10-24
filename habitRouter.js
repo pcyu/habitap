@@ -15,6 +15,15 @@ router.get('/habit', function(req, res) {
   res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
 });
 
+router.get('/signup', function(req, res) {
+  res.sendFile(path.join(__dirname+'/src/templates/signup.html'));
+});
+
+router.get('/login', function(req, res) {
+  res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
+});
+
+
 router.delete('/:id', (req, res) => {
   Person
     .findByIdAndRemove(req.params.id, function(err, value) {
