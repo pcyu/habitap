@@ -1,3 +1,6 @@
+const path = require('path');
+const passport = require('passport');
+
 module.exports = function(app, passport) {
   
   // normal routes ===============================================================
@@ -27,21 +30,32 @@ module.exports = function(app, passport) {
       // locally --------------------------------
           // LOGIN ===============================
           // show the login form
+        //   app.get('/login', function(req, res) {
+        //       res.render('login.ejs', { message: req.flash('loginMessage') });
+        //   });
+  
+          // process the login for
+  
+        //   SIGNUP =================================
+        //   show the signup form
+        //   app.get('/signup', function(req, res) {
+        //       res.render('signup.html', { message: req.flash('signupMessage') });
+        //   });
+        
+        
+
           app.get('/login', function(req, res) {
-              res.render('login.ejs', { message: req.flash('loginMessage') });
+            res.sendFile(path.join(__dirname+'/src/templates/login.html', { message: req.flash('loginMessage')}));
           });
-  
-          // process the login form
+
           app.post('/login', passport.authenticate('local-login', {
-              successRedirect : '/profile', // redirect to the secure profile section
-              failureRedirect : '/login', // redirect back to the signup page if there is an error
-              failureFlash : true // allow flash messages
+            successRedirect : '/profile', // redirect to the secure profile section
+            failureRedirect : '/login', // redirect back to the signup page if there is an error
+            failureFlash : true // allow flash messages
           }));
-  
-          // SIGNUP =================================
-          // show the signup form
+
           app.get('/signup', function(req, res) {
-              res.render('signup.ejs', { message: req.flash('signupMessage') });
+            res.sendFile(path.join(__dirname+'/src/templates/signup.html', { message: req.flash('signupMessage')}));
           });
   
           // process the signup form

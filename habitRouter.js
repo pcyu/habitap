@@ -11,6 +11,8 @@ const path = require('path');
 //   })
 // });
 
+module.exports = function(passport) {
+
 router.get('/habit', function(req, res) {
   res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
 });
@@ -19,9 +21,21 @@ router.get('/signup', function(req, res) {
   res.sendFile(path.join(__dirname+'/src/templates/signup.html'));
 });
 
+// router.post('/signup', passport.authenticate('local-signup', {
+//   successRedirect : '/habit', // redirect to the secure profile section
+//   failureRedirect : '/signup', // redirect back to the signup page if there is an error
+//   failureFlash : true // allow flash messages
+// }));
+
 router.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
+  res.sendFile(path.join(__dirname+'/src/templates/login.html'));
 });
+
+// router.post('/login', passport.authenticate('local-login', {
+//   successRedirect : '/habit', // redirect to the secure profile section
+//   failureRedirect : '/login', // redirect back to the signup page if there is an error
+//   failureFlash : true // allow flash messages
+// }));
 
 
 router.delete('/:id', (req, res) => {
@@ -137,5 +151,12 @@ router.put('/persons/:id', (req, res) => {  //p002
     });
 });
 
+// route middleware to ensure user is logged in
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated())
+      return next();
 
+  res.redirect('/');
+}
+}
 module.exports = router;

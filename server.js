@@ -11,6 +11,7 @@ mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config/database');
 const habitRouter = require('./habitRouter');
+const userRouter = require('./app/userRouter');
 
 const app = express();
 
@@ -18,12 +19,13 @@ app.use( '/', express.static(__dirname + '/public') );
 app.use( '/node_modules', express.static(__dirname + '/node_modules') );
 app.use( '/src', express.static(__dirname + '/src') );
 app.use('/', habitRouter);
+app.use('/', userRouter);
 app.use(bodyParser.json());
 
 // app.use(cookieParser);
 // app.use(morgan);
 // app.use(morgan('common'));
-// app.use(session({ secret: 'habitap' }));
+app.use(session({ secret: 'habitap' }));
 
 
 app.use(passport.initialize());
