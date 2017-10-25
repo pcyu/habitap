@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
-const {Person} = require('./app/models/habit');
+const {Person} = require('./model');
 const path = require('path');
 
 // router.get('/heartbeat', (req, res) => {
@@ -11,16 +11,12 @@ const path = require('path');
 //   })
 // });
 
-router.get('/habit', function(req, res) {
+router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
 });
 
 router.get('/signup', function(req, res) {
   res.sendFile(path.join(__dirname+'/src/templates/signup.html'));
-});
-
-router.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname+'/src/templates/login.html'));
 });
 
 // router.post('/signup', passport.authenticate('local-signup', {
@@ -161,4 +157,4 @@ function isLoggedIn(req, res, next) {
   res.redirect('/');
 }
 
-module.exports = router;
+module.exports = {router};

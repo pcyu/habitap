@@ -10,16 +10,16 @@ const session = require('express-session');
 mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config/database');
-const habitRouter = require('./habitRouter');
-const userRouter = require('./app/userRouter');
+const {router: userRouter} = require('./users');
+const {router: habitRouter} = require('./habits');
 
 const app = express();
 
 app.use( '/', express.static(__dirname + '/public') );
 app.use( '/node_modules', express.static(__dirname + '/node_modules') );
 app.use( '/src', express.static(__dirname + '/src') );
-app.use('/', habitRouter);
-app.use('/', userRouter);
+app.use('/habits', habitRouter);
+app.use('/users', userRouter);
 app.use(bodyParser.json());
 
 // app.use(cookieParser);
@@ -40,8 +40,8 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
       if(err) {
         return reject(err);
       }
-      require('./config/passport')(passport); // pass passport for configuration
-      require('./app/userRouter.js')(app, passport); // load our routes and pass in our app and fully configured passport
+      // require('./config/passport')(passport); // pass passport for configuration
+      // require('./app/userRouter.js')(app, passport); // load our routes and pass in our app and fully configured passport
 
       server = app.listen(port, () => {
         
