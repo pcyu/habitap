@@ -11,12 +11,14 @@ const path = require('path');
 //   })
 // });
 
+
+
 router.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname+'/src/templates/habit.html'));
+  res.sendFile(path.join(__dirname+'/templates/habits.html'));
 });
 
 router.get('/signup', function(req, res) {
-  res.sendFile(path.join(__dirname+'/src/templates/signup.html'));
+  res.sendFile(path.join(__dirname+'/templates/signup.html'));
 });
 
 // router.post('/signup', passport.authenticate('local-signup', {
@@ -26,7 +28,7 @@ router.get('/signup', function(req, res) {
 // }));
 
 router.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname+'/src/templates/login.html'));
+  res.sendFile(path.join(__dirname+'/templates/login.html'));
 });
 
 // router.post('/login', passport.authenticate('local-login', {
