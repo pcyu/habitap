@@ -1,215 +1,147 @@
-const bodyParser = require('body-parser');
 const express = require('express');
-const jsonParser = bodyParser.json();
+const bodyParser = require('body-parser');
 const passport = require('passport');
-const path = require('path');
+
+const {User} = require('./model');
+
 const router = express.Router();
 
-// module.exports = function(app, passport) {
-  
-  // normal routes ===============================================================
-  
-      // show the home page (will also have our login links)
-      router.get('/', function(req, res) {
-        res.sendFile(path.join(__dirname+'/templates/random.html'));
-      });
+const jsonParser = bodyParser.json();
 
-      // PROFILE SECTION =========================
-      router.get('/profile', isLoggedIn, function(req, res) {
-          res.render('profile.ejs', {
-              user : req.user  
-          });
-      });
-  
-      // LOGOUT ==============================
-      router.get('/logout', function(req, res) {
-          req.logout();
-          res.redirect('/');
-      });
-  
-  // =============================================================================
-  // AUTHENTICATE (FIRST LOGIN) ==================================================
-  // =============================================================================
-  
-      // locally --------------------------------
-          // LOGIN ===============================
-          // show the login form
-        //   router.get('/login', function(req, res) {
-        //       res.render('login.ejs', { message: req.flash('loginMessage') });
-        //   });
-  
-          // process the login for
-  
-        //   SIGNUP =================================
-        //   show the signup form
-        //   router.get('/signup', function(req, res) {
-        //       res.render('signup.html', { message: req.flash('signupMessage') });
-        //   });
-        
-        
+// Post to register a new user
+router.post('/register', jsonParser, (req, res) => {
+    const requiredFields = ['username', 'password'];
+    const missingField = requiredFields.find(field => !(field in req.body));
 
-          router.get('/login', function(req, res) {
-            res.sendFile(path.join(__dirname+'/src/templates/login.html', { message: req.flash('loginMessage')}));
-          });
+    if (missingField) {
+        return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: 'Missing field',
+            location: missingField
+        });
+    }
 
-        //   router.post('/login', passport.authenticate('local-login', {
-        //     successRedirect : '/profile', // redirect to the secure profile section
-        //     failureRedirect : '/login', // redirect back to the signup page if there is an error
-        //     failureFlash : true // allow flash messages
-        //   }));
+    const stringFields = ['username', 'password', 'firstName', 'lastName'];
+    const nonStringField = stringFields.find(
+        field => field in req.body && typeof req.body[field] !== 'string'
+    );
 
-          router.get('/signup', function(req, res) {
-            res.sendFile(path.join(__dirname+'/src/templates/signup.html', { message: req.flash('signupMessage')}));
-          });
-  
-          // process the signup form
-        //   router.post('/signup', passport.authenticate('local-signup', {
-        //       successRedirect : '/profile', // redirect to the secure profile section
-        //       failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        //       failureFlash : true // allow flash messages
-        //   }));
-  
-      // facebook -------------------------------
-  
-          // send to facebook to do the authentication
-          router.get('/auth/facebook', passport.authenticate('facebook', { scope : 'email' }));
-  
-          // handle the callback after facebook has authenticated the user
-          router.get('/auth/facebook/callback',
-              passport.authenticate('facebook', {
-                  successRedirect : '/profile',
-                  failureRedirect : '/'
-              }));
-  
-      // twitter --------------------------------
-  
-          // send to twitter to do the authentication
-          router.get('/auth/twitter', passport.authenticate('twitter', { scope : 'email' }));
-  
-          // handle the callback after twitter has authenticated the user
-          router.get('/auth/twitter/callback',
-              passport.authenticate('twitter', {
-                  successRedirect : '/profile',
-                  failureRedirect : '/'
-              }));
-  
-  
-      // google ---------------------------------
-  
-          // send to google to do the authentication
-          router.get('/auth/google', passport.authenticate('google', { scope : ['profile', 'email'] }));
-  
-          // the callback after google has authenticated the user
-          router.get('/auth/google/callback',
-              passport.authenticate('google', {
-                  successRedirect : '/profile',
-                  failureRedirect : '/'
-              }));
-  
-  // =============================================================================
-  // AUTHORIZE (ALREADY LOGGED IN / CONNECTING OTHER SOCIAL ACCOUNT) =============
-  // =============================================================================
-  
-      // locally --------------------------------
-          router.get('/connect/local', function(req, res) {
-              res.render('connect-local.ejs', { message: req.flash('loginMessage') });
-          });
-          router.post('/connect/local', passport.authenticate('local-signup', {
-              successRedirect : '/profile', // redirect to the secure profile section
-              failureRedirect : '/connect/local', // redirect back to the signup page if there is an error
-              failureFlash : true // allow flash messages
-          }));
-  
-      // facebook -------------------------------
-  
-          // send to facebook to do the authentication
-          router.get('/connect/facebook', passport.authorize('facebook', { scope : 'email' }));
-  
-          // handle the callback after facebook has authorized the user
-          router.get('/connect/facebook/callback',
-              passport.authorize('facebook', {
-                  successRedirect : '/profile',
-                  failureRedirect : '/'
-              }));
-  
-      // twitter --------------------------------
-  
-          // send to twitter to do the authentication
-          router.get('/connect/twitter', passport.authorize('twitter', { scope : 'email' }));
-  
-          // handle the callback after twitter has authorized the user
-          router.get('/connect/twitter/callback',
-              passport.authorize('twitter', {
-                  successRedirect : '/profile',
-                  failureRedirect : '/'
-              }));
-  
-  
-      // google ---------------------------------
-  
-          // send to google to do the authentication
-          router.get('/connect/google', passport.authorize('google', { scope : ['profile', 'email'] }));
-  
-          // the callback after google has authorized the user
-          router.get('/connect/google/callback',
-              passport.authorize('google', {
-                  successRedirect : '/profile',
-                  failureRedirect : '/'
-              }));
-  
-  // =============================================================================
-  // UNLINK ACCOUNTS =============================================================
-  // =============================================================================
-  // used to unlink accounts. for social accounts, just remove the token
-  // for local account, remove email and password
-  // user account will stay active in case they want to reconnect in the future
-  
-      // local -----------------------------------
-      router.get('/unlink/local', isLoggedIn, function(req, res) {
-          var user            = req.user;
-          user.local.email    = undefined;
-          user.local.password = undefined;
-          user.save(function(err) {
-              res.redirect('/profile');
-          });
-      });
-  
-      // facebook -------------------------------
-      router.get('/unlink/facebook', isLoggedIn, function(req, res) {
-          var user            = req.user;
-          user.facebook.token = undefined;
-          user.save(function(err) {
-              res.redirect('/profile');
-          });
-      });
-  
-      // twitter --------------------------------
-      router.get('/unlink/twitter', isLoggedIn, function(req, res) {
-          var user           = req.user;
-          user.twitter.token = undefined;
-          user.save(function(err) {
-              res.redirect('/profile');
-          });
-      });
-  
-      // google ---------------------------------
-      router.get('/unlink/google', isLoggedIn, function(req, res) {
-          var user          = req.user;
-          user.google.token = undefined;
-          user.save(function(err) {
-              res.redirect('/profile');
-          });
-      });
-  
-  
-  ;
-  
-  // route middleware to ensure user is logged in
-  function isLoggedIn(req, res, next) {
-      if (req.isAuthenticated())
-          return next();
-  
-      res.redirect('/');
-  }
-  
-  module.exports = {router};
+    if (nonStringField) {
+        return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: 'Incorrect field type: expected string',
+            location: nonStringField
+        });
+    }
+
+    // If the username and password aren't trimmed we give an error.  Users might
+    // expect that these will work without trimming (i.e. they want the password
+    // "foobar ", including the space at the end).  We need to reject such values
+    // explicitly so the users know what's happening, rather than silently
+    // trimming them and expecting the user to understand.
+    // We'll silently trim the other fields, because they aren't credentials used
+    // to log in, so it's less of a problem.
+    const explicityTrimmedFields = ['username', 'password'];
+    const nonTrimmedField = explicityTrimmedFields.find(
+        field => req.body[field].trim() !== req.body[field]
+    );
+
+    if (nonTrimmedField) {
+        return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: 'Cannot start or end with whitespace',
+            location: nonTrimmedField
+        });
+    }
+
+    const sizedFields = {
+        username: {
+            min: 1
+        },
+        password: {
+            min: 10,
+            // bcrypt truncates after 72 characters, so let's not give the illusion
+            // of security by storing extra (unused) info
+            max: 72
+        }
+    };
+    const tooSmallField = Object.keys(sizedFields).find(
+        field =>
+            'min' in sizedFields[field] &&
+            req.body[field].trim().length < sizedFields[field].min
+    );
+    const tooLargeField = Object.keys(sizedFields).find(
+        field =>
+            'max' in sizedFields[field] &&
+            req.body[field].trim().length > sizedFields[field].max
+    );
+
+    if (tooSmallField || tooLargeField) {
+        return res.status(422).json({
+            code: 422,
+            reason: 'ValidationError',
+            message: tooSmallField
+                ? `Must be at least ${sizedFields[tooSmallField]
+                      .min} characters long`
+                : `Must be at most ${sizedFields[tooLargeField]
+                      .max} characters long`,
+            location: tooSmallField || tooLargeField
+        });
+    }
+
+    let {username, password, firstName = '', lastName = ''} = req.body;
+    // Username and password come in pre-trimmed, otherwise we throw an error
+    // before this
+    firstName = firstName.trim();
+    lastName = lastName.trim();
+
+    return User.find({username})
+        .count()
+        .then(count => {
+            if (count > 0) {
+                // There is an existing user with the same username
+                return Promise.reject({
+                    code: 422,
+                    reason: 'ValidationError',
+                    message: 'Username already taken',
+                    location: 'username'
+                });
+            }
+            // If there is no existing user, hash the password
+            return User.hashPassword(password);
+        })
+        .then(hash => {
+            return User.create({
+                username,
+                password: hash,
+                firstName,
+                lastName
+            });
+        })
+        .then(user => {
+            return res.status(201).json(user.apiRepr());
+        })
+        .catch(err => {
+            // Forward validation errors on to the client, otherwise give a 500
+            // error because something unexpected has happened
+            if (err.reason === 'ValidationError') {
+                return res.status(err.code).json(err);
+            }
+            res.status(500).json({code: 500, message: 'Internal server error'});
+        });
+});
+
+// Never expose all your users like below in a prod application
+// we're just doing this so we have a quick way to see
+// if we're creating users. keep in mind, you can also
+// verify this in the Mongo shell.
+router.get('/', (req, res) => {
+    return User.find()
+        .then(users => res.json(users.map(user => user.apiRepr())))
+        .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+module.exports = {router};
