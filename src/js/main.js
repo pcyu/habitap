@@ -1,10 +1,55 @@
 (function($) {
   
     var app = {
+      name: '',
       init: function() {
-        app.registerHandler();
+        app.doLogin();
+        app.getProtected();
+        app.logoutHandler();
+        app.signUpHandler();
       },
-      registerHandler: () => {
+      doLogin: () => {
+        $(document).on('submit', '#login-submit', (e) => {
+          e.preventDefault();
+          app.loginHandler()
+            .then(app.loadEndpoint);
+        });
+      },
+      getProtected: () => {
+        $(document).on('submit', '#get-protected', (e) => {
+          e.preventDefault();
+          let _token = `Bearer ${localStorage.getItem('jwToken')}`;
+          let promise = new Promise((res, rej) => {
+            $.ajax({
+              // beforeSend: (req) => { req.setRequestHeader("Authorization", app.token) },
+              headers: {
+                "accept": "application/json; odata=verbose",
+                "Authorization": _token
+              },
+              type: 'GET',
+              url: `${app.baseUrl}/protected`,
+              success: (item) => {
+                console.log(item);
+                res();
+              },
+              error: (error) => {
+                console.log(error);
+                rej();
+              }
+            });
+          });
+          return promise;
+        });
+      },
+      logoutHandler: () => {
+        $(document).on('submit', '#do-logout', (e) => {
+          e.preventDefault();
+          localStorage.removeItem('jwToken');
+          console.log(`Goodbye ${app.name}! You are now logged out.`);
+          app.name ='';
+        });
+      },
+      signUpHandler: () => {
         $(document).on('submit', '#signup-submit', (e) => {
           e.preventDefault();
           let body = {
