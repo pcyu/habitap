@@ -1,15 +1,17 @@
+require('dotenv').config();
 const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
+const cookieParser = require('cookie-parser');
 const express = require('express');
-const flash = require('connect-flash');
+// const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
-const session = require('express-session');
+// const session = require('express-session');
 
 mongoose.Promise = global.Promise;
 
-const {PORT, DATABASE_URL} = require('./config/database');
+const {PORT, DATABASE_URL} = require('./config');
+const {router: authRouter, basicStrategy, jwtStrategy} = require('./auth');
 const {router: userRouter} = require('./users');
 const {router: habitRouter} = require('./habits');
 
@@ -18,6 +20,7 @@ const app = express();
 app.use( '/', express.static(__dirname + '/public') );
 app.use( '/node_modules', express.static(__dirname + '/node_modules') );
 app.use( '/src', express.static(__dirname + '/src') );
+app.use('/auth', authRouter);
 app.use('/habits', habitRouter);
 app.use('/users', userRouter);
 app.use(bodyParser.json());
@@ -25,12 +28,32 @@ app.use(bodyParser.json());
 // app.use(cookieParser);
 // app.use(morgan);
 // app.use(morgan('common'));
-app.use(session({ secret: 'habitap' }));
+// app.use(session({ secret: 'habitap' }));
 
 
 app.use(passport.initialize());
-app.use(passport.session()); // persistent login sessions
-app.use(flash()); // use connect-flash for flash messages stored in session
+// app.use(passport.session()); // persistent login sessions
+// app.use(flash()); // use connect-flash for flash messages stored in session
+passport.use(basicStrategy);
+passport.use(jwtStrategy);
+
+app.get(
+  '/protected',
+  passport.authenticate('jwt', {
+    session: false
+  }),
+  (req, res) => {
+    return res.json({
+      data: 'rosebud'
+    });
+  }
+);
+
+app.use('*', (req, res) => {
+  return res.status(404).json({
+    message: 'Not Found'
+  });
+});
 
 let server;
 
