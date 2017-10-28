@@ -14,16 +14,32 @@ const createAuthToken = user => {
 
 const router = express.Router();
 
+// router.post(
+//     '/login',
+//     // The user provides a username and password to login
+//     passport.authenticate('basic', {session: false}),
+//     (req, res) => {
+//         const authToken = createAuthToken(req.user.apiRepr());
+//         res.json({authToken});
+//     }
+// );
+
 router.post(
-    '/login',
-    // The user provides a username and password to login
-    // passport.authenticate('basic', {session: false}),
-    passport.authenticate('local', {session: false}),
-    (req, res) => {
-        const authToken = createAuthToken(req.user.apiRepr());
-        res.json({authToken});
-    }
+  '/login',
+  // The user provides a username and password to login
+  passport.authenticate('local', {
+    failureRedirect: '/login',
+    session: false
+  }),
+  (req, res) => {
+      const authToken = createAuthToken(req.user.apiRepr());
+      res.json({authToken});
+  }
 );
+
+router.get('/login', (req, res) => {
+  res.json('{authToken}');
+});
 
 router.post(
     '/refresh',
