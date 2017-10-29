@@ -5,12 +5,6 @@ const jsonParser = bodyParser.json();
 const {Person} = require('./model');
 const path = require('path');
 
-// router.get('/heartbeat', (req, res) => {
-//   res.json({
-//     is: 'working'
-//   })
-// });
-
 router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname+'/templates/habits.html'));
 });
@@ -18,23 +12,6 @@ router.get('/', function(req, res) {
 router.get('/signup', function(req, res) {
   res.sendFile(path.join(__dirname+'/templates/signup.html'));
 });
-
-// router.post('/signup', passport.authenticate('local-signup', {
-//   successRedirect : '/habit', // redirect to the secure profile section
-//   failureRedirect : '/signup', // redirect back to the signup page if there is an error
-//   failureFlash : true // allow flash messages
-// }));
-
-// router.get('/login', function(req, res) {
-//   res.sendFile(path.join(__dirname+'/templates/login.html'));
-// });
-
-// router.post('/login', passport.authenticate('local-login', {
-//   successRedirect : '/habit', // redirect to the secure profile section
-//   failureRedirect : '/login', // redirect back to the signup page if there is an error
-//   failureFlash : true // allow flash messages
-// }));
-
 
 router.delete('/:id', (req, res) => {
   Person
@@ -56,21 +33,6 @@ router.delete('/:id', (req, res) => {
       return res.status(500).json({message: 'Internal server error'});
     });
 });
-
-// /* ===================== FOR TEST =================== */
-// router.get('/test', (req, res) => {
-//   Person
-//     .find()
-//     .sort({created: -1})
-//     .exec()
-//     .then(persons => {
-//       res.json(persons.map(person => person.apiRepr()));
-//     })
-//     .catch(err => {
-//       console.error(err);
-//       res.status(500).json({error: 'something went terribly wrong'});
-//     });
-// });
 
 router.get('/persons', (req, res) => {
   Person
@@ -149,7 +111,6 @@ router.put('/persons/:id', (req, res) => {  //p002
     });
 });
 
-// route middleware to ensure user is logged in
 function isLoggedIn(req, res, next) {
   if (req.isAuthenticated())
       return next();

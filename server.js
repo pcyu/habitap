@@ -22,15 +22,6 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 app.use(bodyParser.json());
 
-
-// app.use(cookieParser);
-// app.use(morgan);
-// app.use(morgan('common'));
-// app.use(session({ secret: 'habitap' }));
-
-// app.use(passport.session()); // persistent login sessions
-// app.use(flash()); // use connect-flash for flash messages stored in session
-
 app.use( '/', express.static(__dirname + '/public') );
 app.use( '/node_modules', express.static(__dirname + '/node_modules') );
 app.use( '/src', express.static(__dirname + '/src') );
@@ -41,8 +32,6 @@ app.use('/users', userRouter);
 
 app.get('/protected', passport.authenticate('jwt', {
   session: false}), (req, res) => {
-    // res.sendFile(path.join(__dirname+'/src/views/protected.html'));
-    // res.json({is: 'working'});
     res.sendFile(__dirname+'/src/templates/protected.html');
   }
 );
@@ -61,9 +50,6 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
       if(err) {
         return reject(err);
       }
-      // require('./config/passport')(passport); // pass passport for configuration
-      // require('./app/userRouter.js')(app, passport); // load our routes and pass in our app and fully configured passport
-
       server = app.listen(port, () => {
         
         console.log(`The server is listening on port ${port}`);
