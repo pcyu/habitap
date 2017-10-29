@@ -25,9 +25,9 @@ router.get('/signup', function(req, res) {
 //   failureFlash : true // allow flash messages
 // }));
 
-router.get('/login', function(req, res) {
-  res.sendFile(path.join(__dirname+'/templates/login.html'));
-});
+// router.get('/login', function(req, res) {
+//   res.sendFile(path.join(__dirname+'/templates/login.html'));
+// });
 
 // router.post('/login', passport.authenticate('local-login', {
 //   successRedirect : '/habit', // redirect to the secure profile section

@@ -1,6 +1,7 @@
 (function($) {
   
     var app = {
+      baseUrl: 'http://localhost:3008',
       name: '',
       init: function() {
         app.doLogin();
@@ -41,6 +42,59 @@
           return promise;
         });
       },
+      loadEndpoint: () => {
+        let _token = `Bearer ${localStorage.getItem('jwToken')}`;
+        let promise = new Promise((res, rej) => {
+          $.ajax({
+            // beforeSend: (req) => { req.setRequestHeader("Authorization", app.token) },
+            headers: {
+              "accept": "application/json; odata=verbose",
+              "Authorization": _token
+            },
+            type: 'GET',
+            url: `${app.baseUrl}/protected`,
+            success: (item) => {
+              app.loadPage('protected');
+              res();
+            },
+            error: (error) => {
+              console.log(error);
+              rej();
+            }
+          });
+        });
+        return promise;
+      },
+      loginHandler: () => {
+        let _body = {
+          username: $('#login-username').val(),
+          password: $('#login-password').val()
+        };
+        let promise = new Promise((res, rej) => {
+          $.ajax({
+            contentType: "application/json; charset=utf-8",
+            data: JSON.stringify(_body),
+            headers: {
+              "accept": "application/json; odata=verbose",
+            },
+            type: 'POST',
+            url: `http://localhost:3008/auth/login`,
+            success: (data) => {
+              app.name = `${data.profile.firstName} ${data.profile.lastName}`;
+              $('#login-username').val('');
+              $('#login-password').val('');
+              localStorage.setItem('jwToken', data.profile.token);
+              console.log(`Welcome ${app.name}! You are now logged in.`);
+              res();
+            },
+            error: (error) => {
+              console.log(error);
+              rej();
+            }
+          });
+        });
+        return promise;
+      },
       logoutHandler: () => {
         $(document).on('submit', '#do-logout', (e) => {
           e.preventDefault();
@@ -50,7 +104,7 @@
         });
       },
       signUpHandler: () => {
-        $(document).on('submit', '#signup-submit', (e) => {
+        $(document).on('submit', '#sign-up-submit', (e) => {
           e.preventDefault();
           let body = {
             firstName: $('#firstName').val(),
@@ -66,16 +120,13 @@
                 "accept": "application/json; odata=verbose"
               },
               type: 'POST',
-              url: `http://localhost:3008/users/register`,
+              url: `${app.baseUrl}/users/register`,
               success: (data) => {
-                $('#showAll').empty();
-                $('#showAll').append(`
-                  <li class="listitem">
-                    <div class="name h">Name</div>
-                    <div class="active h">Active</div>
-                    <div class="age h">Age</div>
-                  </li>
-                `);
+                console.log(`Thank you ${body.firstName} ${body.lastName}! Your account has been created.`);
+                $('#firstName').val('');
+                $('#lastName').val('');
+                $('#username').val('');
+                $('#password').val('');
                 res();
               },
               error: (error) => {

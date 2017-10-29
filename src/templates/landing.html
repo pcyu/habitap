@@ -38,7 +38,7 @@
         <div class="grid-signup grid-cell">
             <h2 class="sign-up">Sign up with Habitap</h2>
             <!-- <form class="register" action="/users/register" method="post" autocomplete="off"> -->
-            <form class="register" id="signup-submit">
+            <form class="register" id="sign-up-submit">
                 <input type="text" name="firstname" id="firstName" placeholder="First Name" required/>
                 <input type="text" name="lastname" id="lastName" placeholder="Last Name" required/>
                 <input type="text" name="username" id="username" placeholder="Username" required/>
@@ -46,8 +46,24 @@
                 <input type='submit' class="sign-up-button" value="Sign-Up"/>
             </form>              
         </div>
-        <div class="cf">
-                <ul id="showAll" class="listitems"></ul>
-                <div id="showOne" class="individual"></div>
+        <div class="aform">
+                <h3>Login</h3>
+                <form id="login-submit" name="login">
+                  <input id="login-username" type="text" name="username" placeholder="Username" />
+                  <input id="login-password" type="text" name="password" placeholder="Password" />
+                  <input type="submit" value="Login" />
+                </form>
+              </div>
+              
+              <div class="aform">
+                <form id="get-protected" name="protected">
+                  <input type="submit" value="Protected" />
+                </form>
+              </div>
+              
+              <div class="aform">
+                <form id="do-logout" name="logout">
+                  <input type="submit" value="Logout" />
+                </form>
         </div>
 </section>
