@@ -99,8 +99,9 @@
         $(document).on('submit', '#do-logout', (e) => {
           e.preventDefault();
           localStorage.removeItem('jwToken');
-          console.log(`Goodbye ${app.name}! You are now logged out.`);
+          console.log(`You are now logged out.`);
           app.name ='';
+          location.reload(true);
         });
       },
       signUpHandler: () => {
