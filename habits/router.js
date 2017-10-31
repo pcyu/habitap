@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const jsonParser = bodyParser.json();
 const {Person} = require('./model');
 const path = require('path');
+const passport = require('passport');
 
 router.get('/', function(req, res) {
   res.sendFile(path.join(__dirname+'/templates/habits.html'));
@@ -34,7 +35,8 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-router.get('/persons', (req, res) => {
+router.get('/persons', passport.authenticate('jwt', {
+  session: false}), (req, res) => {
   Person
     .find()
     .exec()

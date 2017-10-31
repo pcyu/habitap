@@ -1,16 +1,4 @@
- section {
-     align-items: center;
-     display: grid;
-     background-color: #add8e6;
-     margin: 15px;
-     grid-template-columns: 1fr;
-     justify-items: center;
-     @include responsive(truman) {
-         grid-template-columns: 1fr 1fr;
-     }
- }
-
- //------------------------------------------------------------------------------
+//------------------------------------------------------------------------------
 //  About
 //------------------------------------------------------------------------------
 

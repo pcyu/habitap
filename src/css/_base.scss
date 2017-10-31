@@ -1,8 +1,16 @@
 //------------------------------------------------------------------------------
+//  Anchor  
+//------------------------------------------------------------------------------
+a {
+  cursor: pointer;
+} 
+
+//------------------------------------------------------------------------------
 //  Body
 //------------------------------------------------------------------------------
 body {
   background: lightblue;
+  position: relative;
 } 
 
 //------------------------------------------------------------------------------
@@ -28,54 +36,11 @@ h4 {
 //  Form
 //------------------------------------------------------------------------------
 
-label {
-  position: fixed;
-  top: 15px;
-  right: 40px;
-  height: 20px;
-  width: 15px; 
-  z-index: 5;
-  @include responsive(truman) {
-    display: none;
-  }
+input {
+  margin: 12px 0;
+  padding: 6px 10px;
+  width: 100%;
 }
-
-.burger {
-  display: none;
-}
-
-input:checked + label { 
-  span {
-    opacity: 0;
-    top: 50%;
-  }
-  span:first-child {
-    opacity: 1;
-    transform: rotate(405deg);
-  }
-  span:last-child {
-    opacity: 1;
-    transform: rotate(-405deg);
-  }
-}
-
-input:checked ~ nav { 
-  height: 25%;
-  transition-delay: 0s;
-  @include responsive(truman) {
-    height: 50px;
-  }
-}
-li {
-  input:checked ~ nav & {
-    opacity: 1; 
-    transition-delay: 0s;
-    @include responsive(truman) {
-      height: 100px;
-    }
-  }
-}
-
 
 //------------------------------------------------------------------------------
 //  HTML

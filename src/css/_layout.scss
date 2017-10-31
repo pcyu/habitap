@@ -34,6 +34,34 @@
     }
 }
 
+.y-grid {
+    align-items: center;
+    display: grid;
+    background-color: #add8e6;
+    margin: 15px;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    @include responsive(truman) {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+.y-modal {
+    background: rgba(5, 5, 5, 0.8);
+    display: none;
+    padding: 30px 16px;
+    position: absolute;
+    top: 120px;
+    left: 50%;
+    text-align: center;
+    transform: translateX(-50%);
+    width: 80%;
+    &.active {
+        display: block;
+    }
+}
+
 .y-wrapper {
     margin: 0 auto;
 }
+

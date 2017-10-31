@@ -10,7 +10,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#research">Research</a></li>
     <li><a href="#sign-up">Sign-up</a></li>
-    <li><a href="#login">Login</a></li>
+    <li><a id="t-login">Login</a></li>
   </ul>
 </nav>
 <div class="y-banner">
@@ -19,7 +19,17 @@
   </div>
 </div>
 
-<section> 
+<div class="y-modal" id="t-modal">
+    <div class="aform">
+        <form id="login-submit" name="login">
+          <input id="login-username" type="text" name="username" placeholder="Username" />
+          <input id="login-password" type="text" name="password" placeholder="Password" />
+          <input class="login-button" type="submit" value="Login" />
+        </form>
+      </div>
+</div>
+
+<section class="y-grid"> 
   <div class="grid-image grid-cell">
     <div class="grid-nimg">
       <img src="src/img/placeholder.jpg">
@@ -65,26 +75,5 @@
           <input type="password" name="password" id="password" placeholder="Password" required/>
           <input type='submit' class="sign-up-button" value="Sign-Up"/>
       </form>              
-  </div>
-
-  <div class="aform">
-    <h3>Login</h3>
-    <form id="login-submit" name="login">
-      <input id="login-username" type="text" name="username" placeholder="Username" />
-      <input id="login-password" type="text" name="password" placeholder="Password" />
-      <input type="submit" value="Login" />
-    </form>
-  </div>
-  
-  <div class="aform">
-    <form id="get-protected" name="protected">
-      <input type="submit" value="Protected" />
-    </form>
-  </div>
-  
-  <div class="aform">
-    <form id="do-logout" name="logout">
-      <input type="submit" value="Logout" />
-    </form>
   </div>
 </section>

@@ -10,6 +10,10 @@
         app.signUpHandler();
       },
       doLogin: () => {
+        $(document).on('click', '#t-login', () => {
+          $("#t-modal").addClass("active");
+        });
+
         $(document).on('submit', '#login-submit', (e) => {
           e.preventDefault();
           app.loginHandler()
