@@ -11,11 +11,21 @@
       },
       doLogin: () => {
         $(document).on('click', '#t-login', () => {
+          $("#t-modal-message").removeClass("active");
           $("#t-modal-sign-up").removeClass("active");
           $("#t-modal-login").toggleClass("active");
           $('#t-burger').prop('checked', false);
         });
-
+        $(document).on('click', '#t-modal-login-button', () => {
+          $("#t-modal-message").removeClass("active");
+          $("#t-modal-login").toggleClass("active");
+          $('#t-burger').prop('checked', false);
+        });
+        $(document).on('click', '#t-modal-sign-up-button', () => {
+          $("#t-modal-message").removeClass("active");
+          $("#t-modal-sign-up").toggleClass("active");
+          $('#t-burger').prop('checked', false);
+        });
         $(document).on('submit', '#login-submit', (e) => {
           e.preventDefault();
           app.loginHandler()
@@ -95,6 +105,15 @@
             },
             error: (error) => {
               console.log(error);
+              $("#t-modal-login").removeClass("active");
+              $("#t-modal-message").empty();
+              $("#t-modal-message").addClass("active");
+              $("#t-modal-message").append(
+                `
+                <div id="t-modal-login-fail">Your login attempt has failed, please try again.</div>
+                <a id="t-modal-login-button">Login</a>
+                `
+              )
               rej();
             }
           });
@@ -112,6 +131,7 @@
       },
       signUpHandler: () => {
         $(document).on('click', '#t-sign-up', () => {
+          $("#t-modal-message").removeClass("active");
           $("#t-modal-login").removeClass("active");
           $("#t-modal-sign-up").toggleClass("active");
           $('#t-burger').prop('checked', false);
@@ -139,12 +159,28 @@
                 $('#lastName').val('');
                 $('#username').val('');
                 $('#password').val('');
-                $("#t-modal-login").addClass("active");
                 $("#t-modal-sign-up").removeClass("active");
+                $("#t-modal-message").empty();
+                $("#t-modal-message").addClass("active");
+                $("#t-modal-message").append(
+                  `
+                  <div id="t-modal-sign-up-success">Thank you ${body.firstName} ${body.lastName}! Your account has been created.</div>
+                  <a id="t-modal-login-button">Login</a>
+                  `
+                )
                 res();
               },
               error: (error) => {
                 console.log(error);
+                $("#t-modal-sign-up").removeClass("active");
+                $("#t-modal-message").empty();
+                $("#t-modal-message").addClass("active");
+                $("#t-modal-message").append(
+                  `
+                  <div id="t-modal-sign-up-fail">${body.firstName} ${body.lastName}, Either your password needs to be ten characters long, or your username has already been selected.</div>
+                  <a id="t-modal-sign-up-button">Sign-up</a>
+                  `
+                )
                 rej();
               }
             });
