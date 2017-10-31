@@ -1,7 +1,7 @@
 (function($) {
   
     var app = {
-      baseUrl: 'http://localhost:3008',
+      baseUrl: 'http://localhost:3008' || 'https://capstone-node-pcyu.herokuapp.com/',
       name: '',
       init: function() {
         app.doLogin();
