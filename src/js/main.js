@@ -11,7 +11,8 @@
       },
       doLogin: () => {
         $(document).on('click', '#t-login', () => {
-          $("#t-modal").addClass("active");
+          $("#t-modal-sign-up").removeClass("active");
+          $("#t-modal-login").addClass("active");
         });
 
         $(document).on('submit', '#login-submit', (e) => {
@@ -109,6 +110,10 @@
         });
       },
       signUpHandler: () => {
+        $(document).on('click', '#t-sign-up', () => {
+          $("#t-modal-login").removeClass("active");
+          $("#t-modal-sign-up").addClass("active");
+        });
         $(document).on('submit', '#sign-up-submit', (e) => {
           e.preventDefault();
           let body = {

@@ -9,7 +9,7 @@
   <ul class="nav-bar">
     <li><a href="#about">About</a></li>
     <li><a href="#research">Research</a></li>
-    <li><a href="#sign-up">Sign-up</a></li>
+    <li><a id="t-sign-up">Sign-up</a></li>
     <li><a id="t-login">Login</a></li>
   </ul>
 </nav>
@@ -19,14 +19,22 @@
   </div>
 </div>
 
-<div class="y-modal" id="t-modal">
-    <div class="aform">
-        <form id="login-submit" name="login">
-          <input id="login-username" type="text" name="username" placeholder="Username" />
-          <input id="login-password" type="text" name="password" placeholder="Password" />
-          <input class="login-button" type="submit" value="Login" />
-        </form>
-      </div>
+<div class="y-modal" id="t-modal-sign-up">
+    <form class="register" id="sign-up-submit">
+      <input type="text" name="firstname" id="firstName" placeholder="First Name" required/>
+      <input type="text" name="lastname" id="lastName" placeholder="Last Name" required/>
+      <input type="text" name="username" id="username" placeholder="Username" required/>
+      <input type="password" name="password" id="password" placeholder="Password" required/>
+      <input type='submit' class="sign-up-button" value="Sign-Up"/>
+    </form>      
+</div>
+
+<div class="y-modal" id="t-modal-login">
+    <form id="login-submit" name="login">
+      <input id="login-username" type="text" name="username" placeholder="Username" />
+      <input id="login-password" type="text" name="password" placeholder="Password" />
+      <input class="login-button" type="submit" value="Login"/>
+    </form>
 </div>
 
 <section class="y-grid"> 
@@ -64,16 +72,5 @@
   </div> 
   <div class="grid-caption grid-cell reverse1">
     "Blah It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout."
-  </div>
-
-  <div class="grid-signup grid-cell">
-      <h2 class="sign-up">Sign up with Habitap</h2>
-      <form class="register" id="sign-up-submit">
-          <input type="text" name="firstname" id="firstName" placeholder="First Name" required/>
-          <input type="text" name="lastname" id="lastName" placeholder="Last Name" required/>
-          <input type="text" name="username" id="username" placeholder="Username" required/>
-          <input type="password" name="password" id="password" placeholder="Password" required/>
-          <input type='submit' class="sign-up-button" value="Sign-Up"/>
-      </form>              
   </div>
 </section>

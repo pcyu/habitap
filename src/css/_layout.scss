@@ -59,6 +59,9 @@
     &.active {
         display: block;
     }
+    &.inactive {
+        display: none;
+    }
 }
 
 .y-wrapper {
