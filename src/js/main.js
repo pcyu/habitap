@@ -1,7 +1,11 @@
 (function($) {
   
     var app = {
+<<<<<<< HEAD
       baseUrl: 'https://localhost:3008',
+=======
+      baseUrl: 'https://localhost:3008' || 'https://capstone-node-pcyu.herokuapp.com',
+>>>>>>> 3517d193ed356ab89df489eab4af76728fdf5e66
       name: '',
       init: function() {
         app.doLogin();
@@ -94,7 +98,11 @@
               "accept": "application/json; odata=verbose",
             },
             type: 'POST',
+<<<<<<< HEAD
             url: `https://localhost:3008/auth/login`,
+=======
+            url: `http://localhost:3008/auth/login`  || 'https://capstone-node-pcyu.herokuapp.com/auth/login',
+>>>>>>> 3517d193ed356ab89df489eab4af76728fdf5e66
             success: (data) => {
               app.name = `${data.profile.firstName} ${data.profile.lastName}`;
               $('#login-username').val('');
