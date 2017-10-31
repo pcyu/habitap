@@ -56,7 +56,7 @@ label {
   }
   
   input:checked ~ nav { 
-    height: 25%;
+    height: 200px;
     transition-delay: 0s;
     @include responsive(truman) {
       height: 50px;

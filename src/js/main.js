@@ -12,7 +12,8 @@
       doLogin: () => {
         $(document).on('click', '#t-login', () => {
           $("#t-modal-sign-up").removeClass("active");
-          $("#t-modal-login").addClass("active");
+          $("#t-modal-login").toggleClass("active");
+          $('#t-burger').prop('checked', false);
         });
 
         $(document).on('submit', '#login-submit', (e) => {
@@ -112,7 +113,8 @@
       signUpHandler: () => {
         $(document).on('click', '#t-sign-up', () => {
           $("#t-modal-login").removeClass("active");
-          $("#t-modal-sign-up").addClass("active");
+          $("#t-modal-sign-up").toggleClass("active");
+          $('#t-burger').prop('checked', false);
         });
         $(document).on('submit', '#sign-up-submit', (e) => {
           e.preventDefault();
@@ -137,6 +139,8 @@
                 $('#lastName').val('');
                 $('#username').val('');
                 $('#password').val('');
+                $("#t-modal-login").addClass("active");
+                $("#t-modal-sign-up").removeClass("active");
                 res();
               },
               error: (error) => {
