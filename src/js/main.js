@@ -1,7 +1,7 @@
 (function($) {
   
     var app = {
-      baseUrl: 'http://localhost:3008',
+      baseUrl: 'https://localhost:3008',
       name: '',
       init: function() {
         app.doLogin();
@@ -94,7 +94,7 @@
               "accept": "application/json; odata=verbose",
             },
             type: 'POST',
-            url: `http://localhost:3008/auth/login`,
+            url: `https://localhost:3008/auth/login`,
             success: (data) => {
               app.name = `${data.profile.firstName} ${data.profile.lastName}`;
               $('#login-username').val('');
