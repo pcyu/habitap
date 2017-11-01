@@ -5,6 +5,7 @@
       name: '',
       init: function() {
         app.doLogin();
+        app.habitDashboard();
         app.getProtected();
         app.logoutHandler();
         app.signUpHandler();
@@ -30,6 +31,14 @@
           e.preventDefault();
           app.loginHandler()
             .then(app.loadEndpoint);
+        });
+      },
+      habitDashboard: () => {
+        $(document).on('click', '#t-habit-entry', () => {
+          $('#t-burger').prop('checked', false);
+        });
+        $(document).on('click', '#t-habit-history', () => {
+          $('#t-burger').prop('checked', false);
         });
       },
       getProtected: () => {
