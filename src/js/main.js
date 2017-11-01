@@ -130,7 +130,7 @@
         return promise;
       },
       logoutHandler: () => {
-        $(document).on('submit', '#do-logout', (e) => {
+        $(document).on('click', '#t-logout', (e) => {
           e.preventDefault();
           localStorage.removeItem('jwToken');
           console.log(`You are now logged out.`);
