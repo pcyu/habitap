@@ -29,7 +29,6 @@ app.use('/auth', authRouter);
 app.use('/habits', habitRouter);
 app.use('/users', userRouter);
 
-
 app.get('/habit', passport.authenticate('jwt', {
   session: false}), (req, res) => {
     res.sendFile(__dirname+'/src/templates/habit.html');

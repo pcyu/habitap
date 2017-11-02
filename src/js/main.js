@@ -35,12 +35,12 @@
       },
       habitDashboard: () => {
         $(document).on('click', '#t-habit-entry', () => {
-
+          app.loadPage("habit-form");
           $('#t-burger').prop('checked', false);
         });
-        $(document).on('click', '#t-habit-history', () => {
-          $('#t-burger').prop('checked', false);
-        });
+        // $(document).on('click', '#t-habit-history', () => {
+        //   $('#t-burger').prop('checked', false);
+        // });
       },
       getUserPage: () => {
         $(document).on('submit', '#get-protected', (e) => {
