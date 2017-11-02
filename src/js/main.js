@@ -6,7 +6,7 @@
       init: function() {
         app.doLogin();
         app.habitDashboard();
-        app.getProtected();
+        app.getUserPage();
         app.logoutHandler();
         app.signUpHandler();
       },
@@ -35,13 +35,14 @@
       },
       habitDashboard: () => {
         $(document).on('click', '#t-habit-entry', () => {
+
           $('#t-burger').prop('checked', false);
         });
         $(document).on('click', '#t-habit-history', () => {
           $('#t-burger').prop('checked', false);
         });
       },
-      getProtected: () => {
+      getUserPage: () => {
         $(document).on('submit', '#get-protected', (e) => {
           e.preventDefault();
           let _token = `Bearer ${localStorage.getItem('jwToken')}`;
@@ -77,9 +78,9 @@
               "Authorization": _token
             },
             type: 'GET',
-            url: `${app.baseUrl}/protected`,
+            url: `${app.baseUrl}/habit`,
             success: (item) => {
-              app.loadPage('protected');
+              app.loadPage('habit');
               res();
             },
             error: (error) => {

@@ -30,9 +30,9 @@ app.use('/habits', habitRouter);
 app.use('/users', userRouter);
 
 
-app.get('/protected', passport.authenticate('jwt', {
+app.get('/habit', passport.authenticate('jwt', {
   session: false}), (req, res) => {
-    res.sendFile(__dirname+'/src/templates/protected.html');
+    res.sendFile(__dirname+'/src/templates/habit.html');
   }
 );
 
