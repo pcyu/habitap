@@ -1,12 +1,10 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
-// const cookieParser = require('cookie-parser');
 const express = require('express');
-// const flash = require('connect-flash');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
-// const session = require('express-session');
+const path = require('path');
 
 mongoose.Promise = global.Promise;
 
@@ -22,18 +20,29 @@ passport.use(localStrategy);
 passport.use(jwtStrategy);
 app.use(bodyParser.json());
 
-app.use( '/', express.static(__dirname + '/public') );
-app.use( '/node_modules', express.static(__dirname + '/node_modules') );
-app.use( '/src', express.static(__dirname + '/src') );
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
+
+// set our paths
+app.use('/dist', express.static(__dirname + '/public'));
+app.use('/node_modules', express.static(__dirname + '/node_modules'));
+app.use('/src', express.static(__dirname + '/src'));
+
+// set our endpoints
+app.get('/', (req, res) => {
+  res.render('landing');
+});
 app.use('/auth', authRouter);
-app.use('/habits', habitRouter);
+// app.use('/habits', habitRouter);
 app.use('/users', userRouter);
 
-app.get('/habit', passport.authenticate('jwt', {
-  session: false}), (req, res) => {
-    res.sendFile(__dirname+'/src/templates/habit.html');
-  }
-);
+// app.get('/habit', passport.authenticate('jwt', {
+//   session: false}), (req, res) => {
+//     res.sendFile(__dirname+'/src/templates/habit.html');
+//   }
+// );
+
+
 
 app.use('*', (req, res) => {
   return res.status(404).json({
@@ -50,7 +59,7 @@ function runServer(databaseUrl=DATABASE_URL, port=PORT) {
         return reject(err);
       }
       server = app.listen(port, () => {
-        
+
         console.log(`The server is listening on port ${port}`);
         resolve();
       })

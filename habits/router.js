@@ -7,11 +7,7 @@ const path = require('path');
 const passport = require('passport');
 
 router.get('/', function(req, res) {
-  res.sendFile(path.join(__dirname+'/templates/habits.html'));
-});
-
-router.get('/signup', function(req, res) {
-  res.sendFile(path.join(__dirname+'/templates/signup.html'));
+  res.sendFile(path.join(__dirname, '/habits.html'));
 });
 
 router.delete('/:id', (req, res) => {
@@ -35,8 +31,23 @@ router.delete('/:id', (req, res) => {
     });
 });
 
-router.get('/persons', passport.authenticate('jwt', {
-  session: false}), (req, res) => {
+// router.get('/persons', passport.authenticate('jwt', {
+//   session: false}), (req, res) => {
+//   Person
+//     .find()
+//     .exec()
+//     .then(persons => {
+//       res.json({
+//         persons: persons.map( person => person.apiRepr() )
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       return res.status(500).json({message: 'Internal server error'});
+//     });
+// });
+
+router.get('/persons', (req, res) => {
   Person
     .find()
     .exec()
@@ -113,11 +124,11 @@ router.put('/persons/:id', (req, res) => {  //p002
     });
 });
 
-function isLoggedIn(req, res, next) {
-  if (req.isAuthenticated())
-      return next();
-
-  res.redirect('/');
-}
+// function isLoggedIn(req, res, next) {
+//   if (req.isAuthenticated())
+//       return next();
+//
+//   res.redirect('/');
+// }
 
 module.exports = {router};

@@ -1,6 +1,9 @@
+// users router
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
+const path = require('path');
 
 const {User} = require('./model');
 
@@ -8,7 +11,89 @@ const router = express.Router();
 
 const jsonParser = bodyParser.json();
 
-// Post to register a new user
+
+
+//  ===========================================================================
+//                                     DELETE
+//  ===========================================================================
+router.delete('/:id', (req, res) => {
+  User
+    .findByIdAndRemove(req.params.id, function(err, value) {
+      if(err) {
+        const message = `It appears that the document with id (${req.params.id}) does not exist.`;
+        console.error(message);
+        return res.status(400).send(message);
+      }
+    })
+    .exec()
+    .then( person => {
+      const message = `204 / The document with id ${req.params.id} has been deleted`;
+      console.log(message);
+      return res.json(message).end();
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+
+//  ===========================================================================
+//                                       GET
+//  ===========================================================================
+router.get('/profile', (req, res) => {
+  res.sendFile(path.join(__dirname, 'user.html'));
+});
+
+// router.get('/:username', (req, res) => {
+//   User
+//     .findOne({ "username": req.params.username})
+//     .exec()
+//     .then( user => {
+//       res.json({
+//         users: user.apiRepr()
+//       })
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       return res.status(500).json({message: 'Internal server error'});
+//     });
+// });
+
+router.get('/user/:username', (req, res) => {
+  User
+    .findOne({ "username": req.params.username})
+    .exec()
+    .then( user => {
+      console.log(user);
+      res.render('user', {
+        name: user.firstName
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({message: 'Internal server error'});
+    });
+});
+
+router.get('/login', (req, res) => {
+  res.render('login');
+});
+
+router.get('/signup', (req, res) => {
+  res.render('signup');
+});
+
+router.get('/', (req, res) => {  //c029
+  return User.find()
+    .then(users => res.json(users.map(user => user.apiRepr())))
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+
+//  ===========================================================================
+//                                      POST
+//  ===========================================================================
 router.post('/register', jsonParser, (req, res) => {
     const requiredFields = ['username', 'password'];
     const missingField = requiredFields.find(field => !(field in req.body));
@@ -36,14 +121,7 @@ router.post('/register', jsonParser, (req, res) => {
         });
     }
 
-    // If the username and password aren't trimmed we give an error.  Users might
-    // expect that these will work without trimming (i.e. they want the password
-    // "foobar ", including the space at the end).  We need to reject such values
-    // explicitly so the users know what's happening, rather than silently
-    // trimming them and expecting the user to understand.
-    // We'll silently trim the other fields, because they aren't credentials used
-    // to log in, so it's less of a problem.
-    const explicityTrimmedFields = ['username', 'password'];
+    const explicityTrimmedFields = ['username', 'password'];  //c030
     const nonTrimmedField = explicityTrimmedFields.find(
         field => req.body[field].trim() !== req.body[field]
     );
@@ -63,9 +141,7 @@ router.post('/register', jsonParser, (req, res) => {
         },
         password: {
             min: 10,
-            // bcrypt truncates after 72 characters, so let's not give the illusion
-            // of security by storing extra (unused) info
-            max: 72
+            max: 72  //c031
         }
     };
     const tooSmallField = Object.keys(sizedFields).find(
@@ -92,9 +168,7 @@ router.post('/register', jsonParser, (req, res) => {
         });
     }
 
-    let {username, password, firstName = '', lastName = ''} = req.body;
-    // Username and password come in pre-trimmed, otherwise we throw an error
-    // before this
+    let {username, password, firstName = '', lastName = ''} = req.body;  //c032
     firstName = firstName.trim();
     lastName = lastName.trim();
 
@@ -102,16 +176,14 @@ router.post('/register', jsonParser, (req, res) => {
         .count()
         .then(count => {
             if (count > 0) {
-                // There is an existing user with the same username
-                return Promise.reject({
+                return Promise.reject({  //c033
                     code: 422,
                     reason: 'ValidationError',
                     message: 'Username already taken',
                     location: 'username'
                 });
             }
-            // If there is no existing user, hash the password
-            return User.hashPassword(password);
+            return User.hashPassword(password);  //c034
         })
         .then(hash => {
             return User.create({
@@ -124,9 +196,7 @@ router.post('/register', jsonParser, (req, res) => {
         .then(user => {
             return res.status(201).json(user.apiRepr());
         })
-        .catch(err => {
-            // Forward validation errors on to the client, otherwise give a 500
-            // error because something unexpected has happened
+        .catch(err => {  //c035
             if (err.reason === 'ValidationError') {
                 return res.status(err.code).json(err);
             }
@@ -134,14 +204,34 @@ router.post('/register', jsonParser, (req, res) => {
         });
 });
 
-// Never expose all your users like below in a prod application
-// we're just doing this so we have a quick way to see
-// if we're creating users. keep in mind, you can also
-// verify this in the Mongo shell.
-router.get('/', (req, res) => {
-    return User.find()
-        .then(users => res.json(users.map(user => user.apiRepr())))
-        .catch(err => res.status(500).json({message: 'Internal server error'}));
+
+//  ===========================================================================
+//                                       PUT
+//  ===========================================================================
+// TODO change to users
+router.put('/persons/:id', (req, res) => {
+  if(req.params.id !== req.body.id) {
+    const message = `The request path (${req.params.id}) and the request body id (${req.body.id}) must match.`;
+    console.error(message);
+    return res.status(400).json({message: message});
+  }
+  const toUpdate = {};
+  const updateableFields = ['name', 'habits', 'id'];
+  updateableFields.forEach(field => {
+    if(field in req.body) {
+      toUpdate[field] = req.body[field];
+    }
+  });
+  User
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate})
+    .exec()
+    .then( person => res.json(204).end() )
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({message: 'Internal server error'})
+    });
 });
+
+
 
 module.exports = {router};

@@ -56,12 +56,17 @@
     text-align: center;
     transform: translateX(-50%);
     width: 80%;
-    &.active {
+    &.signup {
+      margin-top: 30px;
+    }
+    &.signup,
+    &.login {
+      &.active {
         display: block;
+      }
     }
 }
 
 .y-wrapper {
     margin: 0 auto;
 }
-

@@ -22,10 +22,7 @@
     "bcrypt-nodejs": "latest",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
-    "connect-flash": "~0.1.1",
-    "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
-    "ejs": "~0.8.5",
     "express": "^4.15.4",
     "express-session": "^1.15.6",
     "jsonwebtoken": "^8.1.0",
@@ -38,7 +35,8 @@
     "passport-http": "^0.3.0",
     "passport-jwt": "^3.0.1",
     "passport-local": "~1.0.0",
-    "passport-twitter": "~1.0.2"
+    "passport-twitter": "~1.0.2",
+    "pug": "^2.0.0-rc.4"
   },
   "devDependencies": {
     "babel-core": "^6.26.0",

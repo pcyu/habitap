@@ -1,0 +1,37 @@
+doctype html
+html
+  head
+    title = 'Habitap | Change your life, one habit at a time.'
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="description" content="Habitap")
+    link(rel="icon" type="image/x-icon" href="/src/img/favicon.ico")
+    link(rel="stylesheet" type="text/css" href="/dist/style.min.css")
+  body
+
+    block header
+      div.y-wrapper
+        label(for="t-burger")
+          span
+          span
+          span
+        nav
+          ul.nav-bar
+            li
+              a(href="#about") About
+            li
+              a(href="#research") Research
+            li
+              a(href="/users/signup") Register
+            li
+              a(href="/users/signin") Sign in
+
+    block content
+
+    block footer
+      div.footer
+        p This is the space for a footer
+
+    block scripts
+      script(src="/node_modules/jquery/dist/jquery.min.js")
+      script(src="/dist/app.min.js")
