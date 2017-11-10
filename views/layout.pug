@@ -11,6 +11,7 @@ html
 
     block header
       div.y-wrapper
+        input(id="t-burger" class="burger" type="checkbox")
         label(for="t-burger")
           span
           span
@@ -22,9 +23,9 @@ html
             li
               a(href="/#research") Research
             li
-              a(href="/users/register") Register
+              a(href="/users/register" id="t-sign-up") Register
             li
-              a(href="/users/login") Login
+              a(href="/users/login" id="t-login") Login
 
     block content
 
