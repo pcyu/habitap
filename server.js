@@ -26,14 +26,14 @@ app.use(bodyParser.urlencoded({  // but when we are using native browser methods
 
 // view engine set to pug
 
-// app.set('views', path.join(__dirname, 'views'));
-// app.set('view engine', 'pug');
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'pug');
 
 // view engine set to html
 
-app.set('views', path.join(__dirname, 'public/views'));
-app.set('view engine', 'html');
-app.engine('html', require('hbs').__express);
+// app.set('views', path.join(__dirname, 'public/views'));
+// app.set('view engine', 'html');
+// app.engine('html', require('hbs').__express);
 
 // set our paths
 app.use('/dist', express.static(__dirname + '/public'));
