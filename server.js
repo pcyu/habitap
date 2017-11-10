@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const express = require('express');
+const hbs = require('hbs');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
@@ -23,8 +24,16 @@ app.use(bodyParser.urlencoded({  // but when we are using native browser methods
   extended: true
 }));
 
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'pug');
+// view engine set to pug
+
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'pug');
+
+// view engine set to html
+
+app.set('views', path.join(__dirname, 'public/views'));
+app.set('view engine', 'html');
+app.engine('html', require('hbs').__express);
 
 // set our paths
 app.use('/dist', express.static(__dirname + '/public'));
