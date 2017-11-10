@@ -19,7 +19,7 @@ const app = express();
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-// app.use(bodyParser.json());  // this works with jQuery's AJAX
+app.use(bodyParser.json());  // this works with jQuery's AJAX toggle on to allow postman requests to work
 app.use(bodyParser.urlencoded({  // but when we are using native browser methods, we need this
   extended: true
 }));
@@ -45,7 +45,7 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 app.use('/auth', authRouter);
-// app.use('/habits', habitRouter);
+app.use('/habits', habitRouter);
 app.use('/users', userRouter);
 
 // app.get('/habit', passport.authenticate('jwt', {
