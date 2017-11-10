@@ -10,17 +10,20 @@ let babel = require('gulp-babel'),
     sourcemaps = require('gulp-sourcemaps')
     uglify = require('gulp-uglify')
     wait = require('gulp-wait');
+    pug = require('gulp-pug');
 
 let source = {
   css: './src/css/style.scss',
   html: './public/*.html',
   js: './src/js/*.js',
   public: './public',
-  scss: './src/css/*.scss'
+  scss: './src/css/*.scss',
+  pug: './views/*.pug'
 }
 
 let destination = {
-  public: './public'
+  public: './public',
+  views: './public/views'
 }
 
 gulp.task('html', () => {
@@ -46,6 +49,12 @@ gulp.task('js', () => {
     .pipe(livereload());
 });
 
+gulp.task('pug', () => {  
+  return gulp.src(source.pug)
+      .pipe(pug())
+      .pipe(gulp.dest(destination.views));
+});
+
 gulp.task('sass', () => {
   return gulp.src(source.css)
     .pipe(sourcemaps.init())
@@ -56,6 +65,7 @@ gulp.task('sass', () => {
     .pipe(gulp.dest(destination.public))
     .pipe(livereload());
 });
+
 
 gulp.task('watch', () => {
   livereload.listen();

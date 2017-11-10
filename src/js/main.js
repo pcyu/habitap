@@ -3,12 +3,12 @@
     var app = {
       baseUrl: 'http://localhost:3008',
       init: function() {
-        app.habitDashboard();
-        app.getUserPage();
-        app.loginExec();
-        app.loginModal();
-        app.logoutHandler();
-        app.signUpHandler();
+        // app.habitDashboard();
+        // app.getUserPage();
+        // app.loginExec();
+        // app.loginModal();
+        // app.logoutHandler();
+        // app.signUpHandler();
       },
       habitDashboard: () => {
         $(document).on('click', '#t-habit-entry', () => {

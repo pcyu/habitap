@@ -18,7 +18,10 @@ const app = express();
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
-app.use(bodyParser.json());
+// app.use(bodyParser.json());  // this works with jQuery's AJAX
+app.use(bodyParser.urlencoded({  // but when we are using native browser methods, we need this
+  extended: true
+}));
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');

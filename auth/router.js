@@ -28,7 +28,11 @@ router.post(
           lastName: req.user.lastName,
           token: _token
         }
-        res.json({profile});
+        // res.json({profile});
+        res.render('profile', {
+          firstName: req.user.firstName,
+          lastName: req.user.lastName
+        })
     }
   );
 

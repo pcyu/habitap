@@ -41,9 +41,9 @@ router.delete('/:id', (req, res) => {
 //  ===========================================================================
 //                                       GET
 //  ===========================================================================
-router.get('/profile', (req, res) => {
-  res.sendFile(path.join(__dirname, 'user.html'));
-});
+// router.get('/profile', (req, res) => {
+//   res.sendFile(path.join(__dirname, 'user.html'));
+// });
 
 // router.get('/:username', (req, res) => {
 //   User
@@ -66,7 +66,7 @@ router.get('/user/:username', (req, res) => {
     .exec()
     .then( user => {
       console.log(user);
-      res.render('user', {
+      res.render('profile', {
         name: user.firstName
       });
     })
@@ -80,8 +80,8 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.get('/signup', (req, res) => {
-  res.render('signup');
+router.get('/register', (req, res) => {
+  res.render('register');
 });
 
 router.get('/', (req, res) => {  //c029
