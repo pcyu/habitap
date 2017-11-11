@@ -15,9 +15,12 @@
         //   app.loadPage("habit-form");
         //   $('#t-burger').prop('checked', false);
         // });
-        // $(document).on('click', '#t-habit-history', () => {
-        //   $('#t-burger').prop('checked', false);
-        // });
+        // $(window).load(function () {
+        //   setTimeout(function(){
+        //       $('.link').fadeOut('slow', function () {
+        //       });
+        //   },100000); // set the time here
+        // });  
         $(document).on('click', '#t-login', () => {
           $('#t-burger').prop('checked', false);
         });
