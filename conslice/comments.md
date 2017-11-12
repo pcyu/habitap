@@ -114,3 +114,9 @@ If there is no existing user, hash the password.
 
 ### c035
 Forward validation errors on to the client, otherwise give a 500 error because something unexpected has happened.
+
+### c036
+auth/router.js has two different methods called
+res.json({profile}) enables postman access
+res.render function works in browser with the template engine.
+

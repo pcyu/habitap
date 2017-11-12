@@ -17,6 +17,7 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
                 // Return a rejected promise so we break out of the chain of .thens.
                 // Any errors like this will be handled in the catch block.
                 return Promise.reject({
+                    //c037
                     reason: 'LoginError',
                     message: 'Incorrect username or password'
                 });
