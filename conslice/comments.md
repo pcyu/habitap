@@ -116,7 +116,13 @@ If there is no existing user, hash the password.
 Forward validation errors on to the client, otherwise give a 500 error because something unexpected has happened.
 
 ### c036
-auth/router.js has two different methods called
-res.json({profile}) enables postman access
-res.render function works in browser with the template engine.
+Auth/router.js has two different methods called res.json({profile}) enables postman access. The res.render function works in browser with the template engine.
 
+### c037
+Auth/strategies.js has error log messages nested in key value pairs. i can access these messages somehow, and output them in the browswer.
+
+### c038
+Think about how I want to get the habit entry to finish. Do I use a post request for when the habit is finished being logged, or do I just attach an event to a button or a form which leads to the output of a timeNow dateNow js method.
+
+### c039 
+Make sure to change if your post request for a beginning date follows a different format than prescribed here.

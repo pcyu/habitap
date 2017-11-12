@@ -8,6 +8,7 @@ const personSchema = mongoose.Schema({
     day: Number,
     year: Number
   },
+  //c038
   finish: {
     month: Number,
     day: Number,
@@ -16,6 +17,7 @@ const personSchema = mongoose.Schema({
   user_id: String
 });
 
+//c039
 personSchema.virtual('startDate').get(function() {
   if ((`${this.start.day}` <= 9) && (`${this.start.month}` <= 9)) {
     return `0${this.start.month}.0${this.start.day}.${this.start.year}`.trim();
