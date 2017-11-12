@@ -43,17 +43,17 @@ const passport = require('passport');
       });
   });
   
-  router.get('/history', (req, res) => {
-    let user = req.user;
-    let userid = user._id
-    res.sendFile(__dirname+'/src/templates/habit-history.html');
-  });
+  // router.get('/history', (req, res) => {
+  //   let user = req.user;
+  //   let userid = user._id
+  //   res.sendFile(__dirname+'/src/templates/habit-history.html');
+  // });
   
-  router.get('/new', (req, res) => {
-    let user = req.user;
-    let userid = user._id
-    res.sendFile(__dirname+'/src/templates/habit-form.html');
-  });
+  // router.get('/new', (req, res) => {
+  //   let user = req.user;
+  //   let userid = user._id
+  //   res.sendFile(__dirname+'/src/templates/habit-form.html');
+  // });
   
   router.get('/:id', (req, res) => {
     Person
