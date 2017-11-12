@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
     firstName: {
+      required: true,
       default: '',
       type: String
     },
@@ -20,10 +21,11 @@ const userSchema = mongoose.Schema({
           month: Number,
           day: Number,
           year: Number
-        },
+        },  
       }
     ],
     lastName: {
+      required: true,
       default: '',
       type: String
     },
@@ -40,6 +42,7 @@ const userSchema = mongoose.Schema({
 
 userSchema.methods.apiRepr = function() {
     return {
+        id: this._id,
         username: this.username || '',
         firstName: this.firstName || '',
         lastName: this.lastName || ''
