@@ -8,12 +8,19 @@ const userSchema = mongoose.Schema({
     },
     habits: [
       {
-        endDate: String,
-        id: String,
+        question: {type: String, required: true},
         isactive: Boolean,
-        publishedAt: Number,
-        startDate: String,
-        title: String
+        start: {
+          month: Number,
+          day: Number,
+          year: Number
+        },
+        //c038
+        finish: {
+          month: Number,
+          day: Number,
+          year: Number
+        },
       }
     ],
     lastName: {
