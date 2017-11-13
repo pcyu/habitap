@@ -1,6 +1,36 @@
-extends layout
+doctype html
+html
+  head
+    title = 'Habitap | Change your life, one habit at a time.'
+    meta(charset="UTF-8")
+    meta(name="viewport" content="width=device-width, initial-scale=1")
+    meta(name="description" content="Habitap")
+    link(rel="icon" type="image/x-icon" href="/src/img/favicon.ico")
+    link(rel="stylesheet" type="text/css" href="/dist/style.min.css")
+  body
 
-block content
-  div.y-template
-    h2 Profile Page
-    div Welcome #{firstName}!
+    block header
+      div.y-wrapper
+        input(id="t-burger" class="burger" type="checkbox")
+        label(for="t-burger")
+          span
+          span
+          span
+        nav
+          ul.nav-bar
+            li
+              a(href="/#habit-history" class="link") Habit History
+            li
+              a(href="/#new" class="link") New Habit Entry
+            li
+              a(href="/signout" class="link") Sign Out
+
+    block content
+
+    block footer
+      div.footer
+        p This is the space for a footer
+
+    block scripts
+      script(src="/node_modules/jquery/dist/jquery.min.js")
+      script(src="/dist/app.min.js")
