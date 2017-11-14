@@ -22,13 +22,16 @@ router.post(
       session: false
     }),
     (req, res) => {
+        console.log("choke", req.user._id);
         const _token = createAuthToken(req.user.apiRepr());
         const profile = {
           username: req.user.username,
           firstName: req.user.firstName,
-          lastName: req.user.lastName
+          lastName: req.user.lastName,
+          id: req.user._id,
         }
-        res.cookie('token',_token);          
+        res.cookie('token',_token);
+        res.cookie('token2', req.user._id);          
         // res.json({profile}); 
         // res.render('profile', {
         //   firstName: req.user.firstName,

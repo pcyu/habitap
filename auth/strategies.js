@@ -44,7 +44,6 @@ const localStrategy = new LocalStrategy((username, password, callback) => {
 const jwtStrategy = new JwtStrategy(
     {
         secretOrKey: JWT_SECRET,
-        // Look for the JWT as a Bearer auth header
         jwtFromRequest: function(req) {
             var token = null;
             if (req && req.cookies)

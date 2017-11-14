@@ -5,27 +5,25 @@ const jsonParser = bodyParser.json();
 const {Person} = require('./model');
 const path = require('path');
 const passport = require('passport');
+const {User} = require('../users/model');
 
-// router.get('/persons', passport.authenticate('jwt', {
-//   session: false}), (req, res) => {
-
-  router.get('/json', passport.authenticate('jwt', {
-    session: false}), (req, res) => {
-    let user = req.user;
-    let userid = user._id;
+  // router.get('/json', passport.authenticate('jwt', {
+  //   session: false}), (req, res) => {
+  //   let user = req.user;
+  //   let userid = user._id;
   
-    Person
-      .find({user_id: userid})
-      .sort({created: -1})
-      .exec()
-      .then(persons => {
-        res.json(persons.map(person => person.apiRepr()));
-      })
-      .catch(err => {
-        console.error(err);
-        res.status(500).json({error: 'something went terribly wrong'});
-      });
-  });
+  //   Person
+  //     .find({user_id: userid})
+  //     .sort({created: -1})
+  //     .exec()
+  //     .then(persons => {
+  //       res.json(persons.map(person => person.apiRepr()));
+  //     })
+  //     .catch(err => {
+  //       console.error(err);
+  //       res.status(500).json({error: 'something went terribly wrong'});
+  //     });
+  // });
   
   router.get('/persons', passport.authenticate('jwt', {
     session: false}), (req, res) => {
@@ -45,7 +43,9 @@ const passport = require('passport');
   
   router.get('/new',  passport.authenticate('jwt', {
     session: false}),  (req, res) => {
-    res.render('new');
+    res.render('new', {
+      id: req.user._id
+    });
   });
   
   router.get('/history', passport.authenticate('jwt', {
@@ -54,42 +54,72 @@ const passport = require('passport');
     console.log(req.user);
     res.render('profile', {
       firstName: req.user.firstName, 
-      lastName: req.user.lastName
+      lastName: req.user.lastName,
+      id: req.user._id  
     })
   });
+  
 
-  // router.get('/history', (req, res) => {
-  //   let user = req.user;
-  //   let userid = user._id
-  //   res.sendFile(__dirname+'/src/templates/habit-history.html');
+  // router.get('/:userid', passport.authenticate('jwt', {
+  //   session: false}),(req, res) => {
+  //   console.log("hello", req)
+  //   User
+  //     .findOne({ 'user_id': 'Ghost' })
+  //     .exec()
+  //     .then( person => {
+  //       res.json({
+  //         persons: person.apiRepr()
+  //       })
+  //     })
+  //     .catch(err => {
+  //       console.log(err);
+  //       return res.status(500).json({message: 'Internal server error'});
+  //     });
   // });
   
-  // router.get('/new', (req, res) => {
-  //   let user = req.user;
-  //   let userid = user._id
-  //   res.sendFile(__dirname+'/src/templates/habit-form.html');
+  // router.post('/new', passport.authenticate('jwt', {
+  //   session: false}), (req, res) => {
+  //     let user = req.user;
+  //     // console.log(user, "choke");
+  //     const requiredFields = ['question', 'isactive', 'start', 'finish'];
+  //   for(let i = 0; i < requiredFields.length; i++) {
+  //     const field = requiredFields[i];
+  //     if(!(field in req.body)) {
+  //       const message = `The value for \`${field}\` is missing.`
+  //       console.error(message);
+  //       return res.status(400).send(message);
+  //     }
+  //   }
+  //   Person
+  //     .create({
+  //       question: req.body.question,
+  //       isactive: req.body.isactive,
+  //       start: {
+  //         month: req.body.start.month,
+  //         day: req.body.start.day,
+  //         year: req.body.start.year
+  //       },
+  //       finish: {
+  //         month: req.body.finish.month,
+  //         day: req.body.finish.day,
+  //         year: req.body.finish.year
+  //       },
+  //       user_id: user.id
+  //     })
+  //     .then(
+  //       habitEntry => res.status(201).json(habitEntry.apiRepr())
+  //     )
+  //     .catch(err => {
+  //       console.error(err);
+  //       return res.status(500).json({message: 'Internal server error'});
+  //     });
   // });
-  
-  router.get('/:id', (req, res) => {
-    Person
-      .findById(req.params.id)
-      .exec()
-      .then( person => {
-        res.json({
-          persons: person.apiRepr()
-        })
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).json({message: 'Internal server error'});
-      });
-  });
-  
+
   router.post('/new', passport.authenticate('jwt', {
     session: false}), (req, res) => {
       let user = req.user;
       // console.log(user, "choke");
-      const requiredFields = ['question', 'isactive', 'start', 'finish'];
+      const requiredFields = ['question'];
     for(let i = 0; i < requiredFields.length; i++) {
       const field = requiredFields[i];
       if(!(field in req.body)) {
@@ -101,18 +131,6 @@ const passport = require('passport');
     Person
       .create({
         question: req.body.question,
-        isactive: req.body.isactive,
-        start: {
-          month: req.body.start.month,
-          day: req.body.start.day,
-          year: req.body.start.year
-        },
-        finish: {
-          month: req.body.finish.month,
-          day: req.body.finish.day,
-          year: req.body.finish.year
-        },
-        user_id: user.id
       })
       .then(
         habitEntry => res.status(201).json(habitEntry.apiRepr())

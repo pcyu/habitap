@@ -1,5 +1,4 @@
 // users router
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -10,7 +9,6 @@ const {User} = require('./model');
 const router = express.Router();
 
 const jsonParser = bodyParser.json();
-
 
 
 //  ===========================================================================
@@ -41,41 +39,6 @@ router.delete('/:id', (req, res) => {
 //  ===========================================================================
 //                                       GET
 //  ===========================================================================
-// router.get('/profile', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'user.html'));
-// });
-
-// router.get('/:username', (req, res) => {
-//   User
-//     .findOne({ "username": req.params.username})
-//     .exec()
-//     .then( user => {
-//       res.json({
-//         users: user.apiRepr()
-//       })
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       return res.status(500).json({message: 'Internal server error'});
-//     });
-// });
-
-router.get('/user/:username', (req, res) => {
-  User
-    .findOne({ "username": req.params.username})
-    .exec()
-    .then( user => {
-      console.log(user);
-      res.render('profile', {
-        name: user.firstName
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      return res.status(500).json({message: 'Internal server error'});
-    });
-});
-
 router.get('/login', (req, res) => {
   res.render('login');
 });
@@ -90,7 +53,22 @@ router.get('/', (req, res) => {  //c029
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 
-
+router.get('/:id', (req, res) => {
+    User
+      .findById(req.params.id)
+      .exec()
+      .then( user => {
+          console.log(user._id)
+        res.json({
+          user: user._id
+        })
+      })
+      .catch(err => {
+        console.log(err);
+        return res.status(500).json({message: 'Internal server error'});
+      });
+  });
+  
 //  ===========================================================================
 //                                      POST
 //  ===========================================================================

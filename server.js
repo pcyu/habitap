@@ -7,6 +7,7 @@ const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
 const {User} = require('./users/model');
+const {Persons} = require('./habits/model');
 
 mongoose.Promise = global.Promise;
 
@@ -44,11 +45,13 @@ app.get('/profile/:username', passport.authenticate('jwt', {
     session: false}),(req, res) => {
     User
     //write code that checks if the cookie matches the token
-      .findOne({ "username": req.params.username})
-      .exec()
-      .then( user => {
+      .findOne({ "username": req.params.username}).exec().then( user => {
+        if (user.id !== req.user.id) {
+          res.render('landing')
+        }
         res.render('profile', {
-          name: user.firstName
+          name: user.firstName,
+          id: user._id
         });
       })
       .catch(err => {
@@ -56,6 +59,25 @@ app.get('/profile/:username', passport.authenticate('jwt', {
         return res.status(500).json({message: 'Internal server error'});
       });
 });
+
+// app.get('/habits/:userid', passport.authenticate('jwt', {
+//   session: false}),(req, res) => {
+//   User
+//   //write code that checks if the cookie matches the token
+//     .findOne({ "username": req.params.username}).exec().then( user => {
+//       console.log(user._id, "users")
+//       if (user.id !== req.user.id) {
+//         res.render('landing')
+//       }
+//       res.render('profile', {
+//         name: user.firstName
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       return res.status(500).json({message: 'Internal server error'});
+//     });
+// });
 
 app.use('/auth', authRouter);
 app.use('/habits', habitRouter);
