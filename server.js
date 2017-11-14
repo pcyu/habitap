@@ -38,7 +38,7 @@ app.use('/src', express.static(__dirname + '/src'));
 // set our endpoints
 app.get('/', (req, res) => {
   res.render('landing');
-});git
+});
 
 app.get('/profile/:username', passport.authenticate('jwt', {
     session: false}),(req, res) => {
