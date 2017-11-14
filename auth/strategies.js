@@ -45,7 +45,14 @@ const jwtStrategy = new JwtStrategy(
     {
         secretOrKey: JWT_SECRET,
         // Look for the JWT as a Bearer auth header
-        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('Bearer'),
+        jwtFromRequest: function(req) {
+            var token = null;
+            if (req && req.cookies)
+            {
+                token = req.cookies['token'];
+            }
+            return token;
+        },
         // Only allow HS256 tokens - the same as the ones we issue
         algorithms: ['HS256']
     },

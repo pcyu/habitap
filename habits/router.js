@@ -43,6 +43,21 @@ const passport = require('passport');
       });
   });
   
+  router.get('/new',  passport.authenticate('jwt', {
+    session: false}),  (req, res) => {
+    res.render('new');
+  });
+  
+  router.get('/history', passport.authenticate('jwt', {
+    session: false}),  (req, res) => {
+    console.log(req);
+    console.log(req.user);
+    res.render('profile', {
+      firstName: req.user.firstName, 
+      lastName: req.user.lastName
+    })
+  });
+
   // router.get('/history', (req, res) => {
   //   let user = req.user;
   //   let userid = user._id

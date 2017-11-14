@@ -25,14 +25,14 @@ router.post(
         const _token = createAuthToken(req.user.apiRepr());
         const profile = {
           firstName: req.user.firstName,
-          lastName: req.user.lastName,
-          token: _token
+          lastName: req.user.lastName
         }
+        // res.cookie('token',_token);          
         // res.json({profile}); 
         res.render('profile', {
           firstName: req.user.firstName,
           lastName: req.user.lastName
-        })
+        });
     }
   );
 

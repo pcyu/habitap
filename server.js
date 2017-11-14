@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
+const cookieParser = require('cookie-parser'); 
 
 mongoose.Promise = global.Promise;
 
@@ -16,6 +17,7 @@ const {router: habitRouter} = require('./habits');
 
 const app = express();
 
+app.use(cookieParser());
 app.use(passport.initialize());
 passport.use(localStrategy);
 passport.use(jwtStrategy);
@@ -47,7 +49,6 @@ app.get('/', (req, res) => {
 app.use('/auth', authRouter);
 app.use('/habits', habitRouter);
 app.use('/users', userRouter);
-
 // app.get('/habit', passport.authenticate('jwt', {
 //   session: false}), (req, res) => {
 //     res.sendFile(__dirname+'/src/templates/habit.html');

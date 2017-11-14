@@ -186,7 +186,7 @@ router.post('/register', jsonParser, (req, res) => {
             return User.hashPassword(password);  //c034
         })
         .then(hash => {
-            return User.create({
+            return User.create({ 
                 username,
                 password: hash,
                 firstName,

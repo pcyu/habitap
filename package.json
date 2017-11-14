@@ -22,6 +22,7 @@
     "bcrypt-nodejs": "latest",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",
     "express-session": "^1.15.6",
