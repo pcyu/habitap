@@ -1,12 +1,11 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser'); 
 const express = require('express');
-const hbs = require('hbs');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
-const cookieParser = require('cookie-parser'); 
 
 mongoose.Promise = global.Promise;
 
@@ -46,9 +45,11 @@ app.use('/src', express.static(__dirname + '/src'));
 app.get('/', (req, res) => {
   res.render('landing');
 });
+
 app.use('/auth', authRouter);
 app.use('/habits', habitRouter);
 app.use('/users', userRouter);
+
 // app.get('/habit', passport.authenticate('jwt', {
 //   session: false}), (req, res) => {
 //     res.sendFile(__dirname+'/src/templates/habit.html');

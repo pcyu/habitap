@@ -27,7 +27,7 @@ router.post(
           firstName: req.user.firstName,
           lastName: req.user.lastName
         }
-        // res.cookie('token',_token);          
+        res.cookie('token',_token);          
         // res.json({profile}); 
         res.render('profile', {
           firstName: req.user.firstName,
