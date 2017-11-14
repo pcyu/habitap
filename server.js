@@ -50,8 +50,10 @@ app.get('/', (req, res) => {
 });
 
 
-app.get('/profile/:username', (req, res) => {
+app.get('/profile/:username', passport.authenticate('jwt', {
+    session: false}),(req, res) => {
     User
+    //write code that checks if the cookie matches the token
       .findOne({ "username": req.params.username})
       .exec()
       .then( user => {
