@@ -2,13 +2,11 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser'); 
 const express = require('express');
-// const hbs = require('hbs');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
 const {User} = require('./users/model');
-
 
 mongoose.Promise = global.Promise;
 
@@ -29,15 +27,8 @@ app.use(bodyParser.urlencoded({  // but when we are using native browser methods
 }));
 
 // view engine set to pug
-
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
-
-// view engine set to html
-
-// app.set('views', path.join(__dirname, 'public/views'));
-// app.set('view engine', 'html');
-// app.engine('html', require('hbs').__express);
 
 // set our paths
 app.use('/dist', express.static(__dirname + '/public'));
@@ -47,8 +38,7 @@ app.use('/src', express.static(__dirname + '/src'));
 // set our endpoints
 app.get('/', (req, res) => {
   res.render('landing');
-});
-
+});git
 
 app.get('/profile/:username', passport.authenticate('jwt', {
     session: false}),(req, res) => {
@@ -76,8 +66,6 @@ app.use('/users', userRouter);
 //     res.sendFile(__dirname+'/src/templates/habit.html');
 //   }
 // );
-
-
 
 app.use('*', (req, res) => {
   return res.status(404).json({
