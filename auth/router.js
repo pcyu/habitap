@@ -24,23 +24,20 @@ router.post(
     (req, res) => {
         const _token = createAuthToken(req.user.apiRepr());
         const profile = {
+          username: req.user.username,
           firstName: req.user.firstName,
           lastName: req.user.lastName
         }
         res.cookie('token',_token);          
         // res.json({profile}); 
-        res.render('profile', {
-          firstName: req.user.firstName,
-          lastName: req.user.lastName
-        });
+        // res.render('profile', {
+        //   firstName: req.user.firstName,
+        //   lastName: req.user.lastName
+        // res.redirect(`/profile?username=${req.user.username}`);
+        res.redirect(`/profile/${req.user.username}`);
+        // });
     }
   );
-
-
-
-// router.get('/login', (req, res) => {
-//   res.json('{authToken}');
-// });
 
 router.post(
     '/refresh',

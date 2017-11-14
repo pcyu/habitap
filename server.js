@@ -7,6 +7,8 @@ const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
+const {User} = require('./users/model');
+
 
 mongoose.Promise = global.Promise;
 
@@ -45,6 +47,22 @@ app.use('/src', express.static(__dirname + '/src'));
 // set our endpoints
 app.get('/', (req, res) => {
   res.render('landing');
+});
+
+
+app.get('/profile/:username', (req, res) => {
+    User
+      .findOne({ "username": req.params.username})
+      .exec()
+      .then( user => {
+        res.render('profile', {
+          name: user.firstName
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        return res.status(500).json({message: 'Internal server error'});
+      });
 });
 
 app.use('/auth', authRouter);
