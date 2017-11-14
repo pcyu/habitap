@@ -2,6 +2,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser'); 
 const express = require('express');
+// const hbs = require('hbs');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
