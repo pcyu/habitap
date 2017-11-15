@@ -72,6 +72,7 @@ gulp.task('watch', () => {
   gulp.watch(source.html, ['html']);
   gulp.watch(source.js, ['js']);
   gulp.watch(source.scss, ['sass']);
+  gulp.watch(source.pug, ['pug']);
   return nodemon({
     script: 'server.js'
   });

@@ -8,6 +8,8 @@ const passport = require('passport');
 const path = require('path');
 const {User} = require('./users/model');
 const {Persons} = require('./habits/model');
+const jwt = require('jsonwebtoken');
+const {JWT_SECRET} = require('./config');
 
 mongoose.Promise = global.Promise;
 
@@ -41,9 +43,24 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 
-app.get('/profile/:username', passport.authenticate('jwt', {
-    session: false}),(req, res) => {
-    User
+const verifyUser = (req, res, next) => {
+  try {
+    const token = req.headers.authorization || req.cookies.token;
+    // const token = req.cookies.auth;
+    const {user} = jwt.verify(token, JWT_SECRET);
+    req.user = user;
+    req.validUser = req.params.username === user.username ? true : false;
+    console.log('yeaaaaaa!');
+    next();
+  } catch (e) {
+    console.log('error!');
+    next();
+  }
+};
+
+app.get('/profile/:username', verifyUser, (req, res) => {
+    if (req.validUser) {
+      User
     //write code that checks if the cookie matches the token
       .findOne({ "username": req.params.username}).exec().then( user => {
         if (user.id !== req.user.id) {
@@ -58,7 +75,11 @@ app.get('/profile/:username', passport.authenticate('jwt', {
         console.log(err);
         return res.status(500).json({message: 'Internal server error'});
       });
-});
+    } else {
+      console.log('You are not authorized to view this page.')
+      return res.status(500).json({message: 'Internal server error'});
+    }
+  });
 
 // app.get('/habits/:userid', passport.authenticate('jwt', {
 //   session: false}),(req, res) => {

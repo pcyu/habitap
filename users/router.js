@@ -43,6 +43,14 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/logout', (req, res) => {
+    res.cookie("token", "", {expires: new Date() });
+    res.render('logout', {
+        user: req.user,
+        message: "You are now logged out."
+    })
+});
+
 router.get('/register', (req, res) => {
   res.render('register');
 });
