@@ -37,7 +37,7 @@ router.post(
     // The user provides a username and password to login
     passport.authenticate('local', {
       failureRedirect: '/login',
-      // session: false
+      session: false
     }),
     (req, res, next) => {
         const _token = createAuthToken(req.user.apiRepr());
