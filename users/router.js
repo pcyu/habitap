@@ -1,15 +1,14 @@
 // users router
 require('dotenv').config();
+const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const express = require('express');
-const bodyParser = require('body-parser');
-const {isLoggedIn} = require('../auth');
 const jsonParser = bodyParser.json();
 const jwt = require('jsonwebtoken');
-const {JWT_SECRET} = require('../config');
 const passport = require('passport');
 const path = require('path');
 const router = express.Router();
+const {JWT_SECRET} = require('../config');
 const {User} = require('./model');
 
 const app = express();  //c038
@@ -45,9 +44,6 @@ router.delete('/:id', (req, res) => {
 //  ===========================================================================
 //                                       GET
 //  ===========================================================================
-router.get('/login', (req, res) => {
-  res.render('login');
-});
 
 router.get('/logout', (req, res) => {
     res.cookie("token", "", {expires: new Date() });
@@ -267,7 +263,5 @@ router.put('/persons/:id', (req, res) => {
       return res.status(500).json({message: 'Internal server error'})
     });
 });
-
-
 
 module.exports = {router};

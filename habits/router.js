@@ -1,11 +1,15 @@
-const express = require('express');
-const router = express.Router();
+require('dotenv').config();
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
+const express = require('express');
 const jsonParser = bodyParser.json();
-const {Person} = require('./model');
-const path = require('path');
 const passport = require('passport');
+const path = require('path');
+const router = express.Router();
+const {JWT_SECRET} = require('../config');
+const {Person} = require('./model');
 const {User} = require('../users/model');
+
 
   // router.get('/json', passport.authenticate('jwt', {
   //   session: false}), (req, res) => {
@@ -40,23 +44,43 @@ const {User} = require('../users/model');
         return res.status(500).json({message: 'Internal server error'});
       });
   });
+
+function loggedIn(req, res, next) {
+  if (req.user) {
+      next();
+  } else {
+      res.redirect('/login');
+  }
+}
+
+const verifyUser = (req, res, next) => {
+    try {
+      const token = req.headers.authorization || req.cookies.token;
+      // const token = req.cookies.auth;
+      const {user} = jwt.verify(token, JWT_SECRET);
+      req.user = user;
+      req.validUser = req.params.username === user.username ? true : false;
+      console.log('yeaaaaaa!');
+      next();
+    } catch (e) {
+      console.log('error!');
+      next();
+    }
+  };
   
-  router.get('/new',  passport.authenticate('jwt', {
-    session: false}),  (req, res) => {
+  router.get('/new',  verifyUser, (req, res) => {
+    console.log('token', token)
     res.render('new', {
-      id: req.user._id
+      token: req.app.get('loggedIn')
     });
   });
   
-  router.get('/history', passport.authenticate('jwt', {
-    session: false}),  (req, res) => {
+  router.get('/history', verifyUser, (req, res) => {
     console.log(req);
     console.log(req.user);
     res.render('profile', {
-      firstName: req.user.firstName, 
-      lastName: req.user.lastName,
-      id: req.user._id  
-    })
+      token: req.app.get('loggedIn')
+    });
   });
   
 

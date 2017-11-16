@@ -56,11 +56,19 @@ app.use('/src', express.static(__dirname + '/src'));
 
 // set our endpoints
 app.get('/', (req, res) => {
-  res.render('landing', {token: loggedIn});
+  res.render('landing');
 });
 
 app.get('/register', (req, res) => {
-  res.render('register', {token: loggedIn});
+  res.render('register');
+});
+
+app.get('/habits/new', (req, res) => {
+  res.render('new', {token: loggedIn});
+});
+
+app.get('/habits/history', (req, res) => {
+  res.render('history', {token: loggedIn});
 });
 // app.get('/habits/:userid', passport.authenticate('jwt', {
 //   session: false}),(req, res) => {

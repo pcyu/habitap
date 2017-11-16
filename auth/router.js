@@ -2,9 +2,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const passport = require('passport');
 const jwt = require('jsonwebtoken');
-
 const config = require('../config');
-
 const app = express();
 app.use(cookieParser());
 
@@ -21,8 +19,8 @@ let loggedIn = false;
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-    res.render('login', {token: loggedIn});
-  });
+    res.render('login');
+});
   
 router.get('/logout', (req, res) => {
   res.cookie("token", "", { expires: new Date() });
