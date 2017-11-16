@@ -2,6 +2,7 @@ require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser'); 
 const express = require('express');
+const helpers = require('./helpers');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
@@ -14,7 +15,7 @@ const {JWT_SECRET} = require('./config');
 mongoose.Promise = global.Promise;
 
 const {PORT, DATABASE_URL} = require('./config');
-const {router: authRouter, localStrategy, jwtStrategy} = require('./auth');
+const {router: authRouter, localStrategy, jwtStrategy, isLoggedIn} = require('./auth');
 const {router: userRouter} = require('./users');
 const {router: habitRouter} = require('./habits');
 
@@ -29,6 +30,21 @@ app.use(bodyParser.urlencoded({  // but when we are using native browser methods
   extended: true
 }));
 
+app.use((req, res, next) => {
+  res.locals.helpers = helpers;
+  next();
+});
+
+app.use((req, res, next) => {
+  if(isLoggedIn()) {
+    loggedIn = true;
+  } else {
+    loggedIn = false;
+  }
+  app.set('loggedIn', loggedIn);  //c038
+  next();
+});
+
 // view engine set to pug
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -40,47 +56,12 @@ app.use('/src', express.static(__dirname + '/src'));
 
 // set our endpoints
 app.get('/', (req, res) => {
-  res.render('landing');
+  res.render('landing', {token: loggedIn});
 });
 
-const verifyUser = (req, res, next) => {
-  try {
-    const token = req.headers.authorization || req.cookies.token;
-    // const token = req.cookies.auth;
-    const {user} = jwt.verify(token, JWT_SECRET);
-    req.user = user;
-    req.validUser = req.params.username === user.username ? true : false;
-    console.log('yeaaaaaa!');
-    next();
-  } catch (e) {
-    console.log('error!');
-    next();
-  }
-};
-
-app.get('/profile/:username', verifyUser, (req, res) => {
-    if (req.validUser) {
-      User
-    //write code that checks if the cookie matches the token
-      .findOne({ "username": req.params.username}).exec().then( user => {
-        if (user.id !== req.user.id) {
-          res.render('landing')
-        }
-        res.render('profile', {
-          name: user.firstName,
-          id: user._id
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).json({message: 'Internal server error'});
-      });
-    } else {
-      console.log('You are not authorized to view this page.')
-      return res.status(500).json({message: 'Internal server error'});
-    }
-  });
-
+app.get('/register', (req, res) => {
+  res.render('register', {token: loggedIn});
+});
 // app.get('/habits/:userid', passport.authenticate('jwt', {
 //   session: false}),(req, res) => {
 //   User

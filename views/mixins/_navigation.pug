@@ -1,0 +1,12 @@
+mixin navigation( navs = [], type = 'public' )
+  input(id="t-burger" class="burger" type="checkbox")
+  label(for="t-burger")
+    span
+    span
+    span
+  nav
+    ul.nav-bar
+      each nav in navs
+        if nav.type.indexOf(type) >= 0
+          li
+            a(href=`${nav.path}`) #{nav.name}

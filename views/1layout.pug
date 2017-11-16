@@ -1,4 +1,7 @@
 doctype html
+
+include mixins/_navigation
+
 html
   head
     title = 'Habitap | Change your life, one habit at a time.'
@@ -8,29 +11,20 @@ html
     link(rel="icon" type="image/x-icon" href="/src/img/favicon.ico")
     link(rel="stylesheet" type="text/css" href="/dist/style.min.css")
   body
-
     block header
       div.y-wrapper
-        input(id="t-burger" class="burger" type="checkbox")
-        label(for="t-burger")
-          span
-          span
-          span
-        nav
-          ul.nav-bar
-            li
-              a(href="/habits/history" class="link") Habit History
-            li
-              a(href="/habits/new" class="link") New Habit Entry
-            li
-              a(href="/users/logout" class="link") Sign Out
+        - let show = 'public'
+        if token
+          - show = 'private'
+        +navigation(helpers.navs, show)
 
     block content
 
     block footer
       div.footer
         p This is the space for a footer
-
+        p The loggedIn value is #{token}
     block scripts
       script(src="/node_modules/jquery/dist/jquery.min.js")
       script(src="/dist/app.min.js")
+  

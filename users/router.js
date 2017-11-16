@@ -1,14 +1,20 @@
 // users router
+require('dotenv').config();
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const bodyParser = require('body-parser');
+const {isLoggedIn} = require('../auth');
+const jsonParser = bodyParser.json();
+const jwt = require('jsonwebtoken');
+const {JWT_SECRET} = require('../config');
 const passport = require('passport');
 const path = require('path');
-
+const router = express.Router();
 const {User} = require('./model');
 
-const router = express.Router();
+const app = express();  //c038
 
-const jsonParser = bodyParser.json();
+router.use(cookieParser());
 
 
 //  ===========================================================================
@@ -51,9 +57,53 @@ router.get('/logout', (req, res) => {
     })
 });
 
-router.get('/register', (req, res) => {
-  res.render('register');
-});
+function loggedIn(req, res, next) {
+    if (req.user) {
+        next();
+    } else {
+        res.redirect('/login');
+    }
+}
+
+const verifyUser = (req, res, next) => {
+    try {
+      const token = req.headers.authorization || req.cookies.token;
+      // const token = req.cookies.auth;
+      const {user} = jwt.verify(token, JWT_SECRET);
+      req.user = user;
+      req.validUser = req.params.username === user.username ? true : false;
+      console.log('yeaaaaaa!');
+      next();
+    } catch (e) {
+      console.log('error!');
+      next();
+    }
+  };
+  
+  router.get('/:username', verifyUser, (req, res) => {
+      if (req.validUser) {
+        User
+      //write code that checks if the cookie matches the token
+        .findOne({ "username": req.params.username})
+        .exec()
+        .then( user => {
+        //   if (user.id !== req.user.id) {
+        //     res.render('landing')
+        //   }
+          res.render('profile', {
+            profile: user,
+            token: req.app.get('loggedIn')
+          });
+        })
+        .catch(err => {
+          console.log(err);
+          return res.status(500).json({message: 'Internal server error'});
+        });
+      } else {
+        console.log('You are not authorized to view this page.')
+        return res.status(500).json({message: 'Internal server error'});
+      }
+    });
 
 router.get('/', (req, res) => {  //c029
   return User.find()
