@@ -46,27 +46,6 @@
     }
 }
 
-.y-modal {
-    background: rgba(5, 5, 5, 0.8);
-    display: none;
-    padding: 30px 16px;
-    position: fixed;
-    top: 25%;
-    left: 50%;
-    text-align: center;
-    transform: translateX(-50%);
-    width: 80%;
-    &.signup {
-      margin-top: 30px;
-    }
-    &.signup,
-    &.login {
-      &.active {
-        display: block;
-      }
-    }
-}
-
 .y-wrapper {
     margin: 0 auto;
 }
