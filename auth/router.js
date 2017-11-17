@@ -26,6 +26,7 @@ router.get('/logout', (req, res) => {
   res.cookie("token", "", { expires: new Date() });
   loggedIn = false;
   res.render('logout', {
+    message: "You are now logged out.",
     token: loggedIn
   });
 });
