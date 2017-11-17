@@ -29,21 +29,21 @@ const {User} = require('../users/model');
   //     });
   // });
   
-  router.get('/persons', passport.authenticate('jwt', {
-    session: false}), (req, res) => {
-    Person
-      .find()
-      .exec()
-      .then(persons => {
-        res.json({
-          persons: persons.map( person => person.apiRepr() )
-        });
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).json({message: 'Internal server error'});
+router.get('/persons', passport.authenticate('jwt', {
+  session: false}), (req, res) => {
+  Person
+    .find()
+    .exec()
+    .then(persons => {
+      res.json({
+        persons: persons.map( person => person.apiRepr() )
       });
-  });
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({message: 'Internal server error'});
+    });
+});
 
 function loggedIn(req, res, next) {
   if (req.user) {
@@ -54,34 +54,31 @@ function loggedIn(req, res, next) {
 }
 
 const verifyUser = (req, res, next) => {
-    try {
-      const token = req.headers.authorization || req.cookies.token;
-      // const token = req.cookies.auth;
-      const {user} = jwt.verify(token, JWT_SECRET);
-      req.user = user;
-      req.validUser = req.params.username === user.username ? true : false;
-      console.log('yeaaaaaa!');
-      next();
-    } catch (e) {
-      console.log('error!');
-      next();
-    }
-  };
+  try {
+    const token = req.headers.authorization || req.cookies.token;
+    // const token = req.cookies.auth;
+    const {user} = jwt.verify(token, JWT_SECRET);
+    req.user = user;
+    req.validUser = req.params.username === user.username ? true : false;
+    console.log('yeaaaaaa!');
+    next();
+  } catch (e) {
+    console.log('error!');
+    next();
+  }
+};
   
-  router.get('/new',  verifyUser, (req, res) => {
-    console.log('token', token)
-    res.render('new', {
-      token: req.app.get('loggedIn')
-    });
+router.get('/new',  verifyUser, (req, res) => {
+  res.render('new', {
+    token: req.app.get('loggedIn')
   });
-  
-  router.get('/history', verifyUser, (req, res) => {
-    console.log(req);
-    console.log(req.user);
-    res.render('profile', {
-      token: req.app.get('loggedIn')
-    });
+});
+
+router.get('/history', verifyUser, (req, res) => {
+  res.render('profile', {
+    token: req.app.get('loggedIn')
   });
+});
   
 
   // router.get('/:userid', passport.authenticate('jwt', {
@@ -139,60 +136,60 @@ const verifyUser = (req, res, next) => {
   //     });
   // });
 
-  router.post('/new', passport.authenticate('jwt', {
-    session: false}), (req, res) => {
-      let user = req.user;
-      // console.log(user, "choke");
-      const requiredFields = ['question'];
-    for(let i = 0; i < requiredFields.length; i++) {
-      const field = requiredFields[i];
-      if(!(field in req.body)) {
-        const message = `The value for \`${field}\` is missing.`
-        console.error(message);
-        return res.status(400).send(message);
-      }
-    }
-    Person
-      .create({
-        question: req.body.question,
-      })
-      .then(
-        habitEntry => res.status(201).json(habitEntry.apiRepr())
-      )
-      .catch(err => {
-        console.error(err);
-        return res.status(500).json({message: 'Internal server error'});
-      });
-  });
-  
-  router.put('/:id/', (req, res) => {  //p002
-    if(req.params.id !== req.body.id) {
-      const message = `The request path (${req.params.id}) and the request body id (${req.body.id}) must match.`;
+router.post('/new', passport.authenticate('jwt', {
+  session: false}), (req, res) => {
+    let user = req.user;
+    // console.log(user, "choke");
+    const requiredFields = ['question'];
+  for(let i = 0; i < requiredFields.length; i++) {
+    const field = requiredFields[i];
+    if(!(field in req.body)) {
+      const message = `The value for \`${field}\` is missing.`
       console.error(message);
-      return res.status(400).json({message: message});
+      return res.status(400).send(message);
     }
-    const toUpdate = {};
-    const updateableFields = ['question', 'isactive', 'start', 'finish'];;
-    updateableFields.forEach(field => {
-      if(field in req.body) {
-        toUpdate[field] = req.body[field];
-      }
-    });
-    Person
-      .findByIdAndUpdate(req.params.id, {$set: toUpdate})
-      .exec()
-      .then( person => res.json(204).end() )
-      .catch(err => {
-        console.error(err);
-        return res.status(500).json({message: 'Internal server error'})
-      });
-  });
-  
-  function isLoggedIn(req, res, next) {
-    if (req.isAuthenticated())
-        return next();
-  
-    res.redirect('/');
   }
+  Person
+    .create({
+      question: req.body.question,
+    })
+    .then(
+      habitEntry => res.status(201).json(habitEntry.apiRepr())
+    )
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({message: 'Internal server error'});
+    });
+});
   
-  module.exports = {router};
+router.put('/:id/', (req, res) => {  //p002
+  if(req.params.id !== req.body.id) {
+    const message = `The request path (${req.params.id}) and the request body id (${req.body.id}) must match.`;
+    console.error(message);
+    return res.status(400).json({message: message});
+  }
+  const toUpdate = {};
+  const updateableFields = ['question', 'isactive', 'start', 'finish'];;
+  updateableFields.forEach(field => {
+    if(field in req.body) {
+      toUpdate[field] = req.body[field];
+    }
+  });
+  Person
+    .findByIdAndUpdate(req.params.id, {$set: toUpdate})
+    .exec()
+    .then( person => res.json(204).end() )
+    .catch(err => {
+      console.error(err);
+      return res.status(500).json({message: 'Internal server error'})
+    });
+});
+  
+function isLoggedIn(req, res, next) {
+  if (req.isAuthenticated())
+      return next();
+
+  res.redirect('/');
+}
+  
+module.exports = {router};
