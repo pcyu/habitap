@@ -33,7 +33,7 @@ router.get('/logout', (req, res) => {
 router.post(
     '/login',
     // The user provides a username and password to login
-    passport.authenticate('local', {
+    passport.authenticate('local', {    
       failureRedirect: '/login',
       session: false
     }),
