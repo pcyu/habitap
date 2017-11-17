@@ -7,11 +7,11 @@ const app = express();
 app.use(cookieParser());
 
 const createAuthToken = user => {
-    return jwt.sign({user}, config.JWT_SECRET, {
-        subject: user.username,
-        expiresIn: config.JWT_EXPIRY,
-        algorithm: 'HS256'
-    });
+  return jwt.sign({user}, config.JWT_SECRET, {
+    subject: user.username,
+    expiresIn: config.JWT_EXPIRY,
+    algorithm: 'HS256'
+  });
 };
 
 let loggedIn = false;
@@ -19,7 +19,7 @@ let loggedIn = false;
 const router = express.Router();
 
 router.get('/login', (req, res) => {
-    res.render('login');
+  res.render('login');
 });
   
 router.get('/logout', (req, res) => {
@@ -31,37 +31,37 @@ router.get('/logout', (req, res) => {
 });
 
 router.post(
-    '/login',
-    // The user provides a username and password to login
-    passport.authenticate('local', {    
-      failureRedirect: '/login',
-      session: false
-    }),
-    (req, res, next) => {
-        const _token = createAuthToken(req.user.apiRepr());
-        let username = req.body.username;
-        res.cookie('token', _token);        
-        // res.json({profile}); 
-        loggedIn = true;
-        res.redirect(`/users/${username}`);
-        // });
-    }
-  );
+  '/login',
+  // The user provides a username and password to login
+  passport.authenticate('local', {    
+    failureRedirect: '/login',
+    session: false
+  }),
+  (req, res, next) => {
+    const _token = createAuthToken(req.user.apiRepr());
+    let username = req.body.username;
+    res.cookie('token', _token);        
+    // res.json({profile}); 
+    loggedIn = true;
+    res.redirect(`/users/${username}`);
+    // });
+  }
+);
 
 router.post(
-    '/refresh',
-    // The user exchanges an existing valid JWT for a new one with a later
-    // expiration
-    passport.authenticate('jwt', {session: false}),
-    (req, res) => {
-        const authToken = createAuthToken(req.user);
-        res.json({authToken});
-    }
+  '/refresh',
+  // The user exchanges an existing valid JWT for a new one with a later
+  // expiration
+  passport.authenticate('jwt', {session: false}),
+  (req, res) => {
+      const authToken = createAuthToken(req.user);
+      res.json({authToken});
+  }
 );
 
 const isLoggedIn = () => {
-    console.log('vv', loggedIn);
-    return loggedIn;
+  console.log('vv', loggedIn);
+  return loggedIn;
 }
 
 module.exports = {router, isLoggedIn};

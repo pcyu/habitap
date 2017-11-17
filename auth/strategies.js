@@ -45,12 +45,12 @@ const jwtStrategy = new JwtStrategy(
   {
     secretOrKey: JWT_SECRET,
     jwtFromRequest: function(req) {
-        var token = null;
-        if (req && req.cookies)
-        {
-          token = req.cookies['token'];
-        }
-        return token;
+      var token = null;
+      if (req && req.cookies)
+      {
+        token = req.cookies['token'];
+      }
+      return token;
     },
     // Only allow HS256 tokens - the same as the ones we issue
     algorithms: ['HS256']
