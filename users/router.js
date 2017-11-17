@@ -46,60 +46,60 @@ router.delete('/:id', (req, res) => {
 //  ===========================================================================
 
 router.get('/logout', (req, res) => {
-    res.cookie("token", "", {expires: new Date() });
-    res.render('logout', {
-        user: req.user,
-        message: "You are now logged out."
-    })
+	res.cookie("token", "", {expires: new Date() });
+	res.render('logout', {
+			user: req.user,
+			message: "You are now logged out."
+	})
 });
 
 function loggedIn(req, res, next) {
-    if (req.user) {
-        next();
-    } else {
-        res.redirect('/login');
-    }
+	if (req.user) {
+			next();
+	} else {
+			res.redirect('/login');
+	}
 }
 
 const verifyUser = (req, res, next) => {
-    try {
-      const token = req.headers.authorization || req.cookies.token;
-      // const token = req.cookies.auth;
-      const {user} = jwt.verify(token, JWT_SECRET);
-      req.user = user;
-      req.validUser = req.params.username === user.username ? true : false;
-      console.log('yeaaaaaa!');
-      next();
-    } catch (e) {
-      console.log('error!');
-      next();
-    }
+	try {
+		const token = req.headers.authorization || req.cookies.token;
+		// const token = req.cookies.auth;
+		const {user} = jwt.verify(token, JWT_SECRET);
+		req.user = user;
+		req.validUser = req.params.username === user.username ? true : false;
+		console.log('yeaaaaaa!');
+		next();
+	} catch (e) {
+		console.log('error!');
+		next();
+	}
   };
   
   router.get('/:username', verifyUser, (req, res) => {
-      if (req.validUser) {
-        User
-      //write code that checks if the cookie matches the token
-        .findOne({ "username": req.params.username})
-        .exec()
-        .then( user => {
-        //   if (user.id !== req.user.id) {
-        //     res.render('landing')
-        //   }
-          res.render('profile', {
-            profile: user,
-            token: req.app.get('loggedIn')
-          });
-        })
-        .catch(err => {
-          console.log(err);
-          return res.status(500).json({message: 'Internal server error'});
-        });
-      } else {
-        console.log('You are not authorized to view this page.')
-        return res.status(500).json({message: 'Internal server error'});
-      }
-    });
+		if (req.validUser) {
+			User
+			.findOne({ "username": req.params.username})
+			.exec()
+			.then( user => {
+			// Waleed's code	
+			//   if (user.id !== req.user.id) {
+			//     res.render('landing')
+			//   }
+				res.render('profile', {
+					profile: user,
+					token: req.app.get('loggedIn')
+				});
+			})
+			.catch(err => {
+				console.log(err);
+				return res.status(500).json({message: 'Internal server error'});
+			});
+		} else {
+			console.log('You are not authorized to view this page.')
+			return res.status(500).json({message: 'Internal server error'});
+		}
+	});
 
 router.get('/', (req, res) => {  //c029
   return User.find()
@@ -108,132 +108,132 @@ router.get('/', (req, res) => {  //c029
 });
 
 router.get('/:id', (req, res) => {
-    User
-      .findById(req.params.id)
-      .exec()
-      .then( user => {
-          console.log(user._id)
-        res.json({
-          user: user._id
-        })
-      })
-      .catch(err => {
-        console.log(err);
-        return res.status(500).json({message: 'Internal server error'});
-      });
+	User
+		.findById(req.params.id)
+		.exec()
+		.then( user => {
+				console.log(user._id)
+			res.json({
+				user: user._id
+			})
+		})
+		.catch(err => {
+			console.log(err);
+			return res.status(500).json({message: 'Internal server error'});
+		});
   });
   
 //  ===========================================================================
 //                                      POST
 //  ===========================================================================
 router.post('/register', jsonParser, (req, res) => {
-    const requiredFields = ['username', 'password'];
-    const missingField = requiredFields.find(field => !(field in req.body));
+	const requiredFields = ['username', 'password'];
+	const missingField = requiredFields.find(field => !(field in req.body));
 
-    if (missingField) {
-        return res.status(422).json({
-            code: 422,
-            reason: 'ValidationError',
-            message: 'Missing field',
-            location: missingField
-        });
-    }
+	if (missingField) {
+			return res.status(422).json({
+					code: 422,
+					reason: 'ValidationError',
+					message: 'Missing field',
+					location: missingField
+			});
+	}
 
-    const stringFields = ['username', 'password', 'firstName', 'lastName'];
-    const nonStringField = stringFields.find(
-        field => field in req.body && typeof req.body[field] !== 'string'
-    );
+	const stringFields = ['username', 'password', 'firstName', 'lastName'];
+	const nonStringField = stringFields.find(
+			field => field in req.body && typeof req.body[field] !== 'string'
+	);
 
-    if (nonStringField) {
-        return res.status(422).json({
-            code: 422,
-            reason: 'ValidationError',
-            message: 'Incorrect field type: expected string',
-            location: nonStringField
-        });
-    }
+	if (nonStringField) {
+			return res.status(422).json({
+					code: 422,
+					reason: 'ValidationError',
+					message: 'Incorrect field type: expected string',
+					location: nonStringField
+			});
+	}
 
-    const explicityTrimmedFields = ['username', 'password'];  //c030
-    const nonTrimmedField = explicityTrimmedFields.find(
-        field => req.body[field].trim() !== req.body[field]
-    );
+	const explicityTrimmedFields = ['username', 'password'];  //c030
+	const nonTrimmedField = explicityTrimmedFields.find(
+			field => req.body[field].trim() !== req.body[field]
+	);
 
-    if (nonTrimmedField) {
-        return res.status(422).json({
-            code: 422,
-            reason: 'ValidationError',
-            message: 'Cannot start or end with whitespace',
-            location: nonTrimmedField
-        });
-    }
+	if (nonTrimmedField) {
+			return res.status(422).json({
+					code: 422,
+					reason: 'ValidationError',
+					message: 'Cannot start or end with whitespace',
+					location: nonTrimmedField
+			});
+	}
 
-    const sizedFields = {
-        username: {
-            min: 1
-        },
-        password: {
-            min: 10,
-            max: 72  //c031
-        }
-    };
-    const tooSmallField = Object.keys(sizedFields).find(
-        field =>
-            'min' in sizedFields[field] &&
-            req.body[field].trim().length < sizedFields[field].min
-    );
-    const tooLargeField = Object.keys(sizedFields).find(
-        field =>
-            'max' in sizedFields[field] &&
-            req.body[field].trim().length > sizedFields[field].max
-    );
+	const sizedFields = {
+			username: {
+					min: 1
+			},
+			password: {
+					min: 10,
+					max: 72  //c031
+			}
+	};
+	const tooSmallField = Object.keys(sizedFields).find(
+			field =>
+					'min' in sizedFields[field] &&
+					req.body[field].trim().length < sizedFields[field].min
+	);
+	const tooLargeField = Object.keys(sizedFields).find(
+			field =>
+					'max' in sizedFields[field] &&
+					req.body[field].trim().length > sizedFields[field].max
+	);
 
-    if (tooSmallField || tooLargeField) {
-        return res.status(422).json({
-            code: 422,
-            reason: 'ValidationError',
-            message: tooSmallField
-                ? `Must be at least ${sizedFields[tooSmallField]
-                      .min} characters long`
-                : `Must be at most ${sizedFields[tooLargeField]
-                      .max} characters long`,
-            location: tooSmallField || tooLargeField
-        });
-    }
+	if (tooSmallField || tooLargeField) {
+			return res.status(422).json({
+					code: 422,
+					reason: 'ValidationError',
+					message: tooSmallField
+							? `Must be at least ${sizedFields[tooSmallField]
+										.min} characters long`
+							: `Must be at most ${sizedFields[tooLargeField]
+										.max} characters long`,
+					location: tooSmallField || tooLargeField
+			});
+	}
 
-    let {username, password, firstName = '', lastName = ''} = req.body;  //c032
-    firstName = firstName.trim();
-    lastName = lastName.trim();
+	let {username, password, firstName = '', lastName = ''} = req.body;  //c032
+	firstName = firstName.trim();
+	lastName = lastName.trim();
 
-    return User.find({username})
-        .count()
-        .then(count => {
-            if (count > 0) {
-                return Promise.reject({  //c033
-                    code: 422,
-                    reason: 'ValidationError',
-                    message: 'Username already taken',
-                    location: 'username'
-                });
-            }
-            return User.hashPassword(password);  //c034
-        })
-        .then(hash => {
-            return User.create({ 
-                username,
-                password: hash,
-                firstName,
-                lastName
-            });
-        })
-        .then(user => {
-            return res.status(201).json(user.apiRepr());
-        })
-        .catch(err => {  //c035
-            if (err.reason === 'ValidationError') {
-                return res.status(err.code).json(err);
-            }
-            res.status(500).json({code: 500, message: 'Internal server error'});
-        });
+	return User.find({username})
+		.count()
+		.then(count => {
+				if (count > 0) {
+						return Promise.reject({  //c033
+								code: 422,
+								reason: 'ValidationError',
+								message: 'Username already taken',
+								location: 'username'
+						});
+				}
+				return User.hashPassword(password);  //c034
+		})
+		.then(hash => {
+				return User.create({ 
+						username,
+						password: hash,
+						firstName,
+						lastName
+				});
+		})
+		.then(user => {
+				return res.status(201).json(user.apiRepr());
+		})
+		.catch(err => {  //c035
+				if (err.reason === 'ValidationError') {
+						return res.status(err.code).json(err);
+				}
+				res.status(500).json({code: 500, message: 'Internal server error'});
+		});
 });
 
 
