@@ -1,6 +1,5 @@
 exports.navs = [
     {name: 'Home', path: '/', type: ['public']},
-    {name: 'Research', id: 'research', path: '/#research', type: ['public']},
     {name: 'Register', path: '/register', type: ['public']},
     {name: 'Login', path: '/auth/login', type: ['public']},
     {name: 'Habit History', path: '/habits/history', type: ['private']},

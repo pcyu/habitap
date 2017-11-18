@@ -7,22 +7,6 @@
   width: auto;
 }
 
-#t-modal-sign-up-button {
-  color: red;
-}
-
-#t-modal-sign-up-fail {
-  color: red;
-}
-
-#t-modal-login-button {
-  color: red;
-}
-
-#t-modal-login-fail {
-  color: red;
-}
-
 //------------------------------------------------------------------------------
 //  Forms
 //------------------------------------------------------------------------------
@@ -42,11 +26,11 @@ input {
 .nav-bar {
   left: 20%;
   right: 20%;
-  padding-top: 10px;
+  padding-top: 15px;
   position: absolute;
   text-align: center;
   top: 18%;
-  @include responsive(truman) {
+  @include responsive(coolidge) {
     left: 25%;
     position: relative;
     padding-top: 8px;
@@ -69,7 +53,7 @@ a {
 li {
   opacity: 0;
   .nav-bar & {
-    @include responsive(truman) {
+    @include responsive(coolidge) {
       display: inline-block;
       opacity: 1;
     }
@@ -82,10 +66,6 @@ li {
 .imgrow {
   margin: 36px 0;
   text-align: center;
-}
-
-.nimg {
-
 }
 
 .overlay {

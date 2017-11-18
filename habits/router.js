@@ -45,6 +45,22 @@ router.get('/persons', passport.authenticate('jwt', {
     });
 });
 
+router.get('/info', passport.authenticate('jwt', {
+  session: false}), (req, res) => {
+    Person
+    .find({ "user_id": req.user.id })
+    .exec()
+    .then(persons => {
+      res.json({
+        persons: persons.map( person => person.apiRepr() )
+      });
+    })
+    .catch(err => {
+      console.log(err);
+      return res.status(500).json({message: 'Internal server error'});
+    });
+});
+
 function loggedIn(req, res, next) {
   if (req.user) {
       next();

@@ -31,7 +31,7 @@ label {
     height: 20px;
     width: 15px; 
     z-index: 5;
-    @include responsive(truman) {
+    @include responsive(coolidge) {
       display: none;
     }
   }
@@ -56,9 +56,9 @@ label {
   }
   
   input:checked ~ nav { 
-    height: 200px;
+    height: 150px;
     transition-delay: 0s;
-    @include responsive(truman) {
+    @include responsive(coolidge) {
       height: 50px;
     }
   }
@@ -67,7 +67,7 @@ label {
     input:checked ~ nav & {
       opacity: 1; 
       transition-delay: 0s;
-      @include responsive(truman) {
+      @include responsive(coolidge) {
         height: 100px;
       }
     }

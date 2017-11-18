@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const personSchema = mongoose.Schema({
+  user_id: String,
   question: {type: String, required: true},
   isactive: Boolean,
   start: {
@@ -14,7 +15,6 @@ const personSchema = mongoose.Schema({
     day: Number,
     year: Number
   },
-  user_id: String
 });
 
 //c039
@@ -50,12 +50,12 @@ personSchema.virtual('finishDate').get(function() {
 
 personSchema.methods.apiRepr = function() {
   return {
+    user_id: this.user_id,
     id: this._id,
     question: this.question,
     isactive: this.isactive,
     start: this.startDate,
-    finish: this.finishDate,
-    user_id: this.user_id
+    finish: this.finishDate
   };
 }
 
