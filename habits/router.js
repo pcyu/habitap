@@ -47,6 +47,7 @@ router.get('/persons', passport.authenticate('jwt', {
 
 router.get('/info', passport.authenticate('jwt', {
   session: false}), (req, res) => {
+    console.log(req.user, "req.user");
     Person
     .find({ "user_id": req.user.id })
     .exec()
@@ -155,7 +156,6 @@ router.get('/history', verifyUser, (req, res) => {
 router.post('/new', passport.authenticate('jwt', {
   session: false}), (req, res) => {
     let user = req.user;
-    // console.log(user, "choke");
     const requiredFields = ['question'];
   for(let i = 0; i < requiredFields.length; i++) {
     const field = requiredFields[i];
