@@ -21,29 +21,29 @@ const {User} = require('../users/model');
   //     .sort({created: -1})
   //     .exec()
   //     .then(persons => {
-  //       res.json(persons.map(person => person.apiRepr()));
-  //     })
-  //     .catch(err => {
-  //       console.error(err);
-  //       res.status(500).json({error: 'something went terribly wrong'});
-  //     });
-  // });
+//   //       res.json(persons.map(person => person.apiRepr()));
+//   //     })
+//   //     .catch(err => {
+//   //       console.error(err);
+//   //       res.status(500).json({error: 'something went terribly wrong'});
+//   //     });
+//   // });
   
-router.get('/persons', passport.authenticate('jwt', {
-  session: false}), (req, res) => {
-  Person
-    .find()
-    .exec()
-    .then(persons => {
-      res.json({
-        persons: persons.map( person => person.apiRepr() )
-      });
-    })
-    .catch(err => {
-      console.log(err);
-      return res.status(500).json({message: 'Internal server error'});
-    });
-});
+// router.get('/persons', passport.authenticate('jwt', {
+//   session: false}), (req, res) => {
+//   Person
+//     .find()
+//     .exec()
+//     .then(persons => {
+//       res.json({
+//         persons: persons.map( person => person.apiRepr() )
+//       });
+//     })
+//     .catch(err => {
+//       console.log(err);
+//       return res.status(500).json({message: 'Internal server error'});
+//     });
+// });
 
 router.get('/info', passport.authenticate('jwt', {
   session: false}), (req, res) => {
@@ -153,31 +153,31 @@ router.get('/history', verifyUser, (req, res) => {
   //     });
   // });
 
-router.post('/new', passport.authenticate('jwt', {
-  session: false}), (req, res) => {
-    let user = req.user;
-    const requiredFields = ['question'];
-  for(let i = 0; i < requiredFields.length; i++) {
-    const field = requiredFields[i];
-    if(!(field in req.body)) {
-      const message = `The value for \`${field}\` is missing.`
-      console.error(message);
-      return res.status(400).send(message);
-    }
-  }
-  Person
-    .create({
-      question: req.body.question,
-      user_id: user.id,
-    })
-    .then(
-      habitEntry => res.status(201).json(habitEntry.apiRepr())
-    )
-    .catch(err => {
-      console.error(err);
-      return res.status(500).json({message: 'Internal server error'});
-    });
-});
+// router.post('/new', passport.authenticate('jwt', {
+//   session: false}), (req, res) => {
+//     let user = req.user;
+//     const requiredFields = ['question'];
+//   for(let i = 0; i < requiredFields.length; i++) {
+//     const field = requiredFields[i];
+//     if(!(field in req.body)) {
+//       const message = `The value for \`${field}\` is missing.`
+//       console.error(message);
+//       return res.status(400).send(message);
+//     }
+//   }
+//   Person
+//     .create({
+//       question: req.body.question,
+//       user_id: user.id,
+//     })
+//     .then(
+//       res.render('history', {token: loggedIn})
+//     )
+//     .catch(err => {
+//       console.error(err);
+//       return res.status(500).json({message: 'Internal server error'});
+//     });
+// });
   
 router.put('/:id/', (req, res) => {  //p002
   if(req.params.id !== req.body.id) {

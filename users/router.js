@@ -76,30 +76,94 @@ const verifyUser = (req, res, next) => {
 	}
   };
   
-  router.get('/:username', verifyUser, (req, res) => {
-		if (req.validUser) {
-			User
-			.findOne({ "username": req.params.username})
-			.exec()
-			.then( user => {
-			// Waleed's code	
-			//   if (user.id !== req.user.id) {
-			//     res.render('landing')
-			//   }
-				res.render('profile', {
-					profile: user,
-					token: req.app.get('loggedIn')
-				});
-			})
-			.catch(err => {
-				console.log(err);
-				return res.status(500).json({message: 'Internal server error'});
+//   router.get('/:username', verifyUser, (req, res) => {
+// 		if (req.validUser) {
+// 			User
+// 			.findOne({ "username": req.params.username})
+// 			.exec()
+// 			.then( user => {
+// 			// Waleed's code	
+// 			//   if (user.id !== req.user.id) {
+// 			//     res.render('landing')
+// 			//   }
+// 				console.log("req", req)
+// 				res.render('', {
+// 					: req.user.firstName,
+// 					token: req.app.get('loggedIn')
+// 				});
+// 			})
+// 			.catch(err => {
+// 				console.log(err);
+// 				return res.status(500).json({message: 'Internal server error'});
+// 			});
+// 		} else {
+// 			console.log('You are not authorized to view this page.')
+// 			return res.status(500).json({message: 'Internal server error'});
+// 		}
+// 	});
+
+router.get('/:username', verifyUser, (req, res) => {
+	if (req.validUser) {
+		User
+		.findOne({ "username": req.params.username})
+		.exec()
+		.then( user => {
+		// Waleed's code	
+		//   if (user.id !== req.user.id) {
+		//     res.render('landing')
+		//   }
+			console.log(res, "res")
+			res.render('profile', {
+				profile: req.user.firstName,
+				id: req.user.id,
+				token: req.app.get('loggedIn')
 			});
-		} else {
-			console.log('You are not authorized to view this page.')
+		})
+		
+		.catch(err => {
+			console.log(err);
 			return res.status(500).json({message: 'Internal server error'});
-		}
+		});
+	} else {
+		console.log('You are not authorized to view this page.')
+		return res.status(500).json({message: 'Internal server error'});
+	}
+});
+
+  
+router.get('/new',  passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	res.render('new', {
+	  token: req.app.get('loggedIn')
 	});
+  });
+  
+  router.get('/history', verifyUser, (req, res) => {
+	res.render('profile', {
+	  token: req.app.get('loggedIn')
+	});
+  });
+  
+router.post('/new', passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	  const requiredFields = ['question'];
+	for(let i = 0; i < requiredFields.length; i++) {
+	  const field = requiredFields[i];
+	  if(!(field in req.body)) {
+		const message = `The value for \`${field}\` is missing.`
+		console.error(message);
+		return res.status(400).send(message);
+	  }
+	}
+	User.findOneAndUpdate({username: req.user.username}, {$push: {habits: req.body.question}})
+	  .then(
+		res.render('history', {token: loggedIn})
+	  )
+	  .catch(err => {
+		console.error(err);
+		return res.status(500).json({message: 'Internal server error'});
+	  });
+  });
 
 router.get('/', (req, res) => {  //c029
   return User.find()

@@ -63,11 +63,11 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-app.get('/habits/new', (req, res) => {
+app.get('/users/new', (req, res) => {
   res.render('new', {token: loggedIn});
 });
 
-app.get('/habits/history', (req, res) => {
+app.get('/users/history', (req, res) => {
   res.render('history', {token: loggedIn});
 });
 // app.get('/habits/:userid', passport.authenticate('jwt', {

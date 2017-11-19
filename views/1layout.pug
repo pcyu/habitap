@@ -17,8 +17,8 @@ html
         - let show = 'public'
         if token
           - show = 'private'
+        //- else if token && landing
         +navigation(helpers.navs, show)
-
     block content
 
     block footer
