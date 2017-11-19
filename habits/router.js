@@ -49,7 +49,7 @@ router.get('/info', passport.authenticate('jwt', {
   session: false}), (req, res) => {
     console.log(req.user, "req.user");
     Person
-    .find({ "user_id": req.user.id })
+    .find({ user_id: req.user.id })
     .exec()
     .then(persons => {
       res.json({
@@ -168,6 +168,7 @@ router.post('/new', passport.authenticate('jwt', {
   Person
     .create({
       question: req.body.question,
+      user_id: user.id,
     })
     .then(
       habitEntry => res.status(201).json(habitEntry.apiRepr())
