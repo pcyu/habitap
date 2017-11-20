@@ -112,7 +112,7 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-			console.log(res, "res")
+		console.log(req.user.habits, "kappa")
 			res.render('profile', {
 				profile: req.user.firstName,
 				id: req.user.id,

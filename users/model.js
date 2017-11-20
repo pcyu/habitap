@@ -7,23 +7,20 @@ const userSchema = mongoose.Schema({
       default: '',
       type: String
     },
-    habits: [
-      {
-        question: {type: String, required: true},
-        isactive: Boolean,
-        start: {
-          month: Number,
-          day: Number,
-          year: Number
-        },
-        //c038
-        finish: {
-          month: Number,
-          day: Number,
-          year: Number
-        },  
-      }
-    ],
+    habits: Array,
+        // question: {type: String, required: true},
+        // isactive: Boolean,
+        // start: {
+        //   month: Number,
+        //   day: Number,
+        //   year: Number
+        // },
+        // //c038
+        // finish: {
+        //   month: Number,
+        //   day: Number,
+        //   year: Number
+        // },  
     lastName: {
       required: true,
       default: '',
@@ -44,6 +41,7 @@ userSchema.methods.apiRepr = function() {
     return {
         id: this._id,
         username: this.username || '',
+        habits: this.habits || '',
         firstName: this.firstName || '',
         lastName: this.lastName || ''
     };
