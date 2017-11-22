@@ -75,32 +75,6 @@ const verifyUser = (req, res, next) => {
 		next();
 	}
   };
-  
-//   router.get('/:username', verifyUser, (req, res) => {
-// 		if (req.validUser) {
-// 			User
-// 			.findOne({ "username": req.params.username})
-// 			.exec()
-// 			.then( user => {
-// 			// Waleed's code	
-// 			//   if (user.id !== req.user.id) {
-// 			//     res.render('landing')
-// 			//   }
-// 				console.log("req", req)
-// 				res.render('', {
-// 					: req.user.firstName,
-// 					token: req.app.get('loggedIn')
-// 				});
-// 			})
-// 			.catch(err => {
-// 				console.log(err);
-// 				return res.status(500).json({message: 'Internal server error'});
-// 			});
-// 		} else {
-// 			console.log('You are not authorized to view this page.')
-// 			return res.status(500).json({message: 'Internal server error'});
-// 		}
-// 	});
 
 router.get('/:username', verifyUser, (req, res) => {
 	if (req.validUser) {
@@ -112,10 +86,14 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-		console.log(req.user.habits, "kappa")
+		console.log(user, "kappa")
 			res.render('profile', {
-				profile: req.user.firstName,
-				id: req.user.id,
+				profile: user.firstName,
+				id: user.id,
+				habits: user.habits[0],
+				habits1: user.habits[1],
+				habits2: user.habits[2],
+				habits3: user.habits[3],
 				token: req.app.get('loggedIn')
 			});
 		})
@@ -130,16 +108,28 @@ router.get('/:username', verifyUser, (req, res) => {
 	}
 });
 
+router.get('/history', verifyUser, (req, res) => {
+	console.log(req, "peter")
+	User
+	.findOne({ "username": req.params.username})
+	.exec()
+	.then( user => {
+		console.log(user, "fdaf")
+		res.render('history', {token: loggedIn}, {
+			profile: user.firstName,
+			id: user.id,
+			habits: user.habits[0],
+			habits1: user.habits[1],
+			habits2: user.habits[2],
+			habits3: user.habits[3],
+			token: req.app.get('loggedIn')
+		})
+	});
+});
   
 router.get('/new',  passport.authenticate('jwt', {
 	session: false}), (req, res) => {
 	res.render('new', {
-	  token: req.app.get('loggedIn')
-	});
-  });
-  
-  router.get('/history', verifyUser, (req, res) => {
-	res.render('profile', {
 	  token: req.app.get('loggedIn')
 	});
   });
@@ -157,7 +147,7 @@ router.post('/new', passport.authenticate('jwt', {
 	}
 	User.findOneAndUpdate({username: req.user.username}, {$push: {habits: req.body.question}})
 	  .then(
-		res.render('history', {token: loggedIn})
+			res.redirect('/users/history')
 	  )
 	  .catch(err => {
 		console.error(err);

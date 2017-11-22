@@ -35,10 +35,11 @@ router.post(
   '/login',
   // The user provides a username and password to login
   passport.authenticate('local', {    
-    failureRedirect: '/login',
+    failureRedirect: '/auth/login',
     session: false
   }),
   (req, res, next) => {
+    console.log(req, "shinji")
     const _token = createAuthToken(req.user.apiRepr());
     let username = req.body.username;
     res.cookie('token', _token);        

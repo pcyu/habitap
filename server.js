@@ -8,7 +8,6 @@ const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');
 const {User} = require('./users/model');
-const {Persons} = require('./habits/model');
 const jwt = require('jsonwebtoken');
 const {JWT_SECRET} = require('./config');
 
@@ -17,7 +16,6 @@ mongoose.Promise = global.Promise;
 const {PORT, DATABASE_URL} = require('./config');
 const {router: authRouter, localStrategy, jwtStrategy, isLoggedIn} = require('./auth');
 const {router: userRouter} = require('./users');
-const {router: habitRouter} = require('./habits');
 
 const app = express();
 
@@ -63,13 +61,29 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-app.get('/users/new', (req, res) => {
+const verifyUser = (req, res, next) => {
+	try {
+		const token = req.headers.authorization || req.cookies.token;
+		// const token = req.cookies.auth;
+		const {user} = jwt.verify(token, JWT_SECRET);
+		req.user = user;
+		req.validUser = req.params.username === user.username ? true : false;
+		console.log('yeaaaaaa!');
+		next();
+	} catch (e) {
+		console.log('error!');
+		next();
+	}
+  };
+
+app.get('/users/history', verifyUser, (req, res) => {
+  res.render('history', {token: loggedIn});
+});
+
+app.get('/users/new', verifyUser, (req, res) => {
   res.render('new', {token: loggedIn});
 });
 
-app.get('/users/history', (req, res) => {
-  res.render('history', {token: loggedIn});
-});
 // app.get('/habits/:userid', passport.authenticate('jwt', {
 //   session: false}),(req, res) => {
 //   User
@@ -90,7 +104,6 @@ app.get('/users/history', (req, res) => {
 // });
 
 app.use('/auth', authRouter);
-app.use('/habits', habitRouter);
 app.use('/users', userRouter);
 
 // app.get('/habit', passport.authenticate('jwt', {
