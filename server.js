@@ -77,6 +77,7 @@ const verifyUser = (req, res, next) => {
   };
 
 app.get('/users/history', verifyUser, (req, res) => {
+  console.log(req, "req")
   res.render('history', {token: loggedIn});
 });
 

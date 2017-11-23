@@ -111,7 +111,7 @@ router.get('/:username', verifyUser, (req, res) => {
 router.get('/history', verifyUser, (req, res) => {
 	console.log(req, "peter")
 	User
-	.findOne({ "username": req.params.username})
+	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
 		console.log(user, "fdaf")
