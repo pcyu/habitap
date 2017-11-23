@@ -108,31 +108,17 @@ router.get('/:username', verifyUser, (req, res) => {
 	}
 });
 
-router.get('/history', verifyUser, (req, res) => {
-	console.log(req, "peter")
-	User
-	.findOne({ "username": req.user.username})
-	.exec()
-	.then( user => {
-		console.log(user, "fdaf")
-		res.render('history', {token: loggedIn}, {
-			profile: user.firstName,
-			id: user.id,
-			habits: user.habits[0],
-			habits1: user.habits[1],
-			habits2: user.habits[2],
-			habits3: user.habits[3],
-			token: req.app.get('loggedIn')
-		})
-	});
-});
+// router.get('/history', verifyUser, (req, res) => {
+// 		res.render('history', {
+// 			token: req.app.get('loggedIn')
+// 		})
+// 	});
   
-router.get('/new',  passport.authenticate('jwt', {
-	session: false}), (req, res) => {
-	res.render('new', {
-	  token: req.app.get('loggedIn')
-	});
-  });
+// router.get('/new', verifyUser, (req, res) => {
+// 	res.render('new', {
+// 	  token: req.app.get('loggedIn')
+// 	});
+//   });
   
 router.post('/new', passport.authenticate('jwt', {
 	session: false}), (req, res) => {

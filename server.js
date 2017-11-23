@@ -77,12 +77,27 @@ const verifyUser = (req, res, next) => {
   };
 
 app.get('/users/history', verifyUser, (req, res) => {
-  console.log(req, "req")
-  res.render('history', {token: loggedIn});
+  User
+	.findOne({ "username": req.user.username})
+	.exec()
+	.then( user => {
+    console.log(user, "user2")
+    res.render('history', {
+      profile: user.firstName,
+      id: user.id,
+      habits: user.habits[0],
+      habits1: user.habits[1],
+      habits2: user.habits[2],
+      habits3: user.habits[3],
+      token: req.app.get('loggedIn')
+  });
+  });
 });
 
 app.get('/users/new', verifyUser, (req, res) => {
-  res.render('new', {token: loggedIn});
+  res.render('new', {
+    token: req.app.get('loggedIn')
+  });
 });
 
 // app.get('/habits/:userid', passport.authenticate('jwt', {
