@@ -10,7 +10,6 @@ const path = require('path');
 const router = express.Router();
 const {JWT_SECRET} = require('../config');
 const {User} = require('./model');
-
 const app = express();  //c038
 
 router.use(cookieParser());
@@ -90,10 +89,7 @@ router.get('/:username', verifyUser, (req, res) => {
 			res.render('profile', {
 				profile: user.firstName,
 				id: user.id,
-				habits: user.habits[0],
-				habits1: user.habits[1],
-				habits2: user.habits[2],
-				habits3: user.habits[3],
+				habits: user.habits,
 				token: req.app.get('loggedIn')
 			});
 		})

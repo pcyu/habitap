@@ -5,7 +5,5 @@ block content
     h2  Page
     div Welcome #{profile}!
     div #{id}
-    div Habit Question: #{habits}
-    div Habit Question: #{habits1}
-    div Habit Question: #{habits2}
-    div Habit Question: #{habits3}
+    each question in habits
+      div #{question}

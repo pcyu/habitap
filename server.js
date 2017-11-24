@@ -85,10 +85,7 @@ app.get('/users/history', verifyUser, (req, res) => {
     res.render('history', {
       profile: user.firstName,
       id: user.id,
-      habits: user.habits[0],
-      habits1: user.habits[1],
-      habits2: user.habits[2],
-      habits3: user.habits[3],
+      habits: user.habits,
       token: req.app.get('loggedIn')
   });
   });

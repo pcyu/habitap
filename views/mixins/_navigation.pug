@@ -6,7 +6,7 @@ mixin navigation( navs = [], type = 'public' )
     span
   nav
     ul.nav-bar
-      each nav in navs
-        if nav.type.indexOf(type) >= 0
+      each peter in navs
+        if peter.type.indexOf(type) >= 0
           li
-            a(href=`${nav.path}`) #{nav.name}
+            a(href=`${peter.path}`) #{peter.name}
