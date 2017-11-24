@@ -85,11 +85,11 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-		console.log(user, "kappa")
+		console.log(user.habits, "iterate")
 			res.render('profile', {
 				profile: user.firstName,
 				id: user.id,
-				habits: user.habits,
+				habits: req.user.habits,
 				token: req.app.get('loggedIn')
 			});
 		})
