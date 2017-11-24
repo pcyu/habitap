@@ -14,7 +14,6 @@ const app = express();  //c038
 
 router.use(cookieParser());
 
-
 //  ===========================================================================
 //                                     DELETE
 //  ===========================================================================
@@ -43,14 +42,6 @@ router.delete('/:id', (req, res) => {
 //  ===========================================================================
 //                                       GET
 //  ===========================================================================
-
-router.get('/logout', (req, res) => {
-	res.cookie("token", "", {expires: new Date() });
-	res.render('logout', {
-			user: req.user,
-			message: "You are now logged out."
-	})
-});
 
 function loggedIn(req, res, next) {
 	if (req.user) {
@@ -87,7 +78,7 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   }
 		console.log(user.habits, "iterate")
 			res.render('profile', {
-				profile: user.firstName,
+				firstName: user.firstName,
 				id: user.id,
 				habits: req.user.habits,
 				token: req.app.get('loggedIn')
@@ -102,19 +93,7 @@ router.get('/:username', verifyUser, (req, res) => {
 		console.log('You are not authorized to view this page.')
 		return res.status(500).json({message: 'Internal server error'});
 	}
-});
-
-// router.get('/history', verifyUser, (req, res) => {
-// 		res.render('history', {
-// 			token: req.app.get('loggedIn')
-// 		})
-// 	});
-  
-// router.get('/new', verifyUser, (req, res) => {
-// 	res.render('new', {
-// 	  token: req.app.get('loggedIn')
-// 	});
-//   });
+})
   
 router.post('/new', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
@@ -142,22 +121,6 @@ router.get('/', (req, res) => {  //c029
     .then(users => res.json(users.map(user => user.apiRepr())))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
-
-router.get('/:id', (req, res) => {
-	User
-		.findById(req.params.id)
-		.exec()
-		.then( user => {
-				console.log(user._id)
-			res.json({
-				user: user._id
-			})
-		})
-		.catch(err => {
-			console.log(err);
-			return res.status(500).json({message: 'Internal server error'});
-		});
-  });
   
 //  ===========================================================================
 //                                      POST

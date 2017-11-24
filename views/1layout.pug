@@ -17,7 +17,6 @@ html
         - let show = 'public'
         if token
           - show = 'private'
-        //- else if token && landing
         +navigation(helpers.navs, show)
     block content
 
@@ -27,4 +26,3 @@ html
     block scripts
       script(src="/node_modules/jquery/dist/jquery.min.js")
       script(src="/dist/app.min.js")
-  

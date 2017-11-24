@@ -83,7 +83,7 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.then( user => {
     console.log(user, "user2")
     res.render('history', {
-      profile: user.firstName,
+      firstName: user.firstName,
       id: user.id,
       habits: user.habits,
       token: req.app.get('loggedIn')
