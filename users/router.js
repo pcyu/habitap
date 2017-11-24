@@ -262,8 +262,11 @@ router.post('/register', jsonParser, (req, res) => {
 				});
 		})
 		.then(user => {
-				return res.status(201).json(user.apiRepr());
-		})
+			console.log
+			res.render('registersuccess', {
+				username: user.username
+			});
+		})	
 		.catch(err => {  //c035
 				if (err.reason === 'ValidationError') {
 						return res.status(err.code).json(err);
