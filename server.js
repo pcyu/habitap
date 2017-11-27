@@ -81,7 +81,10 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    console.log(user.habits, "user2")
+    console.log(user.habits[0].question, "single question")
+      for (let i = 0; i < user.habits.length; i++) {
+        console.log(user.habits[i].question, "each question is output")
+      }
     res.render('history', {
       firstName: user.firstName,
       id: user.id,
