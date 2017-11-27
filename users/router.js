@@ -106,15 +106,24 @@ router.post('/new', passport.authenticate('jwt', {
 		return res.status(400).send(message);
 	  }
 	}
-	User.findOneAndUpdate({username: req.user.username}, {$push: {habits: req.body.question}})
-	  .then(
-			res.redirect('/users/history')
-	  )
-	  .catch(err => {
-		console.error(err);
-		return res.status(500).json({message: 'Internal server error'});
-	  });
-  });
+	User.findOneAndUpdate(
+		{username: req.user.username}, 
+		{
+			$push: {
+				habits: {
+					$each: [ { question: req.body.question, startDate: Date.now() } ]
+				}
+			}
+		}
+	)
+	.then(
+		res.redirect('/users/history')
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
 
 router.get('/', (req, res) => {  //c029
   return User.find()
