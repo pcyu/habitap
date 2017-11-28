@@ -4,5 +4,13 @@ block content
   div.y-template
     h2 Profile Page
     div Welcome #{firstName}!
+    div How did you do with your goals yesterday?
     each question in habits
-      div #{question}
+      div #{question.question}
+        form.daily
+          div
+            p Yes
+            input(type='radio',name='habit',value='yes')
+          div
+            p No
+            input(type='radio',name='habit',value='no')

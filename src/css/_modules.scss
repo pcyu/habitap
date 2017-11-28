@@ -85,3 +85,18 @@ li {
     width: 25%;
   }
 }
+
+p {
+  .daily & {
+    border: 1px solid blue;
+    display: inline-block;
+  }
+}
+
+div {
+  .daily & {
+    float: left;
+    text-align: center;
+    width: 50%;
+  }
+}

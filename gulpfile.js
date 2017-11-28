@@ -23,7 +23,7 @@ let source = {
 
 let destination = {
   public: './public',
-  views: './public/views'
+  views: './views'
 }
 
 gulp.task('html', () => {
@@ -51,8 +51,11 @@ gulp.task('js', () => {
 
 gulp.task('pug', () => {  
   return gulp.src(source.pug)
+      .pipe(sourcemaps.init())
       .pipe(pug())
-      .pipe(gulp.dest(destination.views));
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(destination.public))
+      .pipe(livereload());
 });
 
 gulp.task('sass', () => {
@@ -66,13 +69,12 @@ gulp.task('sass', () => {
     .pipe(livereload());
 });
 
-
 gulp.task('watch', () => {
   livereload.listen();
   gulp.watch(source.html, ['html']);
   gulp.watch(source.js, ['js']);
   gulp.watch(source.scss, ['sass']);
-  gulp.watch(source.pug, ['pug']);
+  // gulp.watch(source.pug, ['pug']);
   return nodemon({
     script: 'server.js'
   });
