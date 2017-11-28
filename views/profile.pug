@@ -4,9 +4,9 @@ block content
   div.y-template
     h2 Profile Page
     div Welcome #{firstName}!
-    div How did you do with your goals yesterday?
-    each question in habits
-      div #{question.question}
+    div How did you do with your goals today?
+    each index in habits
+      div #{index.question}
         form.daily
           div
             p Yes

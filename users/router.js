@@ -80,7 +80,7 @@ router.get('/:username', verifyUser, (req, res) => {
 			res.render('profile', {
 				firstName: user.firstName,
 				id: user.id,
-				habits: req.user.habits,
+				habits: user.habits,
 				token: req.app.get('loggedIn')
 			});
 		})
