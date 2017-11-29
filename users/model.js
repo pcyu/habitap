@@ -1,21 +1,18 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
+const habitSchema = mongoose.Schema({
+    question: {type: String},
+    date: { type : Date, default: Date.now }
+});
+
 const userSchema = mongoose.Schema({
     firstName: {
       required: true,
       default: '',
       type: String
     },
-    habits: Array,
-        question: {type: String},
-        // isactive: Boolean,
-        // //c038
-        // finish: {
-        //   month: Number,
-        //   day: Number,
-        //   year: Number
-        // },  
+    habits: [habitSchema],
     lastName: {
       required: true,
       default: '',

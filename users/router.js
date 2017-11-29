@@ -111,7 +111,7 @@ router.post('/new', passport.authenticate('jwt', {
 		{
 			$push: {
 				habits: {
-					$each: [ { question: req.body.question, startDate: Date.now() } ]
+					$each: [ { question: req.body.question } ]
 				}
 			}
 		}
