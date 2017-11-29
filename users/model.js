@@ -3,7 +3,8 @@ const mongoose = require('mongoose');
 
 const habitSchema = mongoose.Schema({
     question: {type: String},
-    date: { type : Date, default: Date.now }
+    date: { type : Date, default: Date.now },
+    dailyCheck: Array,
 });
 
 const userSchema = mongoose.Schema({

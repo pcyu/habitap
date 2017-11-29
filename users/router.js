@@ -79,6 +79,7 @@ router.get('/:username', verifyUser, (req, res) => {
 		console.log(user.habits, "iterate")
 			res.render('profile', {
 				firstName: user.firstName,
+				username: user.username,
 				id: user.id,
 				habits: user.habits,
 				token: req.app.get('loggedIn')
