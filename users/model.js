@@ -13,7 +13,13 @@ const userSchema = mongoose.Schema({
       type: String
     },
     habits: [habitSchema],
-    dailyCheck: Array,
+    dailyCheck: [
+        {   _id: false,
+            id: String,
+            answer: String,
+            date: { type : Date, default: Date.now }
+        }
+    ],
     lastName: {
       required: true,
       default: '',

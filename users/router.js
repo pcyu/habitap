@@ -99,9 +99,9 @@ router.get('/:username', verifyUser, (req, res) => {
 
 router.post('/:username/:habit', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
-	console.log(req.params.habit, "matt")
+	console.log(req.body, "matt")
 	User.update({ "username": req.params.username},  
-						{ $push: { "dailyCheck": req.params.habit, "time": Date.now() } }
+						{ $push: { "dailyCheck": { id: req.params.habit, answer: req.body.habit} } }
 	)
 	.then(
 		res.redirect('/users/history')
