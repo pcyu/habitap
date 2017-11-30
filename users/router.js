@@ -9,6 +9,7 @@ const passport = require('passport');
 const path = require('path');
 const router = express.Router();
 const {JWT_SECRET} = require('../config');
+const {Habit} = require('./model');
 const {User} = require('./model');
 const app = express();  //c038
 
@@ -76,7 +77,7 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-		console.log(user.habits, "iterate")
+		console.log(user.username, "iterate")
 			res.render('profile', {
 				firstName: user.firstName,
 				username: user.username,
@@ -95,6 +96,21 @@ router.get('/:username', verifyUser, (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 })
+
+router.post('/:username/:habit', passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	console.log(req.params.habit, "matt")
+	User.update({ "username": req.params.username},  
+						{ $push: { "dailyCheck": req.params.habit, "time": Date.now() } }
+	)
+	.then(
+		res.redirect('/users/history')
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
   
 router.post('/new', passport.authenticate('jwt', {
 	session: false}), (req, res) => {

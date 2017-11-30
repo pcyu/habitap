@@ -3,8 +3,7 @@ const mongoose = require('mongoose');
 
 const habitSchema = mongoose.Schema({
     question: {type: String},
-    date: { type : Date, default: Date.now },
-    dailyCheck: Array,
+    date: { type : Date, default: Date.now }
 });
 
 const userSchema = mongoose.Schema({
@@ -14,6 +13,7 @@ const userSchema = mongoose.Schema({
       type: String
     },
     habits: [habitSchema],
+    dailyCheck: Array,
     lastName: {
       required: true,
       default: '',
@@ -35,6 +35,7 @@ userSchema.methods.apiRepr = function() {
         id: this._id,
         username: this.username || '',
         habits: this.habits || '',
+        dailyCheck: this.dailyCheck || '',
         firstName: this.firstName || '',
         lastName: this.lastName || ''
     };

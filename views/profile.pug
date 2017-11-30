@@ -7,11 +7,12 @@ block content
     div How did you do with your goals today?
     each index in habits
       div #{index.question}
-        form.daily
+      div #{index._id}
+        form.daily(action=`/users/${username}/${index._id}` method='post')
           div
             p Yes
             input(type='radio',name='habit',value='yes')
           div
             p No
             input(type='radio',name='habit',value='no')
-            input(type='submit',name='_put',class='login-button',value='Submit')
+          input(type='submit',habit=`${index._id}`,class='login-button',value='Submit')
