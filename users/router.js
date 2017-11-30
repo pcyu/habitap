@@ -114,6 +114,7 @@ router.post('/:username/:habit', passport.authenticate('jwt', {
   
 router.post('/new', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
+		console.log(req, "REQ")
 	  const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
 	  const field = requiredFields[i];
@@ -134,7 +135,7 @@ router.post('/new', passport.authenticate('jwt', {
 		}
 	)
 	.then(
-		res.redirect('/users/history')
+		res.redirect(`/users/${req.user.username}`)
 	)
 	.catch(err => {
 	console.error(err);

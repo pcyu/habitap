@@ -41,11 +41,10 @@ router.post(
   (req, res, next) => {
     console.log(req, "shinji")
     const _token = createAuthToken(req.user.apiRepr());
-    let username = req.body.username;
     res.cookie('token', _token);        
     // res.json({profile}); 
     loggedIn = true;
-    res.redirect(`/users/${username}`);
+    res.redirect(`/users/${req.body.username}`);
     // });
   }
 );
