@@ -28,7 +28,7 @@ router.delete('/:id', (req, res) => {
       }
     })
     .exec()
-    .then( person => {
+    .then( user => {
       const message = `204 / The document with id ${req.params.id} has been deleted`;
       console.log(message);
       return res.json(message).end();
@@ -105,6 +105,26 @@ router.post('/:username/:habit', passport.authenticate('jwt', {
 	)
 	.then(
 		res.redirect('/users/history')
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
+router.post('/:username/delete/:habit', passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	console.log(req, "req2")
+	User.update(
+		{username: req.user.username}, 
+		{
+				$pull: {
+					"habits": { _id: req.params.habit }
+				}
+			}
+	)
+	.then(
+		res.redirect(`/users/delete`)
 	)
 	.catch(err => {
 	console.error(err);
