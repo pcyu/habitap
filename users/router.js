@@ -111,6 +111,26 @@ router.post('/:username/:habit', passport.authenticate('jwt', {
 	return res.status(500).json({message: 'Internal server error'});
 	});
 });
+
+router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	console.log(req, "req2")
+	User.findOneAndUpdate(
+		{username: req.user.username}, 
+		{
+				habits: {
+					$pull: { _id: req.params.habit }
+				}
+			}
+	)
+	.then(
+		res.redirect(`/users/delete`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
   
 router.post('/new', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
