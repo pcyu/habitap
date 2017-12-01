@@ -28,7 +28,7 @@ router.delete('/:id', (req, res) => {
       }
     })
     .exec()
-    .then( person => {
+    .then( user => {
       const message = `204 / The document with id ${req.params.id} has been deleted`;
       console.log(message);
       return res.json(message).end();
@@ -112,14 +112,14 @@ router.post('/:username/:habit', passport.authenticate('jwt', {
 	});
 });
 
-router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
+router.post('/:username/delete/:habit', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
 	console.log(req, "req2")
-	User.findOneAndUpdate(
+	User.update(
 		{username: req.user.username}, 
 		{
-				habits: {
-					$pull: { _id: req.params.habit }
+				$pull: {
+					"habits": { _id: req.params.habit }
 				}
 			}
 	)

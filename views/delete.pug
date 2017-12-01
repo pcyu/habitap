@@ -6,5 +6,5 @@ block content
     each index in habits
       div #{index.question}
       div #{index._id}
-        form.daily(action=`/users/${username}/delete/${index._id}` method='delete')
+        form.daily(action=`/users/${username}/delete/${index._id}` method='post')
           input(type='submit',habit=`${index._id}`,class='login-button',value='Delete')
