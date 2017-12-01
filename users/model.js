@@ -1,10 +1,10 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-const habitSchema = mongoose.Schema({
-    question: {type: String},
-    date: { type : Date, default: Date.now }
-});
+// const habitSchema = mongoose.Schema({
+//     question: {type: String},
+//     date: { type : Date, default: Date.now }
+// });
 
 const userSchema = mongoose.Schema({
     firstName: {
@@ -12,7 +12,11 @@ const userSchema = mongoose.Schema({
       default: '',
       type: String
     },
-    habits: [habitSchema],
+    habits: [
+        {   question: String,
+            date: { type : Date, default: Date.now }
+        }
+    ],
     dailyCheck: [
         {   _id: false,
             id: String,

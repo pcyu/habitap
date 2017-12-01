@@ -112,8 +112,7 @@ router.post('/:username/:habit', passport.authenticate('jwt', {
 	});
 });
   
-router.post('/new', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
+router.post('/new', verifyUser, (req, res) => {
 		console.log(req, "REQ")
 	  const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
@@ -124,12 +123,12 @@ router.post('/new', passport.authenticate('jwt', {
 		return res.status(400).send(message);
 	  }
 	}
-	User.findOneAndUpdate(
-		{username: req.user.username}, 
+	User.update(
+		{"username": req.user.username}, 
 		{
 			$push: {
-				habits: {
-					$each: [ { question: req.body.question } ]
+				"habits": {
+					question: req.body.question
 				}
 			}
 		}
