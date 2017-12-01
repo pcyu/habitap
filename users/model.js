@@ -1,11 +1,6 @@
 const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
-// const habitSchema = mongoose.Schema({
-//     question: {type: String},
-//     date: { type : Date, default: Date.now }
-// });
-
 const userSchema = mongoose.Schema({
     firstName: {
       required: true,
