@@ -16,6 +16,7 @@ const userSchema = mongoose.Schema({
         {   _id: false,
             id: String,
             answer: String,
+            question: String,
             date: { type : Date, default: Date.now }
         }
     ],
