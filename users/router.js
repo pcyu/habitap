@@ -133,7 +133,7 @@ router.post('/:username/delete/:habit/:question', passport.authenticate('jwt', {
 });
   
 router.post('/:username/update/:habit/:question', verifyUser, (req, res) => {
-		console.log(req, "update")
+		console.log(req.params, "update")
 	  const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
 	  const field = requiredFields[i];
@@ -147,9 +147,9 @@ router.post('/:username/update/:habit/:question', verifyUser, (req, res) => {
 		{username: req.user.username, "habits._id": req.params.habit}, 
 		{
 			$set: {
-				"habits": {
-					question: req.body.question
-				}
+				"habits": [{
+					"question": req.body.question
+				}]
 			}
 		}
 	)
