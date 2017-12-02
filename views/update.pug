@@ -1,0 +1,11 @@
+extends 1layout
+
+block content
+  div.y-template
+    h2 Update Habit Entry
+    each index in habits
+      div #{index.question}
+      div #{index._id}
+        form.daily(action=`/users/${username}/update/${index._id}/${index.question}` method='post')
+          input(type='text' name='question' placeholder='Change Habit Question' required)
+          input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Update')

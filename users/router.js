@@ -132,6 +132,36 @@ router.post('/:username/delete/:habit/:question', passport.authenticate('jwt', {
 	});
 });
   
+router.post('/:username/update/:habit/:question', verifyUser, (req, res) => {
+		console.log(req, "update")
+	  const requiredFields = ['question'];
+	for(let i = 0; i < requiredFields.length; i++) {
+	  const field = requiredFields[i];
+	  if(!(field in req.body)) {
+		const message = `The value for \`${field}\` is missing.`
+		console.error(message);
+		return res.status(400).send(message);
+	  }
+	}
+	User.update(
+		{username: req.user.username, "habits._id": req.params.habit}, 
+		{
+			$set: {
+				"habits": {
+					question: req.body.question
+				}
+			}
+		}
+	)
+	.then(
+		res.redirect(`/users/${req.user.username}`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
 router.post('/new', verifyUser, (req, res) => {
 		console.log(req, "REQ")
 	  const requiredFields = ['question'];
