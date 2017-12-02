@@ -148,7 +148,7 @@ router.post('/:username/update/:habit/:question', verifyUser, (req, res) => {
 		{
 			$set: {
 				"habits": [{
-					"question": req.body.question
+					"question": req.body.question, "_id": req.params.habit
 				}]
 			}
 		}
