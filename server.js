@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser'); 
 const express = require('express');
 const helpers = require('./helpers');
+const methodOverride = require('method-override');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
@@ -46,6 +47,9 @@ app.use((req, res, next) => {
 // view engine set to pug
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
+
+// allow method overrides
+app.use(methodOverride('_method'));
 
 // set our paths
 app.use('/dist', express.static(__dirname + '/public'));

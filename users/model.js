@@ -8,17 +8,19 @@ const userSchema = mongoose.Schema({
       type: String
     },
     habits: [
-        {   question: String,
-            date: { type : Date, default: Date.now }
-        }
-    ],
-    dailyCheck: [
-        {   _id: false,
+      {
+        question: String,
+        date: { type : Date, default: Date.now },
+        dailyCheck: [
+          {
+            _id: false,
             id: String,
             answer: String,
             question: String,
             date: { type : Date, default: Date.now }
-        }
+          }
+        ]
+      }
     ],
     lastName: {
       required: true,

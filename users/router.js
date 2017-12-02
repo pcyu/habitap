@@ -12,6 +12,8 @@ const {JWT_SECRET} = require('../config');
 const {Habit} = require('./model');
 const {User} = require('./model');
 const app = express();  //c038
+const methodOverride = require('method-override');
+app.use(methodOverride('_method'));
 
 router.use(cookieParser());
 
@@ -132,27 +134,23 @@ router.post('/:username/delete/:habit/:question', passport.authenticate('jwt', {
 	});
 });
   
-router.post('/:username/update/:habit/:question', verifyUser, (req, res) => {
-		console.log(req.params, "update")
-	  const requiredFields = ['question'];
-	for(let i = 0; i < requiredFields.length; i++) {
-	  const field = requiredFields[i];
-	  if(!(field in req.body)) {
-		const message = `The value for \`${field}\` is missing.`
-		console.error(message);
-		return res.status(400).send(message);
-	  }
-	}
-	User.update(
-		{username: req.user.username, "habits._id": req.params.habit}, 
-		{
-			$set: {
-				"habits": [{
-					"question": req.body.question, "_id": req.params.habit
-				}]
-			}
-		}
-	)
+router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
+	console.log(req.params, "update")
+  // const requiredFields = ['question'];
+	// for(let i = 0; i < requiredFields.length; i++) {
+	//   const field = requiredFields[i];
+	//   if(!(field in req.body)) {
+	// 	const message = `The value for \`${field}\` is missing.`
+	// 	console.error(message);
+	// 	return res.status(400).send(message);
+	//   }
+	// }
+  User.update(
+    {username: req.params.username, "habits._id": req.params.habit_id},
+    { $push: 
+      {"habits.$.dailyCheck": req.body.habit}
+    }
+  )
 	.then(
 		res.redirect(`/users/${req.user.username}`)
 	)
