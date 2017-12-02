@@ -4,11 +4,12 @@ block content
   div.y-template
     h2 Profile Page
     div Welcome #{firstName}!
+    div #{id}
     div How did you do with your goals today?
     each index in habits
       div #{index.question}
       div #{index._id}
-        form.daily(action=`/users/${username}/${index._id}/${index.question}` method='post')
+        form.daily(action=`/users/${username}/update/${index._id}/?_method=PUT` method='post')
           div
             p Yes
             input(type='radio',name='habit',value='yes')
