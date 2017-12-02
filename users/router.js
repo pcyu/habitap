@@ -114,11 +114,11 @@ router.post('/:username/:habit/:question', passport.authenticate('jwt', {
 	});
 });
 
-router.post('/:username/delete/:habit/:question', passport.authenticate('jwt', {
+router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
 	console.log(req, "req2")
 	User.update(
-		{username: req.user.username}, 
+		{username: req.params.username}, 
 		{
 				$pull: {
 					"habits": { _id: req.params.habit}
