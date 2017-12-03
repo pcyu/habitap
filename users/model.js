@@ -1,5 +1,4 @@
 const bcrypt = require('bcryptjs');
-const moment = require('moment');
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
@@ -15,7 +14,7 @@ const userSchema = mongoose.Schema({
         dailyCheck: [
           { _id: false,
             answer: String,
-            time: String,
+            time: String
           }
         ]
       }
