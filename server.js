@@ -5,6 +5,7 @@ const express = require('express');
 const helpers = require('./helpers');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const moment = require('moment');
 const morgan = require('morgan');
 const passport = require('passport');
 const path = require('path');

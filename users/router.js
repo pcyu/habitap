@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const jsonParser = bodyParser.json();
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 const passport = require('passport');
 const path = require('path');
 const router = express.Router();
@@ -292,7 +293,7 @@ router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
   User.update(
     {username: req.params.username, "habits._id": req.params.habit_id},
     { $push: 
-      {"habits.$.dailyCheck": {answer: req.body.habit, date: Date.now()}}
+      {"habits.$.dailyCheck": {answer: req.body.habit, time: moment().format('LL')}}
     }
   )
 	.then(
