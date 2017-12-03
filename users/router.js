@@ -20,25 +20,24 @@ router.use(cookieParser());
 //  ===========================================================================
 //                                     DELETE
 //  ===========================================================================
-router.delete('/:id', (req, res) => {
-  User
-    .findByIdAndRemove(req.params.id, function(err, value) {
-      if(err) {
-        const message = `It appears that the document with id (${req.params.id}) does not exist.`;
-        console.error(message);
-        return res.status(400).send(message);
-      }
-    })
-    .exec()
-    .then( user => {
-      const message = `204 / The document with id ${req.params.id} has been deleted`;
-      console.log(message);
-      return res.json(message).end();
-    })
-    .catch(err => {
-      console.log(err);
-      return res.status(500).json({message: 'Internal server error'});
-    });
+router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	console.log(req, "req2")
+	User.update(
+		{username: req.params.username}, 
+		{
+				$pull: {
+					"habits": { _id: req.params.habit}
+				}
+			}
+	)
+	.then(
+		res.redirect(`/users/update`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
 });
 
 
@@ -98,97 +97,6 @@ router.get('/:username', verifyUser, (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 })
-
-router.post('/:username/:habit/:question', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
-	console.log(req.params, "matt")
-	User.update({ "username": req.params.username},  
-						{ $push: { "dailyCheck": { id: req.params.habit, question: req.params.question, answer: req.body.habit} } }
-	)
-	.then(
-		res.redirect('/users/history')
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
-
-router.post('/:username/delete/:habit/:question', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
-	console.log(req, "req2")
-	User.update(
-		{username: req.user.username}, 
-		{
-				$pull: {
-					"habits": { _id: req.params.habit}
-				}
-			}
-	)
-	.then(
-		res.redirect(`/users/delete`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
-  
-router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
-	console.log(req.params, "update")
-  // const requiredFields = ['question'];
-	// for(let i = 0; i < requiredFields.length; i++) {
-	//   const field = requiredFields[i];
-	//   if(!(field in req.body)) {
-	// 	const message = `The value for \`${field}\` is missing.`
-	// 	console.error(message);
-	// 	return res.status(400).send(message);
-	//   }
-	// }
-  User.update(
-    {username: req.params.username, "habits._id": req.params.habit_id},
-    { $push: 
-      {"habits.$.dailyCheck": req.body.habit}
-    }
-  )
-	.then(
-		res.redirect(`/users/${req.user.username}`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
-
-router.post('/new', verifyUser, (req, res) => {
-		console.log(req, "REQ")
-	  const requiredFields = ['question'];
-	for(let i = 0; i < requiredFields.length; i++) {
-	  const field = requiredFields[i];
-	  if(!(field in req.body)) {
-		const message = `The value for \`${field}\` is missing.`
-		console.error(message);
-		return res.status(400).send(message);
-	  }
-	}
-	User.update(
-		{"username": req.user.username}, 
-		{
-			$push: {
-				"habits": {
-					question: req.body.question
-				}
-			}
-		}
-	)
-	.then(
-		res.redirect(`/users/${req.user.username}`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
 
 router.get('/', (req, res) => {  //c029
   return User.find()
@@ -312,32 +220,88 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 });
 
+router.post('/:username/:habit/:question', passport.authenticate('jwt', {
+	session: false}), (req, res) => {
+	console.log(req.params, "matt")
+	User.update({ "username": req.params.username},  
+						{ $push: { "dailyCheck": { id: req.params.habit, question: req.params.question, answer: req.body.habit} } }
+	)
+	.then(
+		res.redirect('/users/history')
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
+router.post('/new', verifyUser, (req, res) => {
+		console.log(req, "REQ")
+	  const requiredFields = ['question'];
+	for(let i = 0; i < requiredFields.length; i++) {
+	  const field = requiredFields[i];
+	  if(!(field in req.body)) {
+		const message = `The value for \`${field}\` is missing.`
+		console.error(message);
+		return res.status(400).send(message);
+	  }
+	}
+	User.update(
+		{"username": req.user.username}, 
+		{
+			$push: {
+				"habits": {
+					question: req.body.question
+				}
+			}
+		}
+	)
+	.then(
+		res.redirect(`/users/${req.user.username}`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
 
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
 // TODO change to users
-router.put('/persons/:id', (req, res) => {
-  if(req.params.id !== req.body.id) {
-    const message = `The request path (${req.params.id}) and the request body id (${req.body.id}) must match.`;
-    console.error(message);
-    return res.status(400).json({message: message});
-  }
-  const toUpdate = {};
-  const updateableFields = ['name', 'habits', 'id'];
-  updateableFields.forEach(field => {
-    if(field in req.body) {
-      toUpdate[field] = req.body[field];
+router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
+	console.log(req.params, "update")
+  User.update(
+    {username: req.params.username, "habits._id": req.params.habit_id},
+    { $push: 
+      {"habits.$.dailyCheck": {answer: req.body.habit}}
     }
-  });
-  User
-    .findByIdAndUpdate(req.params.id, {$set: toUpdate})
-    .exec()
-    .then( person => res.json(204).end() )
-    .catch(err => {
-      console.error(err);
-      return res.status(500).json({message: 'Internal server error'})
-    });
+  )
+	.then(
+		res.redirect(`/users/${req.user.username}`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
+router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
+	console.log(req.params, "update")
+  User.update(
+    {username: req.params.username, "habits._id": req.params.habit_id},
+    { $push: 
+      {"habits.$.dailyCheck": {answer: req.body.habit, date: Date.now()}}
+    }
+  )
+	.then(
+		res.redirect(`/users/${req.user.username}`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
 });
 
 module.exports = {router};
