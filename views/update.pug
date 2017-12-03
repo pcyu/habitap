@@ -8,4 +8,6 @@ block content
       div #{index._id}
         form.daily(action=`/users/${username}/update/${index._id}/${index.question}` method='post')
           input(type='text' name='question' placeholder='Change Habit Question' required)
-          input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Update')
+          input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Edit')
+        form.daily(action=`/users/${username}/delete/${index._id}/?_method=DELETE` method='post')
+          input(type='submit',habit=`${index._id}`,class='login-button',value='Delete')
