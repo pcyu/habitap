@@ -1,0 +1,10 @@
+extends 1layout
+
+block content
+  div.y-template
+    h2 Delete Habit Entry
+    each index in habits
+      div #{index.question}
+      div #{index._id}
+        form.daily(action=`/users/${username}/delete/${index._id}/?_method=DELETE` method='post')
+          input(type='submit',habit=`${index._id}`,class='login-button',value='Delete')

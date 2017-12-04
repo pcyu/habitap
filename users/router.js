@@ -18,33 +18,8 @@ app.use(methodOverride('_method'));
 router.use(cookieParser());
 
 //  ===========================================================================
-//                                     DELETE
+//  													 ADDITIONAL MIDDLEWARE
 //  ===========================================================================
-router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
-	console.log(req, "req2")
-	User.update(
-		{username: req.params.username}, 
-		{
-				$pull: {
-					"habits": { _id: req.params.habit}
-				}
-			}
-	)
-	.then(
-		res.redirect(`/users/update`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
-
-
-//  ===========================================================================
-//                                       GET
-//  ===========================================================================
-
 function loggedIn(req, res, next) {
 	if (req.user) {
 			next();
@@ -66,7 +41,36 @@ const verifyUser = (req, res, next) => {
 		console.log('error!');
 		next();
 	}
-  };
+};
+//  ===========================================================================
+//                                     DELETE
+//  ===========================================================================
+
+//Delete habit question//
+
+router.delete('/:username/delete/:habit', verifyUser, (req, res) => {
+	console.log(req, "req2")
+	User.update(
+		{username: req.params.username}, 
+		{
+				$pull: {
+					"habits": { _id: req.params.habit}
+				}
+			}
+	)
+	.then(
+		res.redirect(`/users/delete`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+//  ===========================================================================
+//                                       GET
+//  ===========================================================================
+
+//Page that is loaded after successful log-in//
 
 router.get('/:username', verifyUser, (req, res) => {
 	if (req.validUser) {
@@ -78,13 +82,14 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-		console.log(user.habits, "user")
+		
 		for (let i = 0; i < user.habits.length; i++) {
 			for (let t = 0; t < user.habits[i].dailyCheck.length; t++) {
-				console.log(user.habits[i].dailyCheck[t].time, "time")
-				console.log(user.habits[i].dailyCheck[t].answer, "ans")
 				if (user.habits[i].dailyCheck[t].time === moment().format('LL')) {
 					res.redirect('/users/history')
+				}
+				else if (user.habits[i].dailyCheck[t].time !== moment().format('LL')) {
+					console.log(user.habits[i].dailyCheck[t].answer, "answer")
 				}
 			}
 		}	
@@ -96,7 +101,6 @@ router.get('/:username', verifyUser, (req, res) => {
 				token: req.app.get('loggedIn')
 			});
 		})
-		
 		.catch(err => {
 			console.log(err);
 			return res.status(500).json({message: 'Internal server error'});
@@ -106,20 +110,15 @@ router.get('/:username', verifyUser, (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 })
-
-router.get('/', (req, res) => {  //c029
-  return User.find()
-    .then(users => res.json(users.map(user => user.apiRepr())))
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
-});
-  
 //  ===========================================================================
 //                                      POST
 //  ===========================================================================
+
+//Register User//
+
 router.post('/register', jsonParser, (req, res) => {
 	const requiredFields = ['username', 'password'];
 	const missingField = requiredFields.find(field => !(field in req.body));
-
 	if (missingField) {
 			return res.status(422).json({
 					code: 422,
@@ -128,12 +127,10 @@ router.post('/register', jsonParser, (req, res) => {
 					location: missingField
 			});
 	}
-
 	const stringFields = ['username', 'password', 'firstName', 'lastName'];
 	const nonStringField = stringFields.find(
 			field => field in req.body && typeof req.body[field] !== 'string'
 	);
-
 	if (nonStringField) {
 			return res.status(422).json({
 					code: 422,
@@ -142,12 +139,10 @@ router.post('/register', jsonParser, (req, res) => {
 					location: nonStringField
 			});
 	}
-
 	const explicityTrimmedFields = ['username', 'password'];  //c030
 	const nonTrimmedField = explicityTrimmedFields.find(
 			field => req.body[field].trim() !== req.body[field]
 	);
-
 	if (nonTrimmedField) {
 			return res.status(422).json({
 					code: 422,
@@ -156,7 +151,6 @@ router.post('/register', jsonParser, (req, res) => {
 					location: nonTrimmedField
 			});
 	}
-
 	const sizedFields = {
 			username: {
 					min: 1
@@ -176,7 +170,6 @@ router.post('/register', jsonParser, (req, res) => {
 					'max' in sizedFields[field] &&
 					req.body[field].trim().length > sizedFields[field].max
 	);
-
 	if (tooSmallField || tooLargeField) {
 			return res.status(422).json({
 					code: 422,
@@ -189,11 +182,9 @@ router.post('/register', jsonParser, (req, res) => {
 					location: tooSmallField || tooLargeField
 			});
 	}
-
 	let {username, password, firstName = '', lastName = ''} = req.body;  //c032
 	firstName = firstName.trim();
 	lastName = lastName.trim();
-
 	return User.find({username})
 		.count()
 		.then(count => {
@@ -229,8 +220,7 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 });
 
-router.post('/:username/:habit/:question', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
+router.post('/:username/:habit/:question', verifyUser, (req, res) => {
 	console.log(req.params, "matt")
 	User.update({ "username": req.params.username},  
 						{ $push: { "dailyCheck": { id: req.params.habit, question: req.params.question, answer: req.body.habit} } }
@@ -243,6 +233,8 @@ router.post('/:username/:habit/:question', passport.authenticate('jwt', {
 	return res.status(500).json({message: 'Internal server error'});
 	});
 });
+
+//Post new habit question//
 
 router.post('/new', verifyUser, (req, res) => {
 		console.log(req, "REQ")
@@ -273,28 +265,11 @@ router.post('/new', verifyUser, (req, res) => {
 	return res.status(500).json({message: 'Internal server error'});
 	});
 });
-
-
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
-// TODO change to users
-router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
-	console.log(req.params, "update")
-  User.update(
-    {username: req.params.username, "habits._id": req.params.habit_id},
-    { $push: 
-      {"habits.$.dailyCheck": {answer: req.body.habit, time: moment().format('LL')}}
-    }
-  )
-	.then(
-		res.redirect(`/users/${req.user.username}`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
+
+//Record whether user has fulfilled daily habit goal//
 
 router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
 	console.log(req.params, "update")

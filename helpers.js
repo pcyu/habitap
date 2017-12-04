@@ -4,6 +4,6 @@ exports.navs = [
     {name: 'Login', path: '/auth/login', type: ['public']},
     {name: 'Habit History', path: '/users/history', type: ['private']},
     {name: 'New Habit', path: '/users/new', type: ['private']},
-    {name: 'Update Habit', path: '/users/update', type: ['private']},
+    {name: 'Delete Habit', path: '/users/delete', type: ['private']},
     {name: 'Logout', path: '/auth/logout', type: ['private']}
 ]   

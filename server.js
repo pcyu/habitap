@@ -109,12 +109,12 @@ app.get('/users/delete', verifyUser, (req, res) => {
   });
 });
 
-app.get('/users/update', verifyUser, (req, res) => {
+app.get('/users/delete', verifyUser, (req, res) => {
   User
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-  res.render('update', {
+  res.render('delete', {
     username: user.username,
     habits: user.habits,
     token: req.app.get('loggedIn')
