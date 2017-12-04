@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const jsonParser = bodyParser.json();
 const jwt = require('jsonwebtoken');
-const moment = require('moment');
 const passport = require('passport');
 const path = require('path');
 const router = express.Router();
@@ -14,8 +13,8 @@ const {Habit} = require('./model');
 const {User} = require('./model');
 const app = express();  //c038
 const methodOverride = require('method-override');
+const moment = require('moment');
 app.use(methodOverride('_method'));
-
 router.use(cookieParser());
 
 //  ===========================================================================
@@ -79,7 +78,16 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-		console.log(user.username, "iterate")
+		console.log(user.habits, "user")
+		for (let i = 0; i < user.habits.length; i++) {
+			for (let t = 0; t < user.habits[i].dailyCheck.length; t++) {
+				console.log(user.habits[i].dailyCheck[t].time, "time")
+				console.log(user.habits[i].dailyCheck[t].answer, "ans")
+				if (user.habits[i].dailyCheck[t].time === moment().format('LL')) {
+					res.redirect('/users/history')
+				}
+			}
+		}	
 			res.render('profile', {
 				firstName: user.firstName,
 				username: user.username,
@@ -276,7 +284,7 @@ router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
   User.update(
     {username: req.params.username, "habits._id": req.params.habit_id},
     { $push: 
-      {"habits.$.dailyCheck": {answer: req.body.habit}}
+      {"habits.$.dailyCheck": {answer: req.body.habit, time: moment().format('LL')}}
     }
   )
 	.then(
