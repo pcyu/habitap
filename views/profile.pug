@@ -9,7 +9,6 @@ block content
     each index in habits
       div #{index.question}
       div #{index._id}
-      div #{dailyCheck}
         form.daily(action=`/users/${username}/record/${index._id}/?_method=PUT` method='post')
           div
             p Yes
@@ -21,3 +20,5 @@ block content
             p Not Yet
             input(type='radio',name='habit',value='not yet')  
           input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Submit')
+        form.daily(action=`/users/${username}/delay/${index._id}/?_method=PUT` method='post')
+          input(type='submit',habit=`${index._id}`,class='login-button',value='delay')

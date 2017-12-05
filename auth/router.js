@@ -39,7 +39,6 @@ router.post(
     session: false
   }),
   (req, res, next) => {
-    console.log(req, "login")
     const _token = createAuthToken(req.user.apiRepr());
     res.cookie('token', _token);        
     // res.json({profile}); 
@@ -61,7 +60,6 @@ router.post(
 );
 
 const isLoggedIn = () => {
-  console.log('vv', loggedIn);
   return loggedIn;
 }
 

@@ -38,11 +38,11 @@
 //               type: 'GET',
 //               url: `${app.baseUrl}/protected`,
 //               success: (item) => {
-//                 console.log(item);
+//                 (item);
 //                 res();
 //               },
 //               error: (error) => {
-//                 console.log(error);
+//                 (error);
 //                 rej();
 //               }
 //             });
@@ -75,7 +75,7 @@
 // //              res();
 //             },
 //             error: (error) => {
-//               console.log(error);
+//               (error);
 // //              rej();
 //             }
 //           });
@@ -111,7 +111,7 @@
 // //              res();
 //             },
 //             error: (error) => {
-//               console.log(error);
+//               (error);
 //               $("#t-modal-login").removeClass("active");
 //               $("#t-modal-message").empty();
 //               $("#t-modal-message").addClass("active");
@@ -143,7 +143,7 @@
 //         $(document).on('click', '#t-logout', (e) => {
 //           e.preventDefault();
 //           localStorage.removeItem('jwToken');
-//           console.log(`You are now logged out.`);
+//           (`You are now logged out.`);
 //           app.profile.name ='';
 //           location.reload(true);
 //         });
@@ -180,7 +180,7 @@
 //               type: 'POST',
 //               url: `${app.baseUrl}/users/register`,
 //               success: (data) => {
-//                 console.log(`Thank you ${body.firstName} ${body.lastName}! Your account has been created.`);
+//                 (`Thank you ${body.firstName} ${body.lastName}! Your account has been created.`);
 //                 $('#firstName').val('');
 //                 $('#lastName').val('');
 //                 $('#username').val('');
@@ -197,7 +197,7 @@
 //                 res();
 //               },
 //               error: (error) => {
-//                 console.log(error);
+//                 (error);
 //                 $("#t-modal-sign-up").removeClass("active");
 //                 $("#t-modal-message").empty();
 //                 $("#t-modal-message").addClass("active");

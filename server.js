@@ -73,10 +73,10 @@ const verifyUser = (req, res, next) => {
 		const {user} = jwt.verify(token, JWT_SECRET);
 		req.user = user;
 		req.validUser = req.params.username === user.username ? true : false;
-		console.log('yeaaaaaa!');
+		('yeaaaaaa!');
 		next();
 	} catch (e) {
-		console.log('error!');
+		('error!');
 		next();
 	}
   };
@@ -120,7 +120,7 @@ app.get('/users/new', verifyUser, (req, res) => {
 //   User
 //   //write code that checks if the cookie matches the token
 //     .findOne({ "username": req.params.username}).exec().then( user => {
-//       console.log(user._id, "users")
+//       (user._id, "users")
 //       if (user.id !== req.user.id) {
 //         res.render('landing')
 //       }
@@ -129,7 +129,7 @@ app.get('/users/new', verifyUser, (req, res) => {
 //       });
 //     })
 //     .catch(err => {
-//       console.log(err);
+//       (err);
 //       return res.status(500).json({message: 'Internal server error'});
 //     });
 // });
@@ -175,7 +175,7 @@ function closeServer() {
   return mongoose.disconnect()
     .then( () => {
       let promise = new Promise( (resolve, reject) => {
-        console.log('Closing server...');
+        ('Closing server...');
         server.close(err => {
           if(err) {
             return reject(err);

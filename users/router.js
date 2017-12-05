@@ -35,10 +35,8 @@ const verifyUser = (req, res, next) => {
 		const {user} = jwt.verify(token, JWT_SECRET);
 		req.user = user;
 		req.validUser = req.params.username === user.username ? true : false;
-		console.log('yeaaaaaa!');
 		next();
 	} catch (e) {
-		console.log('error!');
 		next();
 	}
 };
@@ -49,7 +47,6 @@ const verifyUser = (req, res, next) => {
 //Delete habit question//
 
 router.delete('/:username/delete/:habit', verifyUser, (req, res) => {
-	console.log(req, "delete")
 	User.update(
 		{username: req.params.username}, 
 		{
@@ -73,6 +70,9 @@ router.delete('/:username/delete/:habit', verifyUser, (req, res) => {
 //Page that is loaded after successful log-in//
 
 router.get('/:username', verifyUser, (req, res) => {
+	// let today = moment().format('LL');
+	// console.log(today, "today")
+	// console.log(req.user.habits[0].dailyCheck[0].completedToday, "req")
 	if (req.validUser) {
 		User
 		.findOne({ "username": req.params.username})
@@ -82,19 +82,19 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-
-		function dailyCheck() {	
-			for (const index of user.habits) {
+			console.log(user.habits.length, "user.habits.length")
+			if (user.habits.length < 1) {
+				res.redirect('/users/new')
+			}
+			// for (const index of user.habits) {
+			// 	console.log(index, "index")
+			// }
 				
-				console.log(index, "array")
-				user.habits.forEach(function(entry, index, array){
-					console.log(entry.dailyCheck.length, "entry.dailyCheck.length")
-					if (entry.dailyCheck.length < 1) {
-						console.log("no entries in your daily check")
-					} else if (entry.dailyCheck.length < 15) {
-						console.log("you have entries")
-					} else { return "you are over capacity"}
-				})
+				// user.habits.forEach(function(entry, index, array){
+				// 	if (entry.dailyCheck.length < 1) {
+				// 	} else if (entry.dailyCheck.length < 15) {
+				// 	} else { return "you are over capacity"}
+				// })
 
 				// for (const value of index.dailyCheck) {
 				// 	console.log(index.dailyCheck, "dc")
@@ -111,21 +111,15 @@ router.get('/:username', verifyUser, (req, res) => {
 				// }
 
 					// index.dailyCheck.forEach(function(date){
-					// 	console.log(date.time === moment().format('LL'), "4-moment")
-					// 	if (date.time !== moment().format('LL')) {
-					// 		return "please record an answer for today"
-					// 	}
-					// 	else if (date.time === moment().format('LL')) {
-					// 		return "today has already been recorded"
-					// 	}
+					// 	console.log(date, "date")
+					// 	if (date.time === moment().format('LL')) {
+					// 		return "today has already been submitted"
+					// 	} else { return "no submissions today"}
 					// });
-			}
-		}
-
+		// }
 			res.render('profile', {
 				firstName: user.firstName,
 				username: user.username,
-				dailyCheck: dailyCheck(),
 				id: user.id,
 				habits: user.habits,
 				token: req.app.get('loggedIn')
@@ -237,7 +231,6 @@ router.post('/register', jsonParser, (req, res) => {
 				});
 		})
 		.then(user => {
-			console.log
 			res.render('registersuccess', {
 				username: user.username
 			});
@@ -267,7 +260,6 @@ router.post('/register', jsonParser, (req, res) => {
 //Post new habit question//
 
 router.post('/new', verifyUser, (req, res) => {
-		console.log(req, "-create-new-habit")
 	  const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
 	  const field = requiredFields[i];
@@ -302,12 +294,41 @@ router.post('/new', verifyUser, (req, res) => {
 //Record whether user has fulfilled daily habit goal//
 
 router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
-	console.log(req.user, "update")
-  User.update(
-    {username: req.params.username, "habits._id": req.params.habit_id},
-    { $addToSet: 
-      {"habits.$.dailyCheck": {answer: req.body.habit, time: moment().format('LL')}}
+	let _answer = req.body.habit;
+	
+	// let _completedToday = function(){
+	// 	if (_answer === "not yet") {
+	// 		return false
+	// 	} else {return true}
+	// }
+	
+	User.update(
+		{username: req.params.username, "habits._id": req.params.habit_id},
+		// {username: req.params.username, "habits._id": req.params.habit_id},
+		// { $set: 
+		// 	{"habits.$.completedToday": _completedToday()}
+    // },
+		{ $addToSet: 
+			{"habits.$.dailyCheck": {answer: _answer, time: moment().format('LL')}}
     }
+	)
+	.then(
+		res.redirect(`/users/${req.user.username}`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
+router.put('/:username/delay/:habit_id', verifyUser, (req, res) => {
+	User.update(
+		{username: req.params.username, "habits._id": req.params.habit_id},
+		{
+			$set: {
+				"habits.$.completedToday": false
+			}
+		}
 	)
 	.then(
 		res.redirect(`/users/${req.user.username}`)
