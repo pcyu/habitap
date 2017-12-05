@@ -84,11 +84,13 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   }
 		if (user.habits.length < 1) {
 			return res.redirect('/users/new')
+			res.finished = true
 		}
 		for (const index of user.habits) {
 			index.dailyCheck.forEach(function(object) {
 				if (object.time === moment().format('LL')) {
 					return res.redirect('/users/history')
+					res.finished = true
 				}
 			})
 
@@ -316,7 +318,7 @@ router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
     }
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}`)
+		res.redirect(`/users/history`)
 	)
 	.catch(err => {
 	console.error(err);
@@ -334,7 +336,7 @@ router.put('/:username/delay/:habit_id', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}`)
+		res.redirect(`/users/history`)
 	)
 	.catch(err => {
 	console.error(err);
