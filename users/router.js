@@ -82,14 +82,17 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-			console.log(user.habits.length, "user.habits.length")
-			if (user.habits.length < 1) {
-				res.redirect('/users/new')
-			}
-			// for (const index of user.habits) {
-			// 	console.log(index, "index")
-			// }
-				
+		if (user.habits.length < 1) {
+			return res.redirect('/users/new')
+		}
+		for (const index of user.habits) {
+			index.dailyCheck.forEach(function(object) {
+				if (object.time === moment().format('LL')) {
+					return res.redirect('/users/history')
+				}
+			})
+
+		}		
 				// user.habits.forEach(function(entry, index, array){
 				// 	if (entry.dailyCheck.length < 1) {
 				// 	} else if (entry.dailyCheck.length < 15) {
