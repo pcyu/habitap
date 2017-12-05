@@ -39,7 +39,7 @@ router.post(
     session: false
   }),
   (req, res, next) => {
-    console.log(req, "shinji")
+    console.log(req, "login")
     const _token = createAuthToken(req.user.apiRepr());
     res.cookie('token', _token);        
     // res.json({profile}); 

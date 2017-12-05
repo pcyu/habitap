@@ -9,6 +9,7 @@ block content
     each index in habits
       div #{index.question}
       div #{index._id}
+      div #{dailyCheck}
         form.daily(action=`/users/${username}/record/${index._id}/?_method=PUT` method='post')
           div
             p Yes
