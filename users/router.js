@@ -86,15 +86,15 @@ router.get('/:username', verifyUser, (req, res) => {
 		function dailyCheck() {	
 			for (const index of user.habits) {
 				
-				// console.log(index, "array")
-				// user.habits.forEach(function(entry, index, array){
-				// 	console.log(entry.dailyCheck.length, "entry.dailyCheck.length")
-				// 	if (entry.dailyCheck.length < 1) {
-				// 		console.log("no entries in your daily check")
-				// 	} else if (entry.dailyCheck.length < 15) {
-				// 		console.log("you have entries")
-				// 	} else { return "you are over capacity"}
-				// })
+				console.log(index, "array")
+				user.habits.forEach(function(entry, index, array){
+					console.log(entry.dailyCheck.length, "entry.dailyCheck.length")
+					if (entry.dailyCheck.length < 1) {
+						console.log("no entries in your daily check")
+					} else if (entry.dailyCheck.length < 15) {
+						console.log("you have entries")
+					} else { return "you are over capacity"}
+				})
 
 				// for (const value of index.dailyCheck) {
 				// 	console.log(index.dailyCheck, "dc")
@@ -110,15 +110,15 @@ router.get('/:username', verifyUser, (req, res) => {
 				// 	} 
 				// }
 
-					index.dailyCheck.forEach(function(date){
-						console.log(date.time === moment().format('LL'), "4-moment")
-						if (date.time !== moment().format('LL')) {
-							return "please record an answer for today"
-						}
-						else if (date.time === moment().format('LL')) {
-							return "today has already been recorded"
-						}
-					});
+					// index.dailyCheck.forEach(function(date){
+					// 	console.log(date.time === moment().format('LL'), "4-moment")
+					// 	if (date.time !== moment().format('LL')) {
+					// 		return "please record an answer for today"
+					// 	}
+					// 	else if (date.time === moment().format('LL')) {
+					// 		return "today has already been recorded"
+					// 	}
+					// });
 			}
 		}
 
