@@ -82,19 +82,6 @@ router.get('/:username', verifyUser, (req, res) => {
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
 		//   }
-		if (user.habits.length < 1) {
-			return res.redirect('/users/new')
-			res.finished = true
-		}
-		for (const index of user.habits) {
-			index.dailyCheck.forEach(function(object) {
-				if (object.time === moment().format('LL')) {
-					return res.redirect('/users/history')
-					res.finished = true
-				}
-			})
-
-		}		
 				// user.habits.forEach(function(entry, index, array){
 				// 	if (entry.dailyCheck.length < 1) {
 				// 	} else if (entry.dailyCheck.length < 15) {
@@ -298,23 +285,20 @@ router.post('/new', verifyUser, (req, res) => {
 
 //Record whether user has fulfilled daily habit goal//
 
-router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
+router.put('/:username/record/:question', verifyUser, (req, res) => {
 	let _answer = req.body.habit;
 	
-	// let _completedToday = function(){
-	// 	if (_answer === "not yet") {
-	// 		return false
-	// 	} else {return true}
-	// }
+	let _completedToday = function(){
+		if (_answer === "not yet") {
+			return false
+		} else {return true}
+	}
 	
 	User.update(
-		{username: req.params.username, "habits._id": req.params.habit_id},
-		// { $set: 
-		// 	{"habits.$.completedToday": _completedToday()}
-    // }
-		{ $addToSet: 
-			{"habits.$.dailyCheck": {answer: _answer, time: moment().format('LL')}}
-    }
+		{username: req.params.username, "habits.question": req.params.question},
+			{ $addToSet: 
+				{"habits.$.dailyCheck": {answer: _answer, time: moment().format('LL'), question: req.params.question, completedToday: _completedToday()}}
+    	}
 	)
 	.then(
 		res.redirect(`/users/history`)
@@ -325,22 +309,22 @@ router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
 	});
 });
 
-router.put('/:username/delay/:habit_id', verifyUser, (req, res) => {
-	User.update(
-		{username: req.params.username, "habits._id": req.params.habit_id},
-		{
-			$set: {
-				"habits.$.completedToday": false
-			}
-		}
-	)
-	.then(
-		res.redirect(`/users/history`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
+// router.put('/:username/delay/:habit_id', verifyUser, (req, res) => {
+// 	User.update(
+// 		{username: req.params.username, "habits._id": req.params.habit_id},
+// 		{
+// 			$set: {
+// 				"habits.$.completedToday": false
+// 			}
+// 		}
+// 	)
+// 	.then(
+// 		res.redirect(`/users/history`)
+// 	)
+// 	.catch(err => {
+// 	console.error(err);
+// 	return res.status(500).json({message: 'Internal server error'});
+// 	});
+// });
 
 module.exports = {router};

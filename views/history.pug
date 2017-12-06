@@ -2,7 +2,23 @@ extends 1layout
 
 block content
   div.y-template
-    h2 Habit History Page
+    h2 History Page
     div Welcome #{firstName}!
+    div #{id}
+    div How did you do with your goals today?
     each index in habits
       div #{index.question}
+      div #{index._id}
+        form.daily(action=`/users/${username}/record/${index._id}/?_method=PUT` method='post')
+          div
+            p Yes
+            input(type='radio',name='habit',value='yes')
+          div
+            p No
+            input(type='radio',name='habit',value='no')
+          div
+            p Not Yet
+            input(type='radio',name='habit',value='not yet')  
+          input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Submit')
+        form.daily(action=`/users/${username}/delay/${index._id}/?_method=PUT` method='post')
+          input(type='submit',habit=`${index._id}`,class='login-button',value='delay')

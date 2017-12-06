@@ -15,6 +15,7 @@ const userSchema = mongoose.Schema({
         dailyCheck: [
           { _id: false,
             answer: String,
+            question: String, 
             time: String,
             completedToday: Boolean,
           }
