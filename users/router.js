@@ -78,6 +78,33 @@ router.get('/:username', verifyUser, (req, res) => {
 		.findOne({ "username": req.params.username})
 		.exec()
 		.then( user => {
+			for (const index of user.habits) {
+				// index.dailyCheck.forEach(function(object) {
+					// console.log(object.dailyCheck, "index")
+					// if (object.time === moment().format('LL')) {
+					if (index.dailyCheck.length < 1) { 
+						console.log(index, "nothing inside this dailycheck array")
+
+					} else if (index.dailyCheck.length > 0) {
+						console.log(index, "this has stuff in the dailycheck")
+						 let notCompletedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
+						for (const subindex of notCompletedQuestions) {
+						  console.log(subindex.question, "question")
+						  console.log(subindex.time, "time")
+						  console.log(subindex.answer, "answer")
+						}       
+					}
+				// })
+			}
+			// let notCompletedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
+			// for (const subindex of notCompletedQuestions) {
+			//   console.log(subindex.question, "question")
+			//   console.log(subindex.time, "time")
+			//   console.log(subindex.answer, "answer")
+			// }
+
+
+
 		// Waleed's code	
 		//   if (user.id !== req.user.id) {
 		//     res.render('landing')
@@ -266,7 +293,7 @@ router.post('/new', verifyUser, (req, res) => {
 		{
 			$push: {
 				"habits": {
-					question: req.body.question
+					question: req.body.question, dailyCheck: [{answer: req.body.answer, time: moment().format('LL'), question: req.body.question}]
 				}
 			}
 		}

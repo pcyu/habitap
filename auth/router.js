@@ -44,34 +44,10 @@ router.post(
     res.cookie('token', _token);        
     loggedIn = true;
 		if (req.user.habits.length < 1) {
-      console.log("no habits")
 			res.redirect('/users/new')
-		} else if (req.user.habits.length > 0) {
-      console.log(req.user.habits, "req.user.habits") 
-			for (const index of req.user.habits) {
-        let notCompletedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
-        console.log(notCompletedQuestions, "notCompletedQuestions")
-        for (const subindex of notCompletedQuestions) {
-          console.log(subindex.question, "question")
-          console.log(subindex.time, "time")
-          console.log(subindex.answer, "answer")
-        }
-			  // index.dailyCheck.forEach(function(object) {
-        //   console.log(index.dailyCheck.length, "index")
-				//   // if (object.time === moment().format('LL')) {
-        //   if (index.dailyCheck.length < 1) { 
-        //     console.log(object, "nothing inside this dailycheck array")
-				//   } else if (index.dailyCheck.length > 0) {
-        //     console.log("users-profile-page")       
-        //   }
-        // })
-      }	
+		} else {
       res.redirect(`/users/${req.body.username}`)
-      // res.redirect('/users/history')
-    } 
-    // else if () {
-
-    // }
+    }
   }
 );
 
