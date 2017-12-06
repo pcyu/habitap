@@ -309,10 +309,9 @@ router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
 	
 	User.update(
 		{username: req.params.username, "habits._id": req.params.habit_id},
-		// {username: req.params.username, "habits._id": req.params.habit_id},
 		// { $set: 
 		// 	{"habits.$.completedToday": _completedToday()}
-    // },
+    // }
 		{ $addToSet: 
 			{"habits.$.dailyCheck": {answer: _answer, time: moment().format('LL')}}
     }
