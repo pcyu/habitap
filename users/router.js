@@ -90,17 +90,16 @@ router.get('/:username', verifyUser, (req, res) => {
 								habits: delayedQuestions,
 								token: req.app.get('loggedIn')
 							});
-						} else if (subindex.time !== moment().format('LL')){
-							res.render('profile', {
-								firstName: user.firstName,
-								username: user.username,
-								id: user.id,
-								habits: user.habits,
-								token: req.app.get('loggedIn')
-							});
 						}
 					}
 			}
+				res.render('profile', {
+					firstName: user.firstName,
+					username: user.username,
+					id: user.id,
+					habits: user.habits,
+					token: req.app.get('loggedIn')
+				});
 		})
 		.catch(err => {
 			console.log(err);
