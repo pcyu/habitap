@@ -13,7 +13,7 @@ const userSchema = mongoose.Schema({
         startDate: { type : Date, default: Date.now },
         completedToday: Boolean,
         dailyCheck: [
-          { _id: false,
+          {
             answer: String,
             question: String, 
             time: String,

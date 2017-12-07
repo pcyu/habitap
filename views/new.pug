@@ -7,9 +7,9 @@ block content
     form.new-habit-entry(action='/users/new' method='POST')
       input(type='text' name='question' placeholder='Habit Question' required)
       p Yes
-        input(type='radio',name='answer',value='yes')
+        input(type='radio',name='answer',value='yes', required)
       p No
-        input(type='radio',name='answer',value='no')
+        input(type='radio',name='answer',value='no', required)
       p Not Yet
-        input(type='radio',name='answer',value='not yet')
+        input(type='radio',name='answer',value='not yet', required)
       input(type='submit' class='login-button' value='post')

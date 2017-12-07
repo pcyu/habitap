@@ -79,70 +79,28 @@ router.get('/:username', verifyUser, (req, res) => {
 		.exec()
 		.then( user => {
 			for (const index of user.habits) {
-				// index.dailyCheck.forEach(function(object) {
-					// console.log(object.dailyCheck, "index")
-					// if (object.time === moment().format('LL')) {
-					if (index.dailyCheck.length < 1) { 
-						console.log(index, "nothing inside this dailycheck array")
-
-					} else if (index.dailyCheck.length > 0) {
-						console.log(index, "this has stuff in the dailycheck")
-						 let notCompletedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
-						for (const subindex of notCompletedQuestions) {
-						  console.log(subindex.question, "question")
-						  console.log(subindex.time, "time")
-						  console.log(subindex.answer, "answer")
-						}       
+				let delayedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
+					for (const subindex of delayedQuestions) {
+						console.log(subindex, "subindex")
+						if (subindex.time === moment().format('LL')) {
+							res.render('revisedprofile', {
+								firstName: user.firstName,
+								username: user.username,
+								id: user.id,
+								habits: delayedQuestions,
+								token: req.app.get('loggedIn')
+							});
+						} else if (subindex.time !== moment().format('LL')){
+							res.render('profile', {
+								firstName: user.firstName,
+								username: user.username,
+								id: user.id,
+								habits: user.habits,
+								token: req.app.get('loggedIn')
+							});
+						}
 					}
-				// })
 			}
-			// let notCompletedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
-			// for (const subindex of notCompletedQuestions) {
-			//   console.log(subindex.question, "question")
-			//   console.log(subindex.time, "time")
-			//   console.log(subindex.answer, "answer")
-			// }
-
-
-
-		// Waleed's code	
-		//   if (user.id !== req.user.id) {
-		//     res.render('landing')
-		//   }
-				// user.habits.forEach(function(entry, index, array){
-				// 	if (entry.dailyCheck.length < 1) {
-				// 	} else if (entry.dailyCheck.length < 15) {
-				// 	} else { return "you are over capacity"}
-				// })
-
-				// for (const value of index.dailyCheck) {
-				// 	console.log(index.dailyCheck, "dc")
-				// 	if (index.dailyCheck.length < 1) {
-				// 		return "Please submit your first dailyCheck answer."
-				// 	// } else if (index.dailyCheck.length > 0) {
-				// 	// 	return "you have a daily check entry"
-				// 	// }
-				// 	} else if (value.time !== moment().format('LL')) {
-				// 		return "please submit a daily habit check for today"
-				// 	} else if (value.time === moment().format('LL')) {
-				// 		return "you have already submitted a daily habit check for today"
-				// 	} 
-				// }
-
-					// index.dailyCheck.forEach(function(date){
-					// 	console.log(date, "date")
-					// 	if (date.time === moment().format('LL')) {
-					// 		return "today has already been submitted"
-					// 	} else { return "no submissions today"}
-					// });
-		// }
-			res.render('profile', {
-				firstName: user.firstName,
-				username: user.username,
-				id: user.id,
-				habits: user.habits,
-				token: req.app.get('loggedIn')
-			});
 		})
 		.catch(err => {
 			console.log(err);
@@ -299,7 +257,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}`)
+		res.redirect(`/users/history`)
 	)
 	.catch(err => {
 	console.error(err);
@@ -313,6 +271,30 @@ router.post('/new', verifyUser, (req, res) => {
 //Record whether user has fulfilled daily habit goal//
 
 router.put('/:username/record/:question', verifyUser, (req, res) => {
+	let _answer = req.body.habit;
+	
+	let _completedToday = function(){
+		if (_answer === "not yet") {
+			return false
+		} else {return true}
+	}
+	
+	User.update(
+		{username: req.params.username, "habits.question": req.params.question},
+			{ $addToSet: 
+				{"habits.$.dailyCheck": {answer: _answer, time: moment().format('LL'), question: req.params.question, completedToday: _completedToday()}}
+    	}
+	)
+	.then(
+		res.redirect(`/users/history`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
+router.put('/:username/update/:question', verifyUser, (req, res) => {
 	let _answer = req.body.habit;
 	
 	let _completedToday = function(){
