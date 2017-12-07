@@ -10,7 +10,7 @@ const userSchema = mongoose.Schema({
     habits: [
       {
         question: String,
-        startDate: { type : Date, default: Date.now },
+        startDate: String,
         completedToday: Boolean,
         dailyCheck: [
           {

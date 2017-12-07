@@ -115,33 +115,9 @@ app.get('/users/new', verifyUser, (req, res) => {
   });
 });
 
-// app.get('/habits/:userid', passport.authenticate('jwt', {
-//   session: false}),(req, res) => {
-//   User
-//   //write code that checks if the cookie matches the token
-//     .findOne({ "username": req.params.username}).exec().then( user => {
-//       (user._id, "users")
-//       if (user.id !== req.user.id) {
-//         res.render('landing')
-//       }
-//       res.render('profile', {
-//         name: user.firstName
-//       });
-//     })
-//     .catch(err => {
-//       (err);
-//       return res.status(500).json({message: 'Internal server error'});
-//     });
-// });
 
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
-
-// app.get('/habit', passport.authenticate('jwt', {
-//   session: false}), (req, res) => {
-//     res.sendFile(__dirname+'/src/templates/habit.html');
-//   }
-// );
 
 app.use('*', (req, res) => {
   return res.status(404).json({

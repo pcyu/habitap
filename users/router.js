@@ -70,9 +70,6 @@ router.delete('/:username/delete/:habit', verifyUser, (req, res) => {
 //Page that is loaded after successful log-in//
 
 router.get('/:username', verifyUser, (req, res) => {
-	// let today = moment().format('LL');
-	// console.log(today, "today")
-	// console.log(req.user.habits[0].dailyCheck[0].completedToday, "req")
 	if (req.validUser) {
 		User
 		.findOne({ "username": req.params.username})
@@ -223,20 +220,6 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 });
 
-// router.post('/:username/:habit/:question', verifyUser, (req, res) => {
-// 	console.log(req.params, "matt")
-// 	User.update({ "username": req.params.username},  
-// 						{ $push: { "dailyCheck": { id: req.params.habit, question: req.params.question, answer: req.body.habit} } }
-// 	)
-// 	.then(
-// 		res.redirect('/users/history')
-// 	)
-// 	.catch(err => {
-// 	console.error(err);
-// 	return res.status(500).json({message: 'Internal server error'});
-// 	});
-// });
-
 //Post new habit question//
 
 router.post('/new', verifyUser, (req, res) => {
@@ -271,7 +254,7 @@ router.post('/new', verifyUser, (req, res) => {
 //                                       PUT
 //  ===========================================================================
 
-//Record whether user has fulfilled daily habit goal//
+//Record whether user has fulfilled daily habit goal.  Used in profile.pug
 
 router.put('/:username/record/:question', verifyUser, (req, res) => {
 	let _answer = req.body.habit;
@@ -297,6 +280,8 @@ router.put('/:username/record/:question', verifyUser, (req, res) => {
 	});
 });
 
+//Record whether user has fulfilled daily habit goal.  Used in revisedprofile.pug
+
 router.put('/:username/update/:question', verifyUser, (req, res) => {
 	let _answer = req.body.habit;
 	
@@ -320,23 +305,5 @@ router.put('/:username/update/:question', verifyUser, (req, res) => {
 	return res.status(500).json({message: 'Internal server error'});
 	});
 });
-
-// router.put('/:username/delay/:habit_id', verifyUser, (req, res) => {
-// 	User.update(
-// 		{username: req.params.username, "habits._id": req.params.habit_id},
-// 		{
-// 			$set: {
-// 				"habits.$.completedToday": false
-// 			}
-// 		}
-// 	)
-// 	.then(
-// 		res.redirect(`/users/history`)
-// 	)
-// 	.catch(err => {
-// 	console.error(err);
-// 	return res.status(500).json({message: 'Internal server error'});
-// 	});
-// });
 
 module.exports = {router};
