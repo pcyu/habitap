@@ -128,3 +128,9 @@ Think about how I want to get the habit entry to finish. Do I use a post request
 Make sure to change if your post request for a beginning date follows a different format than prescribed here.
 
 ### c040
+experimented with $set, but it changed the array to an object, so I changed it back to $addtoSet.  Not sure which mongo operator to invoke.  
+
+### c041
+added if statement: if user has no habits, then after login, user is redirected to habits/new.
+
+### c042

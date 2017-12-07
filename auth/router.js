@@ -1,11 +1,17 @@
+const config = require('../config');
 const cookieParser = require('cookie-parser');
 const express = require('express');
+const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const passport = require('passport');
-const jwt = require('jsonwebtoken');
-const config = require('../config');
 const app = express();
+const router = express.Router();
 app.use(cookieParser());
+
+
+//  ===========================================================================
+//                                       AUTH
+//  ===========================================================================
 
 const createAuthToken = user => {
   return jwt.sign({user}, config.JWT_SECRET, {
@@ -17,7 +23,9 @@ const createAuthToken = user => {
 
 let loggedIn = false;
 
-const router = express.Router();
+//  ===========================================================================
+//                                       GET
+//  ===========================================================================
 
 router.get('/login', (req, res) => {
   res.render('login');
@@ -32,6 +40,10 @@ router.get('/logout', (req, res) => {
   });
 });
 
+//  ===========================================================================
+//                                       POST
+//  ===========================================================================
+
 router.post(
   '/login',
   // The user provides a username and password to login
@@ -43,22 +55,12 @@ router.post(
     const _token = createAuthToken(req.user.apiRepr());
     res.cookie('token', _token);        
     loggedIn = true;
+    // c041
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
 		} else {
       res.redirect(`/users/${req.body.username}`)
     }
-  }
-);
-
-router.post(
-  '/refresh',
-  // The user exchanges an existing valid JWT for a new one with a later
-  // expiration
-  passport.authenticate('jwt', {session: false}),
-  (req, res) => {
-      const authToken = createAuthToken(req.user);
-      res.json({authToken});
   }
 );
 

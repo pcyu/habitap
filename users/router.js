@@ -78,21 +78,24 @@ router.get('/:username', verifyUser, (req, res) => {
 		.findOne({ "username": req.params.username})
 		.exec()
 		.then( user => {
-			for (const index of user.habits) {
-				let delayedQuestions = index.dailyCheck.filter(function(item) {return item.answer === "not yet" && item.time === moment().format('LL')})
-					for (const subindex of delayedQuestions) {
-						console.log(subindex, "subindex")
-						if (subindex.time === moment().format('LL')) {
-							res.render('revisedprofile', {
-								firstName: user.firstName,
-								username: user.username,
-								id: user.id,
-								habits: delayedQuestions,
-								token: req.app.get('loggedIn')
-							});
-						}
+			let delayedQuestions = [];
+			for (const habit of user.habits) {
+				for (const daily of habit.dailyCheck) {
+					if (daily.answer === "not yet" && daily.time === moment().format('LL')) {
+						delayedQuestions.push(daily)
 					}
-			}
+				}
+			} 
+			if (delayedQuestions.length > 0) {
+				console.log(delayedQuestions, "delayedQuestions")
+				res.render('revisedprofile', {
+					firstName: user.firstName,
+					username: user.username,
+					id: user.id,
+					habits: delayedQuestions,
+					token: req.app.get('loggedIn')
+				});
+			} else {
 				res.render('profile', {
 					firstName: user.firstName,
 					username: user.username,
@@ -100,6 +103,7 @@ router.get('/:username', verifyUser, (req, res) => {
 					habits: user.habits,
 					token: req.app.get('loggedIn')
 				});
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -304,7 +308,7 @@ router.put('/:username/update/:question', verifyUser, (req, res) => {
 	
 	User.update(
 		{username: req.params.username, "habits.question": req.params.question},
-			{ $addToSet: 
+			{ $addToSet: //c040 
 				{"habits.$.dailyCheck": {answer: _answer, time: moment().format('LL'), question: req.params.question, completedToday: _completedToday()}}
     	}
 	)
