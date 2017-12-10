@@ -78,11 +78,13 @@ router.get('/:username', verifyUser, (req, res) => {
 			let delayedQuestions = [];
 			for (const habit of user.habits) {
 				for (const daily of habit.dailyCheck) {
+					(console.log(habit.dailyCheck, "habit.dailyCheck"))
 					if (daily.answer === "not yet" && daily.time === moment().format('LL')) {
 						delayedQuestions.push(daily)
 					}
 				}
-			} 
+			}
+			// c042
 			if (delayedQuestions.length > 0) {
 				console.log(delayedQuestions, "delayedQuestions")
 				res.render('revisedprofile', {
@@ -92,6 +94,7 @@ router.get('/:username', verifyUser, (req, res) => {
 					habits: delayedQuestions,
 					token: req.app.get('loggedIn')
 				});
+				// c043
 			} else {
 				res.render('profile', {
 					firstName: user.firstName,
@@ -258,7 +261,9 @@ router.post('/new', verifyUser, (req, res) => {
 
 router.put('/:username/record/:question', verifyUser, (req, res) => {
 	let _answer = req.body.habit;
-	
+
+	// c044
+
 	let _completedToday = function(){
 		if (_answer === "not yet") {
 			return false

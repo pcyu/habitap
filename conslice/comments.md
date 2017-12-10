@@ -134,3 +134,10 @@ experimented with $set, but it changed the array to an object, so I changed it b
 added if statement: if user has no habits, then after login, user is redirected to habits/new.
 
 ### c042
+issue with the logic because i can't manage to pull the old dailycheck object with the "not yet" answer along with the object of today's date.
+
+### c043
+outputs profile page even if i already have a today's dailycheck answer "yes" along with today's date.
+
+### c044
+unsure if _completedToday() function is necessary anymore, but might need it in the future.

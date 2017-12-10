@@ -4,10 +4,9 @@ block content
   div.y-template
     h2 Revised Profile Page
     div Welcome #{firstName}!
-    div #{id}
     div How did you do with your goals today?
     each index in habits
-      div #{index.question}
+      div.dailyCheckHabit #{index.question}
         form.daily(action=`/users/${username}/update/${index.question}/?_method=PUT` method='post')
           div
             p Yes
@@ -18,4 +17,4 @@ block content
           div
             p Not Yet
             input(type='radio',name='habit',value='not yet')  
-          input(type='submit',habit=`${index}`,question=`${index.question}`,class='login-button',value='Submit')
+          input(type='submit',question=`${index.question}`,class='login-button',value='Submit')
