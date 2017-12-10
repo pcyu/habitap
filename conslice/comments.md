@@ -137,7 +137,7 @@ added if statement: if user has no habits, then after login, user is redirected 
 issue with the logic because i can't manage to pull the old dailycheck object with the "not yet" answer along with the object of today's date.
 
 ### c043
-outputs profile page even if i already have a today's dailycheck answer "yes" along with today's date.
+made it so that if there is a dailyCheck entry with today's date along with the answer being "yes" or "no" for each habit then will render a different template.
 
 ### c044
 unsure if _completedToday() function is necessary anymore, but might need it in the future.

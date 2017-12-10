@@ -76,17 +76,22 @@ router.get('/:username', verifyUser, (req, res) => {
 		.exec()
 		.then( user => {
 			let delayedQuestions = [];
+			let todaysQuestions = [];
 			for (const habit of user.habits) {
 				for (const daily of habit.dailyCheck) {
-					(console.log(habit.dailyCheck, "habit.dailyCheck"))
 					if (daily.answer === "not yet" && daily.time === moment().format('LL')) {
 						delayedQuestions.push(daily)
+					} else if (daily.time === moment().format('LL') && daily.answer === "yes" || "no") {
+						todaysQuestions.push(daily)
 					}
 				}
 			}
+			console.log(todaysQuestions, "today's questions");
+			console.log(todaysQuestions.length, "today's questions.length");
+			console.log(user.habits, "user.habits");
+			console.log(user.habits.length, "user.habits.length");
 			// c042
 			if (delayedQuestions.length > 0) {
-				console.log(delayedQuestions, "delayedQuestions")
 				res.render('revisedprofile', {
 					firstName: user.firstName,
 					username: user.username,
@@ -95,6 +100,14 @@ router.get('/:username', verifyUser, (req, res) => {
 					token: req.app.get('loggedIn')
 				});
 				// c043
+			} else if (todaysQuestions.length === user.habits.length) {
+				res.render('history', {
+					firstName: user.firstName,
+					username: user.username,
+					id: user.id,
+					habits: user.habits,
+					token: req.app.get('loggedIn')
+				})
 			} else {
 				res.render('profile', {
 					firstName: user.firstName,
@@ -246,7 +259,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/history`)
+		res.redirect(`/users/${req.user.username}`)
 	)
 	.catch(err => {
 	console.error(err);
@@ -277,7 +290,7 @@ router.put('/:username/record/:question', verifyUser, (req, res) => {
     	}
 	)
 	.then(
-		res.redirect(`/users/history`)
+		res.redirect(`/users/${req.params.username}`)
 	)
 	.catch(err => {
 	console.error(err);
@@ -303,7 +316,7 @@ router.put('/:username/update/:question', verifyUser, (req, res) => {
     	}
 	)
 	.then(
-		res.redirect(`/users/history`)
+		res.redirect(`/users/${req.params.username}`)
 	)
 	.catch(err => {
 	console.error(err);
