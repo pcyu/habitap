@@ -18,10 +18,14 @@ let loggedIn = false;
 
 const router = express.Router();
 
+
+//  ===========================================================================
+//                                       GET
+//  ===========================================================================
 router.get('/login', (req, res) => {
   res.render('login');
 });
-  
+
 router.get('/logout', (req, res) => {
   res.cookie("token", "", { expires: new Date() });
   loggedIn = false;
@@ -31,21 +35,22 @@ router.get('/logout', (req, res) => {
   });
 });
 
+
+//  ===========================================================================
+//                                      POST
+//  ===========================================================================
 router.post(
   '/login',
   // The user provides a username and password to login
-  passport.authenticate('local', {    
+  passport.authenticate('local', {
     failureRedirect: '/auth/login',
     session: false
   }),
   (req, res, next) => {
-    console.log(req, "shinji")
     const _token = createAuthToken(req.user.apiRepr());
-    res.cookie('token', _token);        
-    // res.json({profile}); 
+    res.cookie('token', _token);
     loggedIn = true;
-    res.redirect(`/users/${req.body.username}`);
-    // });
+    res.redirect(`/users/${req.body.username}/dailycheck`);
   }
 );
 
@@ -61,7 +66,6 @@ router.post(
 );
 
 const isLoggedIn = () => {
-  console.log('vv', loggedIn);
   return loggedIn;
 }
 

@@ -17,14 +17,14 @@ app.use(methodOverride('_method'));
 
 router.use(cookieParser());
 
+
 //  ===========================================================================
 //                                     DELETE
 //  ===========================================================================
 router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
-	console.log(req, "req2")
 	User.update(
-		{username: req.params.username}, 
+		{username: req.params.username},
 		{
 				$pull: {
 					"habits": { _id: req.params.habit}
@@ -60,26 +60,26 @@ const verifyUser = (req, res, next) => {
 		const {user} = jwt.verify(token, JWT_SECRET);
 		req.user = user;
 		req.validUser = req.params.username === user.username ? true : false;
-		console.log('yeaaaaaa!');
 		next();
 	} catch (e) {
 		console.log('error!');
 		next();
 	}
-  };
+};
 
-router.get('/:username', verifyUser, (req, res) => {
+router.get('/', (req, res) => {  //c029
+  return User.find()
+    .then(users => res.json(users.map(user => user.apiRepr())))
+    .catch(err => res.status(500).json({message: 'Internal server error'}));
+});
+
+router.get('/:username/dailycheck', verifyUser, (req, res) => {
 	if (req.validUser) {
 		User
 		.findOne({ "username": req.params.username})
 		.exec()
 		.then( user => {
-		// Waleed's code	
-		//   if (user.id !== req.user.id) {
-		//     res.render('landing')
-		//   }
-		console.log(user.username, "iterate")
-			res.render('profile', {
+			res.render('dailycheck', {
 				firstName: user.firstName,
 				username: user.username,
 				id: user.id,
@@ -87,7 +87,7 @@ router.get('/:username', verifyUser, (req, res) => {
 				token: req.app.get('loggedIn')
 			});
 		})
-		
+
 		.catch(err => {
 			console.log(err);
 			return res.status(500).json({message: 'Internal server error'});
@@ -98,12 +98,32 @@ router.get('/:username', verifyUser, (req, res) => {
 	}
 })
 
-router.get('/', (req, res) => {  //c029
-  return User.find()
-    .then(users => res.json(users.map(user => user.apiRepr())))
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
-});
-  
+router.get('/:username', verifyUser, (req, res) => {
+	if (req.validUser) {
+		User
+		.findOne({ "username": req.params.username})
+		.exec()
+		.then( user => {
+			res.render('profile', {
+				firstName: user.firstName,
+				username: user.username,
+				id: user.id,
+				habits: user.habits,
+				token: req.app.get('loggedIn')
+			});
+		})
+
+		.catch(err => {
+			console.log(err);
+			return res.status(500).json({message: 'Internal server error'});
+		});
+	} else {
+		console.log('You are not authorized to view this page.')
+		return res.status(500).json({message: 'Internal server error'});
+	}
+})
+
+
 //  ===========================================================================
 //                                      POST
 //  ===========================================================================
@@ -199,7 +219,7 @@ router.post('/register', jsonParser, (req, res) => {
 				return User.hashPassword(password);  //c034
 		})
 		.then(hash => {
-				return User.create({ 
+				return User.create({
 						username,
 						password: hash,
 						firstName,
@@ -207,11 +227,10 @@ router.post('/register', jsonParser, (req, res) => {
 				});
 		})
 		.then(user => {
-			console.log
 			res.render('registersuccess', {
 				username: user.username
 			});
-		})	
+		})
 		.catch(err => {  //c035
 				if (err.reason === 'ValidationError') {
 						return res.status(err.code).json(err);
@@ -222,12 +241,11 @@ router.post('/register', jsonParser, (req, res) => {
 
 router.post('/:username/:habit/:question', passport.authenticate('jwt', {
 	session: false}), (req, res) => {
-	console.log(req.params, "matt")
-	User.update({ "username": req.params.username},  
+	User.update({ "username": req.params.username},
 						{ $push: { "dailyCheck": { id: req.params.habit, question: req.params.question, answer: req.body.habit} } }
 	)
 	.then(
-		res.redirect('/users/history')
+		res.redirect('/history')
 	)
 	.catch(err => {
 	console.error(err);
@@ -236,8 +254,7 @@ router.post('/:username/:habit/:question', passport.authenticate('jwt', {
 });
 
 router.post('/new', verifyUser, (req, res) => {
-		console.log(req, "REQ")
-	  const requiredFields = ['question'];
+  const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
 	  const field = requiredFields[i];
 	  if(!(field in req.body)) {
@@ -247,7 +264,7 @@ router.post('/new', verifyUser, (req, res) => {
 	  }
 	}
 	User.update(
-		{"username": req.user.username}, 
+		{"username": req.user.username},
 		{
 			$push: {
 				"habits": {
@@ -257,7 +274,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}`)
+		res.redirect(`/users/${req.user.username}/dailycheck`)
 	)
 	.catch(err => {
 	console.error(err);
@@ -271,10 +288,9 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 // TODO change to users
 router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
-	console.log(req.params, "update")
   User.update(
     {username: req.params.username, "habits._id": req.params.habit_id},
-    { $push: 
+    { $push:
       {"habits.$.dailyCheck": {answer: req.body.habit}}
     }
   )
@@ -288,10 +304,9 @@ router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
 });
 
 router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
-	console.log(req.params, "update")
   User.update(
     {username: req.params.username, "habits._id": req.params.habit_id},
-    { $push: 
+    { $push:
       {"habits.$.dailyCheck": {answer: req.body.habit, date: Date.now()}}
     }
   )

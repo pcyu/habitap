@@ -1,6 +1,6 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
-const cookieParser = require('cookie-parser'); 
+const cookieParser = require('cookie-parser');
 const express = require('express');
 const helpers = require('./helpers');
 const methodOverride = require('method-override');
@@ -72,7 +72,6 @@ const verifyUser = (req, res, next) => {
 		const {user} = jwt.verify(token, JWT_SECRET);
 		req.user = user;
 		req.validUser = req.params.username === user.username ? true : false;
-		console.log('yeaaaaaa!');
 		next();
 	} catch (e) {
 		console.log('error!');
@@ -127,33 +126,8 @@ app.get('/users/new', verifyUser, (req, res) => {
   });
 });
 
-// app.get('/habits/:userid', passport.authenticate('jwt', {
-//   session: false}),(req, res) => {
-//   User
-//   //write code that checks if the cookie matches the token
-//     .findOne({ "username": req.params.username}).exec().then( user => {
-//       console.log(user._id, "users")
-//       if (user.id !== req.user.id) {
-//         res.render('landing')
-//       }
-//       res.render('profile', {
-//         name: user.firstName
-//       });
-//     })
-//     .catch(err => {
-//       console.log(err);
-//       return res.status(500).json({message: 'Internal server error'});
-//     });
-// });
-
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
-
-// app.get('/habit', passport.authenticate('jwt', {
-//   session: false}), (req, res) => {
-//     res.sendFile(__dirname+'/src/templates/habit.html');
-//   }
-// );
 
 app.use('*', (req, res) => {
   return res.status(404).json({

@@ -40,7 +40,6 @@ userSchema.methods.apiRepr = function() {
         id: this._id,
         username: this.username || '',
         habits: this.habits || '',
-        dailyCheck: this.dailyCheck || '',
         firstName: this.firstName || '',
         lastName: this.lastName || ''
     };

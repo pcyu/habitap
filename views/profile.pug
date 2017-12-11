@@ -3,17 +3,7 @@ extends 1layout
 block content
   div.y-template
     h2 Profile Page
+    h3 THIS PAGE INCLUDES PROFILE INFORMATION AS WELL AS A GRAPH SHOWING AN AGGREGATED STATUS OF HABIT KEEPING
     div Welcome #{firstName}!
     div #{id}
-    div How did you do with your goals today?
-    each index in habits
-      div #{index.question}
-      div #{index._id}
-        form.daily(action=`/users/${username}/record/${index._id}/?_method=PUT` method='post')
-          div
-            p Yes
-            input(type='radio',name='habit',value='yes')
-          div
-            p No
-            input(type='radio',name='habit',value='no')
-          input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Submit')
+    div Here is a nice graph that shows how you are doing so far.
