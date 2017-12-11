@@ -9,6 +9,7 @@ const userSchema = mongoose.Schema({
     },
     habits: [
       {
+        habitId: String,
         question: String,
         startDate: { type : Date, default: Date.now },
         dailyCheck: [

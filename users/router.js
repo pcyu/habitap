@@ -13,33 +13,34 @@ const {Habit} = require('./model');
 const {User} = require('./model');
 const app = express();  //c038
 const methodOverride = require('method-override');
+const uuidv1 = require('uuid/v1');
 app.use(methodOverride('_method'));
 
 router.use(cookieParser());
 
-
 //  ===========================================================================
 //                                     DELETE
 //  ===========================================================================
-router.delete('/:username/delete/:habit', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
-	User.update(
-		{username: req.params.username},
-		{
-				$pull: {
-					"habits": { _id: req.params.habit}
-				}
-			}
-	)
-	.then(
-		res.redirect(`/users/update`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
-
+// router.delete('/:username/delete/:habit', passport.authenticate('jwt',
+// 	{session: false}), (req, res) => {
+// 	User.update(
+// 		{username: req.params.username},
+// 		{
+// 			$pull: {
+// 				habits: {habitId: req.params.habit}
+// 				// "habits": {_id: '5a22bb0a0c463e6d1ea68c7e'}
+// 			}
+// 		}
+// 	)
+// 	.exec()
+// 	.then(item => {
+// 		console.log(`204 / The habit has been deleted.`)
+// 		res.redirect(`/users/${req.user.username}/dailycheck`)
+// 	})
+// 	.catch(err => {
+// 		return res.status(500).json({message: 'Internal server error.'});
+// 	})
+// });
 
 //  ===========================================================================
 //                                       GET
@@ -268,7 +269,8 @@ router.post('/new', verifyUser, (req, res) => {
 		{
 			$push: {
 				"habits": {
-					question: req.body.question
+					question: req.body.question,
+					habitId: uuidv1()
 				}
 			}
 		}
@@ -277,8 +279,8 @@ router.post('/new', verifyUser, (req, res) => {
 		res.redirect(`/users/${req.user.username}/dailycheck`)
 	)
 	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
+		console.error(err);
+		return res.status(500).json({message: 'Internal server error'});
 	});
 });
 
@@ -286,6 +288,27 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
+router.put('/:username/delete/:habit', passport.authenticate('jwt',
+	{session: false}), (req, res) => {
+	User.update(
+		{username: req.params.username},
+		{
+			$pull: {
+				habits: {habitId: req.params.habit}
+				// "habits": {_id: '5a22bb0a0c463e6d1ea68c7e'}
+			}
+		}
+	)
+	.exec()
+	.then(item => {
+		console.log(`204 / The habit has been deleted.`)
+		res.redirect(`/users/${req.user.username}/dailycheck`)
+	})
+	.catch(err => {
+		return res.status(500).json({message: 'Internal server error.'});
+	})
+});
+
 // TODO change to users
 router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
   User.update(
