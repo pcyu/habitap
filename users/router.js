@@ -14,6 +14,7 @@ const {User} = require('./model');
 const app = express();  //c038
 const methodOverride = require('method-override');
 const uuidv1 = require('uuid/v1');
+const {timer} = require('../helpers');
 app.use(methodOverride('_method'));
 
 router.use(cookieParser());
@@ -190,16 +191,16 @@ router.post('/register', jsonParser, (req, res) => {
 	);
 
 	if (tooSmallField || tooLargeField) {
-			return res.status(422).json({
-					code: 422,
-					reason: 'ValidationError',
-					message: tooSmallField
-							? `Must be at least ${sizedFields[tooSmallField]
-										.min} characters long`
-							: `Must be at most ${sizedFields[tooLargeField]
-										.max} characters long`,
-					location: tooSmallField || tooLargeField
-			});
+		return res.status(422).json({
+			code: 422,
+			reason: 'ValidationError',
+			message: tooSmallField
+				? `Must be at least ${sizedFields[tooSmallField]
+					.min} characters long`
+				: `Must be at most ${sizedFields[tooLargeField]
+					.max} characters long`,
+			location: tooSmallField || tooLargeField
+		});
 	}
 
 	let {username, password, firstName = '', lastName = ''} = req.body;  //c032
@@ -209,23 +210,23 @@ router.post('/register', jsonParser, (req, res) => {
 	return User.find({username})
 		.count()
 		.then(count => {
-				if (count > 0) {
-						return Promise.reject({  //c033
-								code: 422,
-								reason: 'ValidationError',
-								message: 'Username already taken',
-								location: 'username'
-						});
-				}
-				return User.hashPassword(password);  //c034
+			if (count > 0) {
+				return Promise.reject({  //c033
+					code: 422,
+					reason: 'ValidationError',
+					message: 'Username already taken',
+					location: 'username'
+				});
+			}
+			return User.hashPassword(password);  //c034
 		})
 		.then(hash => {
-				return User.create({
-						username,
-						password: hash,
-						firstName,
-						lastName
-				});
+			return User.create({
+				username,
+				password: hash,
+				firstName,
+				lastName
+			});
 		})
 		.then(user => {
 			res.render('registersuccess', {
@@ -234,24 +235,10 @@ router.post('/register', jsonParser, (req, res) => {
 		})
 		.catch(err => {  //c035
 				if (err.reason === 'ValidationError') {
-						return res.status(err.code).json(err);
+					return res.status(err.code).json(err);
 				}
 				res.status(500).json({code: 500, message: 'Internal server error'});
 		});
-});
-
-router.post('/:username/:habit/:question', passport.authenticate('jwt', {
-	session: false}), (req, res) => {
-	User.update({ "username": req.params.username},
-						{ $push: { "dailyCheck": { id: req.params.habit, question: req.params.question, answer: req.body.habit} } }
-	)
-	.then(
-		res.redirect('/history')
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
 });
 
 router.post('/new', verifyUser, (req, res) => {
@@ -259,18 +246,21 @@ router.post('/new', verifyUser, (req, res) => {
 	for(let i = 0; i < requiredFields.length; i++) {
 	  const field = requiredFields[i];
 	  if(!(field in req.body)) {
-		const message = `The value for \`${field}\` is missing.`
-		console.error(message);
-		return res.status(400).send(message);
+			const message = `The value for \`${field}\` is missing.`
+			console.error(message);
+			return res.status(400).send(message);
 	  }
 	}
+	const tracker = timer();
 	User.update(
 		{"username": req.user.username},
 		{
 			$push: {
 				"habits": {
+					endDate: tracker.goalEnd,
+					habitId: uuidv1(),
 					question: req.body.question,
-					habitId: uuidv1()
+					startDate: tracker.goalBegin,
 				}
 			}
 		}
@@ -295,7 +285,6 @@ router.put('/:username/delete/:habit', passport.authenticate('jwt',
 		{
 			$pull: {
 				habits: {habitId: req.params.habit}
-				// "habits": {_id: '5a22bb0a0c463e6d1ea68c7e'}
 			}
 		}
 	)
@@ -309,36 +298,65 @@ router.put('/:username/delete/:habit', passport.authenticate('jwt',
 	})
 });
 
+// router.put('/:username/:habit/:question', passport.authenticate('jwt', {
+// 	session: false}), (req, res) => {
+// 	User.update(
+// 		{ "username": req.params.username},
+// 		{
+// 			$push:
+// 			{
+// 				"dailyCheck":
+// 				{
+// 					answer: req.body.habit,
+// 					id: req.params.habit,
+// 					question: req.params.question
+// 				}
+// 			}
+// 		}
+// 	)
+// 	.then(
+// 		res.redirect('/history')
+// 	)
+// 	.catch(err => {
+// 		console.error(err);
+// 		return res.status(500).json({message: 'Internal server error'});
+// 	});
+// });
+
 // TODO change to users
-router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
-  User.update(
-    {username: req.params.username, "habits._id": req.params.habit_id},
-    { $push:
-      {"habits.$.dailyCheck": {answer: req.body.habit}}
-    }
-  )
-	.then(
-		res.redirect(`/users/${req.user.username}`)
-	)
-	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
-	});
-});
+// router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
+//   User.update(
+//     {username: req.params.username, "habits._id": req.params.habit_id},
+//     { $push:
+//       {"habits.$.dailyCheck": {answer: req.body.habit}}
+//     }
+//   )
+// 	.then(
+// 		res.redirect(`/users/${req.user.username}`)
+// 	)
+// 	.catch(err => {
+// 	console.error(err);
+// 	return res.status(500).json({message: 'Internal server error'});
+// 	});
+// });
 
 router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
   User.update(
     {username: req.params.username, "habits._id": req.params.habit_id},
-    { $push:
-      {"habits.$.dailyCheck": {answer: req.body.habit, date: Date.now()}}
+    {
+			$push: {
+				"habits.$.dailyCheck": {
+					answer: req.body.habit, date: Date.now()
+				}
+			}
     }
   )
 	.then(
 		res.redirect(`/users/${req.user.username}`)
 	)
 	.catch(err => {
-	console.error(err);
-	return res.status(500).json({message: 'Internal server error'});
+		console.error(err);
+		return res.status(500).json({message: 'Internal server error'});
 	});
 });
 

@@ -8,13 +8,13 @@ block content
     each index in habits
       div #{index.question}
       div #{index.habitId}
-        form.daily(action=`/users/${username}/record/${index._id}/?_method=PUT` method='post')
+        form.daily(action=`/users/${username}/record/${index.habitId}/?_method=PUT` method='post')
           div
             p Yes
             input(type='radio',name='habit',value='yes')
           div
             p No
             input(type='radio',name='habit',value='no')
-          input(type='submit',habit=`${index._id}`,question=`${index.question}`,class='login-button',value='Submit')
+          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Submit')
         form.daily(action=`/users/${username}/delete/${index.habitId}/?_method=PUT` method='post')
           input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='DELETE')
