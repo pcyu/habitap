@@ -9,12 +9,13 @@ const userSchema = mongoose.Schema({
     },
     habits: [
       {
+        active: Boolean,
         dailyCheck: [ Number ],
         endDate: Number,
         habitId: String,
         question: String,
         startDate: Number,
-        todayValue: Boolean,
+        todayAnswer: Boolean,
         timeStamp: {
           default: Date.now,
           type : Date

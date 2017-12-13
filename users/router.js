@@ -76,16 +76,21 @@ router.get('/', (req, res) => {  //c029
 });
 
 router.get('/:username/dailycheck', verifyUser, (req, res) => {
+	// TODO check here to make sure that the habit falls within Start and End dates
 	if (req.validUser) {
 		User
 		.findOne({ "username": req.params.username})
 		.exec()
 		.then( user => {
+			let _habits = user.habits.filter((item, index) => {
+				return item.todayAnswer != true;
+			});
+
 			res.render('dailycheck', {
 				firstName: user.firstName,
 				username: user.username,
 				id: user.id,
-				habits: user.habits,
+				habits: _habits,
 				token: req.app.get('loggedIn')
 			});
 		})
@@ -251,16 +256,18 @@ router.post('/new', verifyUser, (req, res) => {
 			return res.status(400).send(message);
 	  }
 	}
-	const tracker = timer();
+	const tracker = timer(true);
 	User.update(
 		{"username": req.user.username},
 		{
 			$push: {
 				"habits": {
+					active: true,
 					endDate: tracker.goalEnd,
 					habitId: uuidv1(),
 					question: req.body.question,
 					startDate: tracker.goalBegin,
+					todayAnswer: false
 				}
 			}
 		}
@@ -340,14 +347,15 @@ router.put('/:username/delete/:habit', passport.authenticate('jwt',
 // 	});
 // });
 
-router.put('/:username/record/:habit_id', verifyUser, (req, res) => {
+router.put('/:username/record/:habitId', verifyUser, (req, res) => {
   User.update(
-    {username: req.params.username, "habits._id": req.params.habit_id},
+    {username: req.params.username, "habits.habitId": req.params.habitId},
     {
 			$push: {
-				"habits.$.dailyCheck": {
-					answer: req.body.habit, date: Date.now()
-				}
+				"habits.$.dailyCheck": req.body.habit
+			},
+			$set: {
+				"habits.$.todayAnswer": true
 			}
     }
   )

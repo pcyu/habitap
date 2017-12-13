@@ -8,37 +8,41 @@ exports.navs = [
     {name: 'Logout', path: '/auth/logout', type: ['private']}
 ];
 
-exports.timer = (startDate, daysActive) => {
+exports.timer = (create=null) => {
   const msDay = 86400000;
   const msHour = 3600000;
-  const offset = new Date().getTimezoneOffset()/60;
+  const offset = new Date().getTimezoneOffset()/60;  // we may not need to account for offset
   const msOffset = new Date().getTimezoneOffset() * 60000;
 
-  // Today's start date in milliseconds
+  // Today's start date in milliseconds (local time)
   let start = new Date();
-  start.setHours(0 - offset,0,0,0);
+  start.setHours(0,0,0,0);
   let msStart = new Date(start).getTime();
 
-  // Right now in milliseconds
-  let msNow = Date.now() - msOffset;
+  // Right now in milliseconds (local time)
+  let msNow = Date.now();
 
-  // Today's end date in milliseconds
+  // Today's end date in milliseconds (local time)
   let end = new Date();
-  end.setHours(23 - offset,59,59,999);
+  end.setHours(23,59,59,999);
   let msEnd = new Date(end).getTime();
 
-  const remainingTime = (ms) => {
+  const timeTracker = (ms) => {
     let hours = Math.floor((ms/(1000 * 60 * 60)) % 24);
     let minutes = Math.floor((ms/(1000*60)) % 60);
     let seconds = Math.floor((ms/1000) % 60);
+    if(create) {
+      return {
+        goalBegin: msStart + msDay,
+        goalEnd: msEnd + (msDay * 16),  // this makes the habit tracking duration equal to 15 days
+      }
+    }
     return {
       hours: hours,
-      goalBegin: msEnd,  // goalBegin and goalEnd have values that are used only when a habit is first created
-      goalEnd: msStart,  // this makes the habit tracking duration equal to 15 days
       minutes: minutes,
       seconds: seconds,
     }
   }
 
-  return remainingTime(msEnd - msNow);
+  return timeTracker(msEnd - msNow);
 };

@@ -11,10 +11,10 @@ block content
         form.daily(action=`/users/${username}/record/${index.habitId}/?_method=PUT` method='post')
           div
             p Yes
-            input(type='radio',name='habit',value='yes')
+            input(type='radio',name='habit',value=1)
           div
             p No
-            input(type='radio',name='habit',value='no')
+            input(type='radio',name='habit',value=0)
           input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Submit')
         form.daily(action=`/users/${username}/delete/${index.habitId}/?_method=PUT` method='post')
           input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='DELETE')
