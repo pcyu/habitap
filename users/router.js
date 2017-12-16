@@ -36,7 +36,7 @@ router.delete('/:username/delete/:habit', passport.authenticate('jwt',
 	.exec()
 	.then(item => {
 		console.log(`204 / The habit has been deleted.`)
-		res.redirect(`/users/${req.user.username}/dailycheck`)
+		res.redirect(`/users/history`)
 	})
 	.catch(err => {
 		return res.status(500).json({message: 'Internal server error.'});
@@ -273,7 +273,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}/dailycheck`)
+		res.redirect(`/users/history`)
 	)
 	.catch(err => {
 		console.error(err);
