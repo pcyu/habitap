@@ -332,8 +332,9 @@ router.put('/:username/delete/:habit', passport.authenticate('jwt',
 
 // Change Habit Question
 router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
+	console.log(req.params.id, "req.params.id")
   User.update(
-    {username: req.params.username, "habits.$.habitId": req.params.habit},
+    {username: req.params.username, "habits.habitId": req.params.id},
     { $set:
       {"habits.$.question": req.body.question}
     }

@@ -5,6 +5,7 @@ block content
     h2 Update Habit Entry
     each index in habits
       div #{index.question}
+      div #{index.habitId}
         form.daily(action=`/users/${username}/update/${index.habitId}/${index.question}` method='post')
           input(type='text' name='question' placeholder='Change Habit Question' required)
           input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Edit')
