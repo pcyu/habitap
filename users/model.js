@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
       type: String
     },
     habits: [
-      {
+      { _id: false,
         active: Boolean,
         dailyCheck: [ Number ],
         endDate: Number,

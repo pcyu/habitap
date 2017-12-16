@@ -285,25 +285,25 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
-// router.put('/:username/delete/:habit', passport.authenticate('jwt',
-// 	{session: false}), (req, res) => {
-// 	User.update(
-// 		{username: req.params.username},
-// 		{
-// 			$pull: {
-// 				habits: {habitId: req.params.habit}
-// 			}
-// 		}
-// 	)
-// 	.exec()
-// 	.then(item => {
-// 		console.log(`204 / The habit has been deleted.`)
-// 		res.redirect(`/users/${req.user.username}/dailycheck`)
-// 	})
-// 	.catch(err => {
-// 		return res.status(500).json({message: 'Internal server error.'});
-// 	})
-// });
+router.put('/:username/delete/:habit', passport.authenticate('jwt',
+	{session: false}), (req, res) => {
+	User.update(
+		{username: req.params.username},
+		{
+			$pull: {
+				habits: {habitId: req.params.habit}
+			}
+		}
+	)
+	.exec()
+	.then(item => {
+		console.log(`204 / The habit has been deleted.`)
+		res.redirect(`/users/${req.user.username}/dailycheck`)
+	})
+	.catch(err => {
+		return res.status(500).json({message: 'Internal server error.'});
+	})
+});
 
 // router.put('/:username/:habit/:question', passport.authenticate('jwt', {
 // 	session: false}), (req, res) => {
@@ -330,22 +330,22 @@ router.post('/new', verifyUser, (req, res) => {
 // 	});
 // });
 
-// TODO change to users
-// router.put('/:username/update/:habit_id', verifyUser, (req, res) => {
-//   User.update(
-//     {username: req.params.username, "habits._id": req.params.habit_id},
-//     { $push:
-//       {"habits.$.dailyCheck": {answer: req.body.habit}}
-//     }
-//   )
-// 	.then(
-// 		res.redirect(`/users/${req.user.username}`)
-// 	)
-// 	.catch(err => {
-// 	console.error(err);
-// 	return res.status(500).json({message: 'Internal server error'});
-// 	});
-// });
+// Change Habit Question
+router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
+  User.update(
+    {username: req.params.username, "habits.$.habitId": req.params.habit},
+    { $set:
+      {"habits.$.question": req.body.question}
+    }
+  )
+	.then(
+		res.redirect(`/users/${req.user.username}`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
 
 router.put('/:username/record/:habitId', verifyUser, (req, res) => {
   User.update(
