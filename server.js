@@ -1,6 +1,7 @@
 require('dotenv').config();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
+const CronJob = require('cron').CronJob;
 const express = require('express');
 const helpers = require('./helpers');
 const methodOverride = require('method-override');
@@ -135,6 +136,16 @@ app.use('*', (req, res) => {
     message: 'Not Found'
   });
 });
+
+var job = new CronJob({
+  cronTime: '00 00 12 * * 0-6',
+  onTick: function() {
+
+  },
+  start: false,
+  timeZone: 'America/New_York'
+});
+job.start();
 
 let server;
 
