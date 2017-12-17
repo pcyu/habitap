@@ -10,7 +10,6 @@ const passport = require('passport');
 const path = require('path');
 const router = express.Router();
 const {JWT_SECRET} = require('../config');
-const {Habit} = require('./model');
 const {User} = require('./model');
 const app = express();  //c038
 const methodOverride = require('method-override');
