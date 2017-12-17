@@ -6,10 +6,10 @@ var agenda = new Agenda({db: { address: DATABASE_URL, collection: 'users' }});
 
 agenda.define('reset dailyCheck', function(job, done) {
   console.log("daily check reset!")
-  User.update({$set: {"habits.todayAnswer": false}}, done);
+  User.update({}, {$set: {firstName: "huehue"}}, {multi: true}, done);
 });
 
 agenda.on('ready', function(){
-  agenda.every('2 minutes', 'reset dailyCheck');
+  agenda.every('1 minute', 'reset dailyCheck');
   agenda.start();
 });
