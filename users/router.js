@@ -273,7 +273,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/history`)
+		res.redirect(`/users/${req.user.username}/dailycheck`)
 	)
 	.catch(err => {
 		console.error(err);
@@ -360,7 +360,7 @@ router.put('/:username/record/:habitId', verifyUser, (req, res) => {
     }
   )
 	.then(
-		res.redirect(`/users/${req.user.username}`)
+		res.redirect(`/users/${req.user.username}/dailycheck`)
 	)
 	.catch(err => {
 		console.error(err);
