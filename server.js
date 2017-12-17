@@ -80,6 +80,7 @@ const verifyUser = (req, res, next) => {
   };
 
 app.get('/users/history', verifyUser, (req, res) => {
+  console.log(req.user, "req.user")
   User
 	.findOne({ "username": req.user.username})
 	.exec()

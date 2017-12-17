@@ -36,7 +36,7 @@ router.delete('/:username/delete/:habit', passport.authenticate('jwt',
 	.exec()
 	.then(item => {
 		console.log(`204 / The habit has been deleted.`)
-		res.redirect(`/users/history`)
+		res.redirect(`/users/update`)
 	})
 	.catch(err => {
 		return res.status(500).json({message: 'Internal server error.'});
@@ -285,25 +285,6 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
-router.put('/:username/delete/:habit', passport.authenticate('jwt',
-	{session: false}), (req, res) => {
-	User.update(
-		{username: req.params.username},
-		{
-			$pull: {
-				habits: {habitId: req.params.habit}
-			}
-		}
-	)
-	.exec()
-	.then(item => {
-		console.log(`204 / The habit has been deleted.`)
-		res.redirect(`/users/${req.user.username}/dailycheck`)
-	})
-	.catch(err => {
-		return res.status(500).json({message: 'Internal server error.'});
-	})
-});
 
 // router.put('/:username/:habit/:question', passport.authenticate('jwt', {
 // 	session: false}), (req, res) => {
@@ -339,7 +320,7 @@ router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
     }
   )
 	.then(
-		res.redirect(`/users/${req.user.username}`)
+		res.redirect(`/users/update`)
 	)
 	.catch(err => {
 	console.error(err);

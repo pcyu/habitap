@@ -5,5 +5,13 @@ block content
     h2 Habit History Page
     h3 THIS PAGE WILL SHOW HISTORICAL DATA BY HABIT
     div Welcome #{firstName}!
+    div --
     each index in habits
-      div #{index.question}
+      div habit question: #{index.question}
+      div is active: #{index.active}
+      div start date: #{index.startDate}
+      div end date: #{index.endDate}
+      div performed daily check today?: #{index.todayAnswer}
+      div time stamp: #{index.timeStamp}
+      div --
+
