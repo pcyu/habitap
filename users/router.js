@@ -5,6 +5,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const jsonParser = bodyParser.json();
 const jwt = require('jsonwebtoken');
+const moment = require('moment');
 const passport = require('passport');
 const path = require('path');
 const router = express.Router();
@@ -257,16 +258,18 @@ router.post('/new', verifyUser, (req, res) => {
 	  }
 	}
 	const tracker = timer(true);
+	const beginTime = moment(tracker.goalBegin).format("LL");
+	const endTime = moment(tracker.goalEnd).format("LL");
 	User.update(
 		{"username": req.user.username},
 		{
 			$push: {
 				"habits": {
 					active: true,
-					endDate: tracker.goalEnd,
+					endDate: endTime,
 					habitId: uuidv1(),
 					question: req.body.question,
-					startDate: tracker.goalBegin,
+					startDate: beginTime,
 					todayAnswer: false
 				}
 			}

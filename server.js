@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const express = require('express');
 const helpers = require('./helpers');
 const methodOverride = require('method-override');
+const moment = require('moment');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 const passport = require('passport');
@@ -80,18 +81,17 @@ const verifyUser = (req, res, next) => {
   };
 
 app.get('/users/history', verifyUser, (req, res) => {
-  console.log(req.user, "req.user")
   User
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    res.render('history', {
-      firstName: user.firstName,
-      username: user.username,
-      id: user.id,
-      habits: user.habits,
-      token: req.app.get('loggedIn')
-    });
+      res.render('history', {
+        firstName: user.firstName,
+        username: user.username,
+        id: user.id,
+        habits: user.habits,
+        token: req.app.get('loggedIn')
+      });
   });
 });
 
