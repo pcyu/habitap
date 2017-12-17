@@ -137,15 +137,15 @@ app.use('*', (req, res) => {
   });
 });
 
-var job = new CronJob({
-  cronTime: '00 00 12 * * 0-6',
-  onTick: function() {
-
-  },
-  start: false,
-  timeZone: 'America/New_York'
-});
-job.start();
+// var job = new CronJob({
+//   // cronTime: '00 35 12 * * 0-6',
+//   // onTick: function() {
+    
+//   // },
+//   // start: false,
+//   // timeZone: 'America/New_York'
+// });
+// job.start();
 
 let server;
 
