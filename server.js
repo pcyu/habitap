@@ -85,10 +85,7 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    for (index of user.habits) {
-      console.log(index.dailyCheck, "index")
-      console.log(index.dailyCheck.reduce( (prev, curr) => prev + curr ),"reduce")
-    }
+    user.habits.forEach((item) => {item.habitScore = item.dailyCheck.reduce( (prev, curr) => prev + curr )})
       res.render('history', {
         firstName: user.firstName,
         username: user.username,
