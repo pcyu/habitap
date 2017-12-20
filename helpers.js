@@ -33,8 +33,9 @@ const timeTracker = (ms) => {
   let seconds = Math.floor((ms/1000) % 60);
   if(create) {
     return {
-      goalBegin: msStart + msDay,
-      goalEnd: msEnd + (msDay * 16),  // this makes the habit tracking duration equal to 15 days
+      // goalBegin: msStart + msDay,
+      goalBegin: msStart,
+      goalEnd: msEnd + (msDay * 15),  // this makes the habit tracking duration equal to 15 days
     }
   }
   return {
