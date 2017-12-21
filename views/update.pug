@@ -8,6 +8,6 @@ block content
       div.updateForm
         form.daily(action=`/users/${username}/update/${index.habitId}/${index.question}` method='post')
           input(type='text' name='question' placeholder='Change Habit Question' required)
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,id='edit-button',value='Edit')
+          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='edit-button',value='Edit')
         form.daily(action=`/users/${username}/delete/${index.habitId}/?_method=DELETE` method='post')
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,id='delete-button',value='Delete')
+          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='delete-button',value='Delete')
