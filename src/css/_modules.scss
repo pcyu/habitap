@@ -7,12 +7,29 @@
   width: auto;
 }
 
+#delete-button {
+  display: inline-block;
+  position: absolute;
+  top: 44%;
+  left: 7%;
+  width: auto;
+}
+
+#edit-button {
+  display: inline-block;
+  width: auto;
+}
+
 //------------------------------------------------------------------------------
 //  Forms
 //------------------------------------------------------------------------------
 
 input {
   display: block;
+}
+
+.updateForm {
+  position: relative;
 }
 
 //------------------------------------------------------------------------------

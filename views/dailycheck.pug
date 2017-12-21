@@ -16,5 +16,3 @@ block content
             p No
             input(type='radio',name='habit',value=0)
           input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Submit')
-        form.daily(action=`/users/${username}/delete/${index.habitId}/?_method=DELETE` method='post')
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='DELETE')
