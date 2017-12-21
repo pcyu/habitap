@@ -10,4 +10,4 @@ block content
           input(type='text' name='question' placeholder='Change Habit Question' required)
           input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Edit')
         form.daily(action=`/users/${username}/delete/${index.habitId}/?_method=DELETE` method='post')
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='DELETE')
+          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Delete')
