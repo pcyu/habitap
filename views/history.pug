@@ -3,9 +3,6 @@ extends 1layout
 block content
   div.y-template
     h2 Habit History Page
-    h3 THIS PAGE WILL SHOW HISTORICAL DATA BY HABIT
-    div Welcome #{firstName}!
-
     each index in habits
       div.habitTile.cf
         h2 #{index.question}
