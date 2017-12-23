@@ -46,11 +46,24 @@ router.post(
     failureRedirect: '/auth/login',
     session: false
   }),
-  (req, res, next) => {
+(req, res, next) => {
     const _token = createAuthToken(req.user.apiRepr());
-    res.cookie('token', _token);
+    res.cookie('token', _token);        
     loggedIn = true;
-    res.redirect(`/users/${req.body.username}/dailycheck`);
+    // c041
+    const trueAnswerArray = [];
+    for (let value of req.user.habits) {
+      trueAnswerArray.push(value.todayAnswer===true)
+    }
+    console.log(trueAnswerArray.length, "trueAnswerArray")
+    console.log(req.user.habits.length, "habitsarraylength")
+		if (req.user.habits.length < 1) {
+			res.redirect('/users/new')
+    } else if (req.user.habits.length === trueAnswerArray.length){
+      res.redirect(`/users/${req.body.username}`)
+    } else {
+      res.redirect(`/users/${req.body.username}/dailycheck`)
+    }
   }
 );
 
