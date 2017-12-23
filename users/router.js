@@ -233,11 +233,9 @@ router.post('/register', jsonParser, (req, res) => {
 				lastName
 			});
 		})
-		.then(user => {
-			res.render('registersuccess', {
-				username: user.username
-			});
-		})
+		.then(
+			res.redirect(`/auth/login`)
+		)
 		.catch(err => {  //c035
 				if (err.reason === 'ValidationError') {
 					return res.status(err.code).json(err);
