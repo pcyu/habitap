@@ -51,15 +51,12 @@ router.post(
     res.cookie('token', _token);        
     loggedIn = true;
     // c041
-    const trueAnswerArray = [];
-    for (let value of req.user.habits) {
-      trueAnswerArray.push(value.todayAnswer===true)
-    }
-    console.log(trueAnswerArray.length, "trueAnswerArray")
-    console.log(req.user.habits.length, "habitsarraylength")
+    let trueAnswers = req.user.habits.filter((item, index) => {
+      return item.todayAnswer === true;
+    });
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
-    } else if (req.user.habits.length === trueAnswerArray.length){
+    } else if (req.user.habits.length === trueAnswers.length){
       res.redirect(`/users/${req.body.username}`)
     } else {
       res.redirect(`/users/${req.body.username}/dailycheck`)
