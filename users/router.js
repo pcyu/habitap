@@ -85,14 +85,21 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			let _habits = user.habits.filter((item, index) => {
 				return item.todayAnswer != true;
 			});
-
+			if (_habits.length === 0) {
+				res.render('history',{
+					firstName: user.firstName,
+					username: user.username,
+					id: user.id,
+					habits: user.habits,
+					token: req.app.get('loggedIn')
+				})} else {
 			res.render('dailycheck', {
 				firstName: user.firstName,
 				username: user.username,
 				id: user.id,
 				habits: _habits,
 				token: req.app.get('loggedIn')
-			});
+			})};
 		})
 
 		.catch(err => {
@@ -340,9 +347,10 @@ router.put('/:username/record/:habitId', verifyUser, (req, res) => {
 			}
     }
   )
-	.then(
+	.then( user => {
+		console.log(req.user.habits, "user")
 		res.redirect(`/users/${req.user.username}/dailycheck`)
-	)
+	})
 	.catch(err => {
 		console.error(err);
 		return res.status(500).json({message: 'Internal server error'});
