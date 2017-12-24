@@ -92,14 +92,15 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 					id: user.id,
 					habits: user.habits,
 					token: req.app.get('loggedIn')
-				})} else {
-			res.render('dailycheck', {
-				firstName: user.firstName,
-				username: user.username,
-				id: user.id,
-				habits: _habits,
-				token: req.app.get('loggedIn')
-			})};
+				})
+			} else {
+				res.render('dailycheck', {
+					firstName: user.firstName,
+					username: user.username,
+					id: user.id,
+					habits: _habits,
+					token: req.app.get('loggedIn')
+				})};
 		})
 
 		.catch(err => {

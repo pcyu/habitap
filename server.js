@@ -114,11 +114,20 @@ app.get('/users/update', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-  res.render('update', {
-    username: user.username,
-    habits: user.habits,
-    token: req.app.get('loggedIn')
-    });
+    if (user.habits.length === 0) {
+      res.render('noupdate', {
+        firstName: user.firstName,
+        username: user.username,
+        habits: user.habits,
+        token: req.app.get('loggedIn')
+      })
+    } else {
+      res.render('update', {
+        username: user.username,
+        habits: user.habits,
+        token: req.app.get('loggedIn')
+      })
+    }
   });
 });
 
