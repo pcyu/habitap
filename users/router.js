@@ -24,7 +24,6 @@ router.use(cookieParser());
 //  ===========================================================================
 router.delete('/:username/delete/:habit', passport.authenticate('jwt',
 	{session: false}), (req, res) => {
-		console.log(req.params, "req.params")
 	User.update(
 		{username: req.params.username},
 		{
@@ -349,7 +348,6 @@ router.put('/:username/record/:habitId', verifyUser, (req, res) => {
     }
   )
 	.then( user => {
-		console.log(req.user.habits, "user")
 		res.redirect(`/users/${req.user.username}/dailycheck`)
 	})
 	.catch(err => {
