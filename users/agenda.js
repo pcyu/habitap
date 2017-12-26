@@ -6,10 +6,15 @@ var agenda = new Agenda({db: { address: DATABASE_URL, collection: 'users' }});
 
 agenda.define('reset dailyCheck', function(job, done) {
   console.log("daily check reset!!!")
-  User.update({}, {$set: {firstName: "peter"}}, {multi: true}, done);
 
-  // User.find({"habits": {$exists: true}}, {$set: {"habits.todayAnswer": false}}, {multi: true}, done);
+  //toggle to test if first name gets changed
+  // User.update({}, {$set: {firstName: "hellokitty"}}, {multi: true}, done);
 
+  //with multi true
+  // User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, {multi: true}, done);
+  
+  //following the syntax from slack
+  User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, done);
 });
 
 agenda.on('ready', function(){
