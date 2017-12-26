@@ -8,13 +8,13 @@ agenda.define('reset dailyCheck', function(job, done) {
   console.log("daily check reset!!!")
 
   //toggle to test if first name gets changed
-  // User.update({}, {$set: {firstName: "hellokitty"}}, {multi: true}, done);
+  User.update({}, {$set: {firstName: "hellokitty"}}, {multi: true}, done);
 
   //with multi true
   // User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, {multi: true}, done);
   
   //following the syntax from slack
-  User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, done);
+  // User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, done);
 });
 
 agenda.on('ready', function(){
