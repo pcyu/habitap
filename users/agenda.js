@@ -2,32 +2,25 @@ const Agenda = require('agenda');
 const {User} = require('./model');
 const {DATABASE_URL} = require('../config');
 
-var agenda = new Agenda({db: { address: DATABASE_URL, collection: 'users' }});
+var agenda = new Agenda({db: { address: DATABASE_URL, collection: 'agenda' }});
 
 agenda.define('reset dailyCheck', function(job, done) {
-  console.log("daily check reset!!!")
+  console.log("daily check reset!!!!")
 
-  //toggle to test if first name gets changed
-  User.update({}, {$set: {firstName: "hellokitty"}}, {multi: true}, done);
-
-  //with multi true
-  // User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, {multi: true}, done);
-  
-  //following the syntax from slack
-  // User.updateMany({}, {$set: {"habits.$[].todayAnswer": false}}, done);
+  User.find()
+		.then(users => {
+      for (var user of users) {
+        for (var habit of user.habits) {
+          habit.todayAnswer = false;
+        }
+        user.save(function(error, updatedUser) {
+          console.log(updatedUser, "updatedUser");
+        });
+      }
+    });
 });
 
 agenda.on('ready', function(){
-  agenda.every('1 minute', 'reset dailyCheck');
+  agenda.every('5 seconds', 'reset dailyCheck');
   agenda.start();
 });
-
-// {username: req.params.username, "habits.habitId": req.params.habitId},
-// {
-//   $push: {
-//     "habits.$.dailyCheck": req.body.habit
-//   },
-//   $set: {
-//     "habits.$.todayAnswer": true
-//   }
-// }
