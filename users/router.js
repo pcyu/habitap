@@ -68,9 +68,9 @@ const verifyUser = (req, res, next) => {
 	}
 };
 
-router.get('/', (req, res) => {  //c029
-  return User.find()
-    .then(users => res.json(users.map(user => user.apiRepr())))
+router.get('/blog-posts', (req, res) => {  //c029
+  return Blog.find()
+    .then(blogs => res.json(users.map(user => user.apiRepr())))
     .catch(err => res.status(500).json({message: 'Internal server error'}));
 });
 

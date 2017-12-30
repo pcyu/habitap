@@ -1,11 +1,12 @@
 const Agenda = require('agenda');
 const {User} = require('./model');
 const {DATABASE_URL} = require('../config');
+const moment = require('moment');
 
 var agenda = new Agenda({db: { address: DATABASE_URL, collection: 'agenda' }});
 
 agenda.define('reset dailyCheck', function(job, done) {
-  console.log("daily check reset!!!!")
+  console.log(moment().format('LLL'));
 
   User.find()
 		.then(users => {
@@ -13,14 +14,13 @@ agenda.define('reset dailyCheck', function(job, done) {
         for (var habit of user.habits) {
           habit.todayAnswer = false;
         }
-        user.save(function(error, updatedUser) {
-          console.log(updatedUser, "updatedUser");
-        });
+      user.save();
       }
     });
+    done();
 });
 
 agenda.on('ready', function(){
-  agenda.every('5 seconds', 'reset dailyCheck');
+  agenda.every('1 minute', 'reset dailyCheck');
   agenda.start();
 });

@@ -160,6 +160,21 @@ let server;
 
 function runServer(databaseUrl=DATABASE_URL, port=PORT) {
   let promise = new Promise( (resolve, reject) => {
+    mongoose.connection.on('open', () => {
+      mongoose.connection.db.collection('agenda', (err, collection) => {
+        collection.update({ lockedAt: { $exists: true }, lastFinishedAt: { $exists: false } }, {
+          $unset: {
+            lockedAt: undefined,
+            lastModifiedBy: undefined,
+            lastRunAt: undefined
+          },
+          $set: { nextRunAt: new Date() }
+        }, { multi: true }, (e, numUnlocked) => {
+          if (e) { console.error(e); }
+          console.log(`Unlocked #{${numUnlocked}} jobs.`);
+        });
+      });
+    });    
     mongoose.connect(databaseUrl, err => {
       if(err) {
         return reject(err);
