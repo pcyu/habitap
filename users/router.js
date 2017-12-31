@@ -84,6 +84,9 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			let _habits = user.habits.filter((item, index) => {
 				return item.todayAnswer != true;
 			});
+			user.habits.forEach((item) => {
+				item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
+			})
 			if (_habits.length === 0) {
 				res.render('history',{
 					firstName: user.firstName,
