@@ -85,23 +85,26 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    user.habits.forEach((item) => {item.habitScore = item.dailyCheck.reduce( (prev, curr) => prev + curr )})
-    if (user.habits.length === 0) {
-      res.render('nohistory', {
-        firstName: user.firstName,
-        username: user.username,
-        habits: user.habits,
-        token: req.app.get('loggedIn')
-      })
-    } else {  
-      res.render('history', {
+    user.habits.forEach((item) => {
+      item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
+    })
+      if (user.habits.length === 0) {
+        res.render('nohistory', {
           firstName: user.firstName,
           username: user.username,
-          id: user.id,
           habits: user.habits,
           token: req.app.get('loggedIn')
-      });
-    }
+        })
+      } 
+      else {  
+        res.render('history', {
+            firstName: user.firstName,
+            username: user.username,
+            id: user.id,
+            habits: user.habits,
+            token: req.app.get('loggedIn')
+        });
+      }
   });
 });
 
