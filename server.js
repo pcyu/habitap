@@ -90,7 +90,6 @@ app.get('/users/history', verifyUser, (req, res) => {
     })
       if (user.habits.length === 0) {
         res.render('nohistory', {
-          firstName: user.firstName,
           username: user.username,
           habits: user.habits,
           token: req.app.get('loggedIn')
@@ -98,7 +97,6 @@ app.get('/users/history', verifyUser, (req, res) => {
       } 
       else {  
         res.render('history', {
-            firstName: user.firstName,
             username: user.username,
             id: user.id,
             habits: user.habits,
@@ -129,7 +127,6 @@ app.get('/users/update', verifyUser, (req, res) => {
 	.then( user => {
     if (user.habits.length === 0) {
       res.render('noupdate', {
-        firstName: user.firstName,
         username: user.username,
         habits: user.habits,
         token: req.app.get('loggedIn')

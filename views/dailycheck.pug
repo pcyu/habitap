@@ -3,7 +3,7 @@ extends 1layout
 block content
   div.y-template
     h2 Daily Check
-    div So #{firstName}, how did you do with your goals today?
+    div So #{username}, how did you do with your goals today?
     each index in habits
       div #{index.question}
         form.daily(action=`/users/${username}/record/${index.habitId}/?_method=PUT` method='post')

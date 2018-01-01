@@ -89,7 +89,6 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			})
 			if (_habits.length === 0) {
 				res.render('history',{
-					firstName: user.firstName,
 					username: user.username,
 					id: user.id,
 					habits: user.habits,
@@ -97,7 +96,6 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 				})
 			} else {
 				res.render('dailycheck', {
-					firstName: user.firstName,
 					username: user.username,
 					id: user.id,
 					habits: _habits,
@@ -122,7 +120,7 @@ router.get('/:username/:question/habitstart', verifyUser, (req, res) => {
 		.exec()
 		.then(
 				res.render('habitstart', {
-					first: req.user.firstName,
+					username: req.params.username,
 					question: req.params.question,
 					token: req.app.get('loggedIn')
 				})
