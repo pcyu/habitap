@@ -3,21 +3,23 @@ extends 1layout
 block content
   div.y-template
     h2 Habit History Page
-    each index in habits
+    each habit, index in habits
       div.habitTile.cf
-        h2 #{index.question}
-        div.habitScore #{index.habitScore}
+        h2 #{habit.question}
+        div #{index}
+        div.habitScore #{habit.habitScore}
         div.habitDate
-          div #{index.startDate}
+          div #{habit.startDate}
           p to
-          div #{index.endDate}
-    canvas(id="myChart" width="400" height="400")
+          div #{habit.endDate}
+        canvas(id= ("myChart"+ index) width="400" height="400")
           
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
     window.onload = function() {
-      var ctx = document.getElementById("myChart").getContext('2d');
-      var chart = new Chart(ctx, {
+      for (let i = 0; i < 5; i++) {
+        var ctx = document.getElementById("myChart"+i).getContext('2d');
+        var chart = new Chart(ctx, {
         type: 'pie',
         data: {
           labels: ["red", "green", "blue"],
@@ -39,4 +41,5 @@ block content
           },
         }
       });
+      }
     };
