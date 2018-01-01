@@ -111,7 +111,7 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 	}
 })
 
-router.get('/:username/:question/habitstart', verifyUser, (req, res) => {
+router.get('/:username/habitstart', verifyUser, (req, res) => {
 	if (req.validUser) {
 		User
 		.findOne({username: req.params.username})
@@ -119,7 +119,6 @@ router.get('/:username/:question/habitstart', verifyUser, (req, res) => {
 		.then(
 				res.render('habitstart', {
 					username: req.params.username,
-					question: req.params.question,
 					token: req.app.get('loggedIn')
 				})
 		)
@@ -275,7 +274,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}/${req.body.question}/habitstart`)
+		res.redirect(`/users/${req.user.username}/habitstart`)
 	)
 	.catch(err => {
 		console.error(err);
