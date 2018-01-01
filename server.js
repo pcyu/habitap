@@ -78,7 +78,7 @@ const verifyUser = (req, res, next) => {
 		console.log('error!');
 		next();
 	}
-  };
+};
 
 app.get('/users/history', verifyUser, (req, res) => {
   User
@@ -105,7 +105,6 @@ app.get('/users/history', verifyUser, (req, res) => {
       }
   });
 });
-
 
 app.get('/users/delete', verifyUser, (req, res) => {
   User

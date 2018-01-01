@@ -57,7 +57,6 @@ function loggedIn(req, res, next) {
 const verifyUser = (req, res, next) => {
 	try {
 		const token = req.headers.authorization || req.cookies.token;
-		// const token = req.cookies.auth;
 		const {user} = jwt.verify(token, JWT_SECRET);
 		req.user = user;
 		req.validUser = req.params.username === user.username ? true : false;
@@ -75,7 +74,6 @@ router.get('/blog-posts', (req, res) => {  //c029
 });
 
 router.get('/:username/dailycheck', verifyUser, (req, res) => {
-	// TODO check here to make sure that the habit falls within Start and End dates
 	if (req.validUser) {
 		User
 		.findOne({ "username": req.params.username})
@@ -134,32 +132,6 @@ router.get('/:username/:question/habitstart', verifyUser, (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 })
-
-// router.get('/:username', verifyUser, (req, res) => {
-// 	if (req.validUser) {
-// 		User
-// 		.findOne({ "username": req.params.username})
-// 		.exec()
-// 		.then( user => {
-// 			res.render('profile', {
-// 				firstName: user.firstName,
-// 				username: user.username,
-// 				id: user.id,
-// 				habits: user.habits,
-// 				token: req.app.get('loggedIn')
-// 			});
-// 		})
-
-// 		.catch(err => {
-// 			console.log(err);
-// 			return res.status(500).json({message: 'Internal server error'});
-// 		});
-// 	} else {
-// 		console.log('You are not authorized to view this page.')
-// 		return res.status(500).json({message: 'Internal server error'});
-// 	}
-// })
-
 
 //  ===========================================================================
 //                                      POST
@@ -315,31 +287,6 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
-
-// router.put('/:username/:habit/:question', passport.authenticate('jwt', {
-// 	session: false}), (req, res) => {
-// 	User.update(
-// 		{ "username": req.params.username},
-// 		{
-// 			$push:
-// 			{
-// 				"dailyCheck":
-// 				{
-// 					answer: req.body.habit,
-// 					id: req.params.habit,
-// 					question: req.params.question
-// 				}
-// 			}
-// 		}
-// 	)
-// 	.then(
-// 		res.redirect('/history')
-// 	)
-// 	.catch(err => {
-// 		console.error(err);
-// 		return res.status(500).json({message: 'Internal server error'});
-// 	});
-// });
 
 // Change Habit Question
 router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
