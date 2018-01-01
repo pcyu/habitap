@@ -115,21 +115,18 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 	}
 })
 
-router.get('/:username', verifyUser, (req, res) => {
+router.get('/:username/:question/habitstart', verifyUser, (req, res) => {
 	if (req.validUser) {
 		User
-		.findOne({ "username": req.params.username})
+		.findOne({username: req.params.username})
 		.exec()
-		.then( user => {
-			res.render('profile', {
-				firstName: user.firstName,
-				username: user.username,
-				id: user.id,
-				habits: user.habits,
-				token: req.app.get('loggedIn')
-			});
-		})
-
+		.then(
+				res.render('habitstart', {
+					first: req.user.firstName,
+					question: req.params.question,
+					token: req.app.get('loggedIn')
+				})
+		)
 		.catch(err => {
 			console.log(err);
 			return res.status(500).json({message: 'Internal server error'});
@@ -139,6 +136,31 @@ router.get('/:username', verifyUser, (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 })
+
+// router.get('/:username', verifyUser, (req, res) => {
+// 	if (req.validUser) {
+// 		User
+// 		.findOne({ "username": req.params.username})
+// 		.exec()
+// 		.then( user => {
+// 			res.render('profile', {
+// 				firstName: user.firstName,
+// 				username: user.username,
+// 				id: user.id,
+// 				habits: user.habits,
+// 				token: req.app.get('loggedIn')
+// 			});
+// 		})
+
+// 		.catch(err => {
+// 			console.log(err);
+// 			return res.status(500).json({message: 'Internal server error'});
+// 		});
+// 	} else {
+// 		console.log('You are not authorized to view this page.')
+// 		return res.status(500).json({message: 'Internal server error'});
+// 	}
+// })
 
 
 //  ===========================================================================
@@ -283,7 +305,7 @@ router.post('/new', verifyUser, (req, res) => {
 		}
 	)
 	.then(
-		res.redirect(`/users/${req.user.username}/dailycheck`)
+		res.redirect(`/users/${req.user.username}/${req.body.question}/habitstart`)
 	)
 	.catch(err => {
 		console.error(err);
