@@ -21,6 +21,6 @@ agenda.define('reset dailyCheck', function(job, done) {
 });
 
 agenda.on('ready', function(){
-  agenda.every('1 minute', 'reset dailyCheck');
+  agenda.every('0 0 * * *' , 'reset dailyCheck');
   agenda.start();
 });
