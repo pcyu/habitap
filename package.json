@@ -23,6 +23,7 @@
     "bcrypt-nodejs": "latest",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
+    "chart.js": "^2.7.1",
     "cookie-parser": "^1.4.3",
     "dotenv": "^4.0.0",
     "express": "^4.15.4",

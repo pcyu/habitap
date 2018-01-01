@@ -85,6 +85,28 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
+    const temp = {
+      type: 'pie',
+      data: {
+        labels: ["red", "green", "blue"],
+        datasets: [{
+          label: 'Number of votes',
+          data: [1, 1, 1],
+          backgroundColor: ["#000111","#000311", "#000112"],
+          borderColor: ["#000111", "#000141", "#000131"],
+          borderWidth: 1
+        }],
+        },
+      options: {
+        title: { 
+          display: true,
+          text: "chart",
+        },
+        legend: {
+          position: 'bottom'
+        },
+      }
+    };
     user.habits.forEach((item) => {
       item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
     })
@@ -92,7 +114,7 @@ app.get('/users/history', verifyUser, (req, res) => {
         res.render('nohistory', {
           username: user.username,
           habits: user.habits,
-          token: req.app.get('loggedIn')
+          token: req.app.get('loggedIn'),
         })
       } 
       else {  
@@ -100,7 +122,8 @@ app.get('/users/history', verifyUser, (req, res) => {
             username: user.username,
             id: user.id,
             habits: user.habits,
-            token: req.app.get('loggedIn')
+            token: req.app.get('loggedIn'),
+            temp: temp
         });
       }
   });
