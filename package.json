@@ -9,15 +9,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samuraijane/base-a.git"
+    "url": "git+https://github.com/pcyu/habitap.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samuraijane/base-a/issues"
+    "url": "https://github.com/pcyu/habitap/issues"
   },
-  "homepage": "https://github.com/samuraijane/base-a#readme",
+  "homepage": "https://github.com/pcyu/habitap#readme",
   "dependencies": {
     "agenda": "^1.0.3",
     "bcrypt-nodejs": "latest",
