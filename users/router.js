@@ -299,7 +299,7 @@ router.post('/new', verifyUser, (req, res) => {
 					habitId: uuidv1(),
 					question: req.body.question,
 					startDate: beginTime,
-					todayAnswer: false
+					todayAnswer: true
 				}
 			}
 		}
