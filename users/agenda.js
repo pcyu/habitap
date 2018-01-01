@@ -12,7 +12,7 @@ agenda.define('reset dailyCheck', function(job, done) {
 		.then(users => {
       for (var user of users) {
         for (var habit of user.habits) {
-          habit.todayAnswer = false;
+          habit.todayAnswer = true;
         }
       user.save();
       }
@@ -20,7 +20,9 @@ agenda.define('reset dailyCheck', function(job, done) {
     done();
 });
 
+// (min hour dayofmonth month dayofweek)
+
 agenda.on('ready', function(){
-  agenda.every('0 0 * * *' , 'reset dailyCheck');
+  agenda.every('42 13 * * *' , 'reset dailyCheck');
   agenda.start();
 });

@@ -80,7 +80,7 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 		.exec()
 		.then( user => {
 			let _habits = user.habits.filter((item, index) => {
-				return item.todayAnswer != true;
+				return item.todayAnswer != true && item.active != false;
 			});
 			user.habits.forEach((item) => {
 				item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
