@@ -14,6 +14,7 @@ const userSchema = mongoose.Schema({
         endDate: String,
         habitId: String,
         question: String,
+        questionArray: [ String ],
         startDate: String,
         todayAnswer: Boolean,
         timeStamp: {

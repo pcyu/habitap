@@ -85,11 +85,12 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    // user.habits.forEach((item) => {
-    //   item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr)
-    // })
+    const todayAnswerFalseArray = (user.habits.filter( function(value){
+      return value.active === false
+   }))
       if (user.habits.length === 0) {
-        res.render('nohistory', {
+        res.render(
+          'nohistory', {
           username: user.username,
           habits: user.habits,
           token: req.app.get('loggedIn'),
@@ -99,7 +100,34 @@ app.get('/users/history', verifyUser, (req, res) => {
         res.render('history', {
             username: user.username,
             id: user.id,
-            habits: user.habits,
+            habits: todayAnswerFalseArray,
+            token: req.app.get('loggedIn'),
+        });
+      }
+  });
+});
+
+app.get('/users/dashboard', verifyUser, (req, res) => {
+  User
+	.findOne({ "username": req.user.username})
+	.exec()
+	.then( user => {
+    const todayAnswerTrueArray = (user.habits.filter( function(value){
+       return value.active === true
+    }))
+      if (user.habits.length === 0) {
+        res.render(
+          'nohistory', {
+          username: user.username,
+          habits: user.habits,
+          token: req.app.get('loggedIn'),
+        })
+      } 
+      else {  
+        res.render('dashboard', {
+            username: user.username,
+            id: user.id,
+            habits: todayAnswerTrueArray,
             token: req.app.get('loggedIn'),
         });
       }

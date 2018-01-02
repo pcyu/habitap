@@ -2,18 +2,14 @@ extends 1layout
 
 block content
   div.y-template
-    h2 Habit History
+    h2 Dashboard
     each habit, index in habits
       div.habitTile.cf
         h2 #{habit.question}
-        div.updateForm
-          form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
-            input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete')
-        div.habitDate
-          div #{habit.startDate}
-          p to
-          div #{habit.endDate}
-          canvas(id= ("myChart-"+ index) width="400" height="400")
+        form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
+          input(type='text' name='question' placeholder='Change Habit Question' required)
+          input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
+        canvas(id= ("myChart-"+ index) width="400" height="400")
           
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
@@ -23,16 +19,16 @@ block content
           const yesArray = item.dailyCheck.filter(yes => yes === 1);
           const noArray = item.dailyCheck.filter(no => no === 0);
           const missArray = item.dailyCheck.filter(miss => miss === -1);
-          item.data = [yesArray.length, noArray.length, missArray.length]
+          item.data = item.dailyCheck.length === 0 ? [0, 0, 0, 15] : [yesArray.length, noArray.length, missArray.length, ( 15 - (yesArray.length + noArray.length + missArray.length) )]
           var ctx = document.getElementById("myChart-"+index).getContext('2d');
           var chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-              labels: ["Success", "Fail", "Missed Days"],
+              labels: ["Success", "Fail", "Missed Days", "Days Remaining"],
               datasets: [{
                 label: 'Number of votes',
                 data: item.data,
-                backgroundColor: ["#2471A3", "#A93226", "#D3D3D3"],
+                backgroundColor: ["#2471A3", "#A93226", "#D3D3D3", "#000000"],
                 borderColor: ["#17202A"],
                 borderWidth: 1
               }],

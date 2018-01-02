@@ -5,28 +5,6 @@ const moment = require('moment');
 
 var agenda = new Agenda({db: { address: DATABASE_URL, collection: 'agenda' }});
 
-
-	// User.update(
-  //   {username: req.params.username, "habits.habitId": req.params.habitId},
-  //   {
-	// 		$push: {
-	// 			"habits.$.dailyCheck": req.body.habit
-	// 		},
-	// 		$set: {
-	// 			"habits.$.todayAnswer": true
-	// 		}
-  //   }
-	// )
-	// .then((results) => {
-	// 	User.findOne({username: req.params.username}).then(user => {
-	// 			for (var habit of user.habits) {
-	// 				habit.active = (habit.dailyCheck.length < 15);
-	// 			}
-	// 			user.save();
-	// 		})
-	// })
-
-
 agenda.define('catch missed days', function(job, done) {
 
   User.find()
@@ -34,8 +12,8 @@ agenda.define('catch missed days', function(job, done) {
     for (var user of users) {
       for (var habit of user.habits) {
         if (habit.todayAnswer===false && habit.active===true) {
-        console.log(moment().format('LLL'), habit.dailyCheck)
-          habit.dailyCheck.push(2);
+        console.log(moment().format('LLL'), "Pushed missed dailyCheck values into respective arrays")
+          habit.dailyCheck.push(-1);
         }
       }
     user.save();
@@ -45,7 +23,7 @@ agenda.define('catch missed days', function(job, done) {
 });
 
 agenda.define('reset dailyCheck', function(job, done) {
-  console.log(moment().format('LLL'), "reset dailyCheck");
+  console.log(moment().format('LLL'), "Reset todayAnswers to false");
 
   User.find()
 		.then(users => {
@@ -58,11 +36,9 @@ agenda.define('reset dailyCheck', function(job, done) {
     });
     done();
 });
-
 // (min hour dayofmonth month dayofweek)
-
 agenda.on('ready', function(){
-  agenda.every('10 seconds' , 'catch missed days');
-  agenda.every('46 21 * * *' , 'reset dailyCheck');
+  agenda.every('59 23 * * *' , 'catch missed days');
+  agenda.every('00 00* * *' , 'reset dailyCheck');
   agenda.start();
 });

@@ -3,11 +3,11 @@ extends 1layout
 block content
   div.y-template
     h2 Update Habit Entry
-    each index in habits
-      div #{index.question}
+    each habit in habits
+      div #{habit.question}
       div.updateForm
-        form.daily(action=`/users/${username}/update/${index.habitId}/${index.question}` method='post')
+        form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
           input(type='text' name='question' placeholder='Change Habit Question' required)
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='edit-button',value='Edit')
-        form.daily(action=`/users/${username}/delete/${index.habitId}/?_method=DELETE` method='post')
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='delete-button',value='Delete')
+          input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
+        form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
+          input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete')
