@@ -85,9 +85,9 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    user.habits.forEach((item) => {
-      item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr)
-    })
+    // user.habits.forEach((item) => {
+    //   item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr)
+    // })
       if (user.habits.length === 0) {
         res.render('nohistory', {
           username: user.username,

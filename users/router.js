@@ -82,9 +82,9 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			let _habits = user.habits.filter((item, index) => {
 				return item.todayAnswer != true && item.active != false;
 			});
-			user.habits.forEach((item) => {
-				item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
-			})
+			// user.habits.forEach((item) => {
+			// 	item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
+			// })
 			if (_habits.length === 0) {
 				res.render('history',{
 					username: user.username,
@@ -305,7 +305,7 @@ router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
 });
 
 router.put('/:username/record/:habitId', verifyUser, (req, res) => {
-  User.update(
+	User.update(
     {username: req.params.username, "habits.habitId": req.params.habitId},
     {
 			$push: {
@@ -315,8 +315,16 @@ router.put('/:username/record/:habitId', verifyUser, (req, res) => {
 				"habits.$.todayAnswer": true
 			}
     }
-  )
-	.then( user => {
+	)
+	.then((results) => {
+		User.findOne({username: req.params.username}).then(user => {
+				for (var habit of user.habits) {
+					habit.active = (habit.dailyCheck.length < 15);
+				}
+				user.save();
+			})
+	})
+	.then( ()=> {
 		res.redirect(`/users/${req.user.username}/dailycheck`)
 	})
 	.catch(err => {
