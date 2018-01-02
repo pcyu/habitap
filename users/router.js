@@ -304,6 +304,7 @@ router.post('/new', verifyUser, (req, res) => {
 					endDate: endTime,
 					habitId: uuidv1(),
 					question: req.body.question,
+					questionArray: {question: req.body.question, revisionDate: moment().format("LL")},
 					startDate: beginTime,
 					todayAnswer: true
 				}
@@ -346,12 +347,17 @@ router.post('/new', verifyUser, (req, res) => {
 router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
   User.update(
     {username: req.params.username, "habits.habitId": req.params.id},
-    { $set:
-      {"habits.$.questionArray": req.body.question}
-    }
+    { 
+			$push: {
+			"habits.$.questionArray": {question: req.body.question, revisionDate: moment().format("LL")}
+			},
+			$set:{
+			"habits.$.question": req.body.question
+			}
+		}
   )
 	.then(
-		res.redirect(`/users/history`)
+		res.redirect(`/users/dashboard`)
 	)
 	.catch(err => {
 	console.error(err);

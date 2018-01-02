@@ -115,11 +115,13 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
     const todayAnswerTrueArray = (user.habits.filter( function(value){
        return value.active === true
     }))
+    // for (var item of todayAnswerTrueArray) {
+    //   item.question = (item.questionArray.slice(-1)[0])
+    // }
       if (user.habits.length === 0) {
         res.render(
           'nohistory', {
           username: user.username,
-          habits: user.habits,
           token: req.app.get('loggedIn'),
         })
       } 
