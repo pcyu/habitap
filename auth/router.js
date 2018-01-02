@@ -57,7 +57,7 @@ router.post(
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
     } else if (req.user.habits.length === trueAnswers.length){
-      res.redirect(`/users/history`)
+      res.redirect(`/users/dashboard`)
     } else {
       res.redirect(`/users/${req.body.username}/dailycheck`)
     }
