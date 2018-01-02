@@ -19,16 +19,17 @@ block content
         habits.forEach((item, index) => {
           const yesArray = item.dailyCheck.filter(yes => yes === 1);
           const noArray = item.dailyCheck.filter(no => no === 0);
-          item.data = item.dailyCheck.length === 0 ? [0, 0, 15] : [yesArray.length, noArray.length, ( 15 - (yesArray.length + noArray.length) )]
+          const missArray = item.dailyCheck.filter(miss => miss === 2);
+          item.data = item.dailyCheck.length === 0 ? [0, 0, 0, 15] : [yesArray.length, noArray.length, missArray.length, ( 15 - (yesArray.length + noArray.length) )]
           var ctx = document.getElementById("myChart-"+index).getContext('2d');
           var chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-              labels: ["Success", "Fail", "Days Remaining"],
+              labels: ["Success", "Fail", "Missed Days", "Days Remaining"],
               datasets: [{
                 label: 'Number of votes',
                 data: item.data,
-                backgroundColor: ["#2471A3", "#A93226", "#D3D3D3"],
+                backgroundColor: ["#2471A3", "#A93226", "#D3D3D3", "000000"],
                 borderColor: ["#17202A"],
                 borderWidth: 1
               }],
