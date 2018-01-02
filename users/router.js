@@ -86,7 +86,7 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			// 	item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
 			// })
 			if (_habits.length === 0) {
-				res.render('history',{
+				res.render('dashboard',{
 					username: user.username,
 					id: user.id,
 					habits: user.habits,

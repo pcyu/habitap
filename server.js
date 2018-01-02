@@ -87,7 +87,14 @@ app.get('/users/history', verifyUser, (req, res) => {
 	.then( user => {
     const todayAnswerFalseArray = (user.habits.filter( function(value){
       return value.active === false
-   }))
+    }))
+    var previousQuestions = [];
+    for (var item of todayAnswerFalseArray) {
+      for (var question of item.questionArray) {
+        previousQuestions.push(question)
+      }
+    }
+    previousQuestions.pop()
       if (user.habits.length === 0) {
         res.render(
           'nohistory', {
@@ -101,6 +108,7 @@ app.get('/users/history', verifyUser, (req, res) => {
             username: user.username,
             id: user.id,
             habits: todayAnswerFalseArray,
+            questions: previousQuestions,
             token: req.app.get('loggedIn'),
         });
       }
