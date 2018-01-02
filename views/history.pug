@@ -18,16 +18,14 @@ block content
       window.onload = function() {
         var habits = !{JSON.stringify(habits)};
         habits.forEach((item, index) => {
-          const dataArray = [];
           const yesArray = item.dailyCheck.filter(yes => yes === 1);
           const noArray = item.dailyCheck.filter(no => no === 0);
-          dataArray.push(yesArray.length, noArray.length)
-          item.data = item.dailyCheck.length === 0 ? [0, 0, 1] : dataArray
+          item.data = item.dailyCheck.length === 0 ? [0, 0, 15] : [yesArray.length, noArray.length, ( 15 - (yesArray.length + noArray.length) )]
           var ctx = document.getElementById("myChart-"+index).getContext('2d');
           var chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-              labels: ["Yes", "No", "Haven't started yet"],
+              labels: ["Successful Days", "Failed Days", "Days left"],
               datasets: [{
                 label: 'Number of votes',
                 data: item.data,
