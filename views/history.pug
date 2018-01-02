@@ -15,30 +15,36 @@ block content
           
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
-    window.onload = function() {
-      for (let i = 0; i < 5; i++) {
-        var ctx = document.getElementById("myChart-"+i).getContext('2d');
-        var chart = new Chart(ctx, {
-        type: 'pie',
-        data: {
-          labels: ["red", "green", "blue"],
-          datasets: [{
-            label: 'Number of votes',
-            data: [1, 1, 1],
-            backgroundColor: ["#000011", "#000311", "#000021"],
-            borderColor: ["#000011", "#000411", "#000191"],
-            borderWidth: 1
-          }],
-        },
-        options: {
-          title: { 
-            display: true,
-            text: "chart",
-          },
-          legend: {
-            position: 'bottom'
-          },
-        }
-      });
-      }
-    };
+      window.onload = function() {
+        var habits = !{JSON.stringify(habits)};
+        habits.forEach((item, index) => {
+          const dataArray = [];
+          const yesArray = item.dailyCheck.filter(yes => yes === 1);
+          const noArray = item.dailyCheck.filter(no => no === 0);
+          dataArray.push(yesArray.length, noArray.length)
+          item.data = item.dailyCheck.length === 0 ? [0, 0, 1] : dataArray
+          var ctx = document.getElementById("myChart-"+index).getContext('2d');
+          var chart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+              labels: ["Yes", "No", "Haven't started yet"],
+              datasets: [{
+                label: 'Number of votes',
+                data: item.data,
+                backgroundColor: ["#2471A3", "#A93226", "#000000"],
+                borderColor: ["#17202A"],
+                borderWidth: 1
+              }],
+            },
+            options: {
+              title: { 
+                display: true,
+                text: "Habit Chart",
+              },
+              legend: {
+                position: 'bottom'
+              },
+            }
+          });
+        })
+      };
