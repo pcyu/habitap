@@ -95,7 +95,7 @@ app.get('/users/history', verifyUser, (req, res) => {
       }
     }
     previousQuestions.pop()
-      if (user.habits.length === 0) {
+      if (todayAnswerFalseArray.length === 0) {
         res.render(
           'nohistory', {
           username: user.username,
