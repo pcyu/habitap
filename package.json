@@ -1,7 +1,7 @@
 {
-  "name": "capstone-node",
+  "name": "habitap",
   "version": "1.0.0",
-  "description": "CRUD capstone lehgo",
+  "description": "habit logging app",
   "main": "config.js",
   "scripts": {
     "test": "mocha",
