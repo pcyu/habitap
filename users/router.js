@@ -248,43 +248,6 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 });
 
-// router.post('/new', verifyUser, (req, res) => {
-//   const requiredFields = ['question'];
-// 	for(let i = 0; i < requiredFields.length; i++) {
-// 	  const field = requiredFields[i];
-// 	  if(!(field in req.body)) {
-// 			const message = `The value for \`${field}\` is missing.`
-// 			console.error(message);
-// 			return res.status(400).send(message);
-// 	  }
-// 	}
-// 	const tracker = timer(true);
-// 	const beginTime = moment(tracker.goalBegin).format("LL");
-// 	const endTime = moment(tracker.goalEnd).format("LL");
-// 	User.update(
-// 		{"username": req.user.username},
-// 		{
-// 			$push: {
-// 				"habits": {
-// 					active: true,
-// 					endDate: endTime,
-// 					habitId: uuidv1(),
-// 					question: req.body.question,
-// 					startDate: beginTime,
-// 					todayAnswer: true
-// 				}
-// 			}
-// 		}
-// 	)
-// 	.then(
-// 		res.redirect(`/users/${req.user.username}/habitstart`)
-// 	)
-// 	.catch(err => {
-// 		console.error(err);
-// 		return res.status(500).json({message: 'Internal server error'});
-// 	});
-// });
-
 router.post('/new', verifyUser, (req, res) => {
   const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
