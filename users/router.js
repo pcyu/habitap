@@ -294,21 +294,6 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 
 // Change Habit Question
-// router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
-//   User.update(
-//     {username: req.params.username, "habits.habitId": req.params.id},
-//     { $set:
-//       {"habits.$.question": req.body.question}
-//     }
-//   )
-// 	.then(
-// 		res.redirect(`/users/history`)
-// 	)
-// 	.catch(err => {
-// 	console.error(err);
-// 	return res.status(500).json({message: 'Internal server error'});
-// 	});
-// });
 
 router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
   User.update(
