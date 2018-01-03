@@ -16,7 +16,6 @@ const methodOverride = require('method-override');
 const uuidv1 = require('uuid/v1');
 const {timer} = require('../helpers');
 app.use(methodOverride('_method'));
-
 router.use(cookieParser());
 
 //  ===========================================================================
@@ -286,15 +285,11 @@ router.post('/new', verifyUser, (req, res) => {
 	});
 });
 
-
-
-
 //  ===========================================================================
 //                                       PUT
 //  ===========================================================================
 
 // Change Habit Question
-
 router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
   User.update(
     {username: req.params.username, "habits.habitId": req.params.id},
