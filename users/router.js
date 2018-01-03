@@ -82,6 +82,9 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			let _habits = user.habits.filter((item, index) => {
 				return item.todayAnswer != true && item.active != false;
 			});
+			const todayAnswerTrueArray = (user.habits.filter( function(value){
+				return value.active === true
+			}));	
 			// user.habits.forEach((item) => {
 			// 	item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
 			// })
@@ -89,7 +92,7 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 				res.render('dashboard',{
 					username: user.username,
 					id: user.id,
-					habits: user.habits,
+					habits: todayAnswerTrueArray,
 					token: req.app.get('loggedIn')
 				})
 			} else {
