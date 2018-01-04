@@ -5,11 +5,17 @@ block content
     h2 Dashboard
     each habit, index in habits
       div.habitTile.cf
-        h2 #{habit.question}
-        form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
-          input(type='text' name='question' placeholder='Change Habit Question' required)
-          input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
+        div.habitQuestionInput
+          h2 #{habit.question}
+        //- form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
+        //-   input(type='text' name='question' placeholder='Change Habit Question' required)
+        //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
         canvas(id= ("myChart-"+ index) width="400" height="400")
+        ul.legends
+          li.success 6
+          li.fail 6
+          li.miss 1
+          li.remain 2
           
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
@@ -28,18 +34,14 @@ block content
               datasets: [{
                 label: 'Number of votes',
                 data: item.data,
-                backgroundColor: ["#2471A3", "#A93226", "#D3D3D3", "#000000"],
+                backgroundColor: ["#2471A3", "#A93226", "#D3D3D3", "#001000"],
                 borderColor: ["#17202A"],
                 borderWidth: 1
               }],
             },
             options: {
-              title: { 
-                display: true,
-                text: "Habit Chart",
-              },
               legend: {
-                position: 'right'
+                display: false
               },
             }
           });
