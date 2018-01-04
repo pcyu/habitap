@@ -84,9 +84,12 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 			const todayAnswerTrueArray = (user.habits.filter( function(value){
 				return value.active === true
 			}));	
-			// user.habits.forEach((item) => {
-			// 	item.habitScore = item.dailyCheck.length === 0 ? 0 : item.dailyCheck.reduce( (prev, curr) => prev + curr) 
-			// })
+			todayAnswerTrueArray.forEach((item) => {
+				item.success = item.dailyCheck.filter(yes => yes === 1).length;
+				item.fail = item.dailyCheck.filter(no => no === 0).length;
+				item.miss = item.dailyCheck.filter(miss => miss === -1).length;
+				item.remain = 15 - (item.success + item.fail + item.miss);
+			})
 			if (_habits.length === 0) {
 				res.render('dashboard',{
 					username: user.username,

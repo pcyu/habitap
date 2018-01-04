@@ -12,20 +12,22 @@ block content
         //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
         canvas(id= ("myChart-"+ index) width="400" height="400")
         ul.legends
-          li.success 6
-          li.fail 6
-          li.miss 1
-          li.remain 2
+          li.success #{habit.success}
+          li.fail #{habit.fail}
+          li.miss #{habit.miss}
+          li.remain #{habit.remain}
           
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
       window.onload = function() {
         var habits = !{JSON.stringify(habits)};
+        console.log(habits, "clienthabits")
         habits.forEach((item, index) => {
-          const yesArray = item.dailyCheck.filter(yes => yes === 1);
-          const noArray = item.dailyCheck.filter(no => no === 0);
-          const missArray = item.dailyCheck.filter(miss => miss === -1);
-          item.data = item.dailyCheck.length === 0 ? [0, 0, 0, 15] : [yesArray.length, noArray.length, missArray.length, ( 15 - (yesArray.length + noArray.length + missArray.length) )]
+          const yes = item.dailyCheck.filter(yes => yes === 1).length;
+          const no = item.dailyCheck.filter(no => no === 0).length;
+          const miss = item.dailyCheck.filter(miss => miss === -1).length;
+          const daysLeft = 15 - (yes + no + miss);
+          item.data = [yes, no, miss, daysLeft];
           var ctx = document.getElementById("myChart-"+index).getContext('2d');
           var chart = new Chart(ctx, {
             type: 'doughnut',
