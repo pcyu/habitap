@@ -38,7 +38,7 @@ agenda.define('reset dailyCheck', function(job, done) {
 });
 // (min hour dayofmonth month dayofweek)
 agenda.on('ready', function(){
-  agenda.every('43 07 * * *' , 'catch missed days');
-  agenda.every('44 07 * * *' , 'reset dailyCheck');
+  agenda.every('1 minute' , 'catch missed days');
+  agenda.every('2 minutes' , 'reset dailyCheck');
   agenda.start();
 });
