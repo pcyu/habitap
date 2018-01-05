@@ -36,11 +36,12 @@
 
 .y-grid {
     align-items: center;
+    background-color: #796f75;
     display: grid;
-    background-color: #add8e6;
-    margin: 15px;
     grid-template-columns: 1fr;
     justify-items: center;
+    margin-top: 20px;
+    padding: 10px;
     @include responsive(truman) {
         grid-template-columns: 1fr 1fr;
     }
