@@ -43,11 +43,12 @@ input {
 }
 
 .registerForm {
-  background-color: rgba(0,0,0,.2);
+  background-color: rgba(0,0,0,.1);
   padding: 5px;
   width: 100%;
   @include responsive(harding) {
     grid-column: 2;
+    grid-row: 1;
   }
 }
 
