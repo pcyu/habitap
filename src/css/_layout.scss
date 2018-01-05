@@ -1,4 +1,7 @@
 .y-banner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     margin-top: 50px;
     overflow: hidden;
     position: relative;
@@ -18,6 +21,7 @@
     }
     @include responsive(harding) {
         height: 460px;
+        grid-template-columns: 1fr 1fr;
     }
     @include responsive(hoover) {
         height: 600px;

@@ -46,6 +46,9 @@ input {
   background-color: rgba(0,0,0,.2);
   padding: 5px;
   width: 100%;
+  @include responsive(harding) {
+    grid-column: 2;
+  }
 }
 
 //------------------------------------------------------------------------------
