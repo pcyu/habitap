@@ -9,6 +9,7 @@ a {
 //  Body
 //------------------------------------------------------------------------------
 body {
+  background-color: #D6CFCB;
   font-family: "Roboto Condensed";
   font-style: normal;
   position: relative;
@@ -87,10 +88,11 @@ p + p {
 }
 
 p {
-  color: white;
+  color: #193441;
   font-family: "Roboto Condensed";
   font-weight: 100;
   .overlay & {
+    color: white;
     @include responsive(truman) {
       position: relative;
       top: 25%;
