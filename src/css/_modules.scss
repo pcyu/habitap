@@ -61,15 +61,15 @@ a {
     text-transform: uppercase;
     color: #020304;
     font-weight: 700;
-    font-family: sans-serif;
+    font-family: "Roboto Condensed";
     display: block;
     padding: 10px;
   }
 }
 
 li {
-  opacity: 0;
   .nav-bar & {
+    opacity: 0;
     @include responsive(coolidge) {
       display: inline-block;
       opacity: 1;
@@ -82,8 +82,8 @@ li {
 //------------------------------------------------------------------------------
 
 .habitTile {
-  border: 1px solid #AAA;
-  background: white;
+  border: 1px solid #CCC;
+  background: #c1f2eb;
   margin: 24px 0;
   padding: 16px;
 }
@@ -105,6 +105,22 @@ p {
   width: 200px;
 }
 
+.habitQuestionInput {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.legends {
+  background: white;
+  border: 1px solid black;
+}
+
+li {
+  .legends & {
+    border: 1px solid gray;
+    color: red;
+  }
+}
 
 //------------------------------------------------------------------------------
 //  Images

@@ -9,7 +9,8 @@ a {
 //  Body
 //------------------------------------------------------------------------------
 body {
-  background: lightblue;
+  font-family: "Roboto Condensed";
+  font-style: normal;
   position: relative;
 }
 
@@ -22,9 +23,16 @@ h1 {
   left: 40px;
   z-index: 6;
   font-size: 20px;
-  font-weight: 900;
-  font-family: sans-serif;
+  font-family: "Cabin";
+  font-weight: normal;
+  font-style: normal;
   text-transform: uppercase;
+}
+
+h3, h4 {
+  font-family: "Cabin";
+  font-weight: 900;
+  font-style: oblique;
 }
 
 h2 {
@@ -52,6 +60,9 @@ input {
 //------------------------------------------------------------------------------
 html {
   color: $black80;
+  font-family: "Source Sans Pro";
+  font-weight: normal;
+  font-style: normal;
   font-size: 14px;
   height: 100%;
   &.disable {
@@ -76,6 +87,8 @@ p + p {
 }
 
 p {
+  font-family: "Roboto Condensed";
+  font-weight: 100;
   .overlay & {
     @include responsive(truman) {
       position: relative;
