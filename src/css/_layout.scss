@@ -57,9 +57,12 @@
 
 footer {
   bottom: 0;
-  background: white;
+  background: #403D3B;
   padding: 15px;
   position: relative;
   text-align: center;
   width: 100%;
+  & div {
+    color: white;
+  }
 }
