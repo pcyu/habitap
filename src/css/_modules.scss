@@ -4,7 +4,8 @@
 
 .login-button {
   display: inline-block;
-  width: auto;
+  margin: 10px;
+  width: 50px;
 }
 
 .delete-button {
@@ -26,16 +27,19 @@
 
 input {
   display: block;
+  margin: 0 auto;
+  padding: 6px 10px;
+  width: 50%;
 }
 
 .updateForm {
   position: relative;
 }
 
-#registerForm {
+.registerForm {
   background-color: rgba(0,0,0,.2);
   padding: 5%;
-  width: 50%;
+  width: 100%;
 }
 
 //------------------------------------------------------------------------------
