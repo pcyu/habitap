@@ -1,9 +1,8 @@
 extends landing
 
 block signin
-  div.y-template
+  div#registerForm
     h2 Register
-    div#registerForm
       form.register(action='/users/register' method='POST')
         input(type='text' name='username' placeholder='Username' required)
         input(type='password' name='password' id='password' placeholder='Password' required)
