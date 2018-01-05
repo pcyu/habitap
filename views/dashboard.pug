@@ -11,11 +11,11 @@ block content
         //-   input(type='text' name='question' placeholder='Change Habit Question' required)
         //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
         canvas(id= ("myChart-"+ index) width="400" height="400")
-        ul.legends
-          li.success #{habit.success}
-          li.fail #{habit.fail}
-          li.miss #{habit.miss}
-          li.remain #{habit.remain}
+        div.legends
+          div.success #{habit.success}
+          div.fail #{habit.fail}
+          div.miss #{habit.miss}
+          div.remain #{habit.remain}
           
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.

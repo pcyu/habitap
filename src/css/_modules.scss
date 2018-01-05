@@ -112,13 +112,16 @@ p {
 
 .legends {
   background: white;
+  display: grid;
   border: 1px solid black;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-li {
+div {
   .legends & {
     border: 1px solid gray;
     color: red;
+    text-align: center;
   }
 }
 
