@@ -29,7 +29,7 @@ h1 {
   text-transform: uppercase;
 }
 
-h3, h4 {
+h2, h3, h4 {
   font-family: "Cabin";
   font-weight: 900;
   font-style: oblique;
@@ -87,6 +87,7 @@ p + p {
 }
 
 p {
+  color: white;
   font-family: "Roboto Condensed";
   font-weight: 100;
   .overlay & {
