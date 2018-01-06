@@ -140,11 +140,30 @@ p {
 div {
   .legends & {
     border: 1px solid gray;
-    color: red;
+    color: white;
+    padding: 5%;
     text-align: center;
   }
 }
 
+.success {
+  background-color: #2471A3;
+}
+
+.fail {
+  background-color: #A93226;
+}
+
+.miss {
+  background-color: #D3D3D3;
+}
+
+.remain {
+  background-color: #001000;
+  &:after {
+    content: "Days Left";
+  }
+}
 //------------------------------------------------------------------------------
 //  Images
 //------------------------------------------------------------------------------
