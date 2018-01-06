@@ -85,9 +85,10 @@ p {
   font-weight: 100;
   .overlay & {
     color: white;
-    @include responsive(truman) {
+    @include responsive(nixon) {
+      padding: 0 15px;
       position: relative;
-      top: 25%;
+      top: 40%;
     }
   }
 }
