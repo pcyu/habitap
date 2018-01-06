@@ -1,9 +1,9 @@
-extends 1layout
+extends landing
 
-block content
-  div.y-template
+block signin
+  div.registerForm
     h2 Login
-    form.login(action='/auth/login' method='POST')
-      input(type='text' name='username' placeholder='Username' required)
-      input(type='password' name='password' placeholder='Password' required)
-      input(type='submit' class='login-button' value='Login')
+      form.login(action='/auth/login' method='POST')
+        input(type='text' name='username' placeholder='Username' required)
+        input(type='password' name='password' placeholder='Password' required)
+        input(type='submit' class='login-button' value='Login')

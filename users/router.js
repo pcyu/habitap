@@ -153,7 +153,7 @@ router.post('/register', jsonParser, (req, res) => {
 			});
 	}
 
-	const stringFields = ['username', 'password', 'firstName', 'lastName'];
+	const stringFields = ['username', 'password'];
 	const nonStringField = stringFields.find(
 			field => field in req.body && typeof req.body[field] !== 'string'
 	);
@@ -214,9 +214,7 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 	}
 
-	let {username, password, firstName = '', lastName = ''} = req.body;  //c032
-	firstName = firstName.trim();
-	lastName = lastName.trim();
+	let {username, password} = req.body;  //c032
 
 	return User.find({username})
 		.count()
@@ -234,9 +232,7 @@ router.post('/register', jsonParser, (req, res) => {
 		.then(hash => {
 			return User.create({
 				username,
-				password: hash,
-				firstName,
-				lastName
+				password: hash
 			});
 		})
 		.then(

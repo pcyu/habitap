@@ -2,11 +2,6 @@ const bcrypt = require('bcryptjs');
 const mongoose = require('mongoose');
 
 const userSchema = mongoose.Schema({
-    firstName: {
-      required: true,
-      default: '',
-      type: String
-    },
     habits: [
       { _id: false,
         active: Boolean,
@@ -29,11 +24,6 @@ const userSchema = mongoose.Schema({
         }
       }
     ],
-    lastName: {
-      required: true,
-      default: '',
-      type: String
-    },
     password: {
       required: true,
       type: String
@@ -49,9 +39,7 @@ userSchema.methods.apiRepr = function() {
     return {
         id: this._id,
         username: this.username || '',
-        habits: this.habits || '',
-        firstName: this.firstName || '',
-        lastName: this.lastName || ''
+        habits: this.habits || ''
     };
 };
 

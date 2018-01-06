@@ -1,11 +1,9 @@
-extends 1layout
+extends landing
 
-block content
-  div.y-template
+block signin
+  div.registerForm
     h2 Register
-    form.register(action='/users/register' method='POST')
-      input(type='text' name='firstName' placeholder='First Name' required)
-      input(type='text' name='lastName' placeholder='Last Name' required)
-      input(type='text' name='username' placeholder='Username' required)
-      input(type='password' name='password' id='password' placeholder='Password' required)
-      input(type='submit' class='sign-up-button' value='Register')
+      form.register(action='/users/register' method='POST')
+        input(type='text' name='username' placeholder='Username' required)
+        input(type='password' name='password' id='password' placeholder='Password' required)
+        input(type='submit' class='login-button' value='Register')

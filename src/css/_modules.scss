@@ -3,8 +3,11 @@
 //------------------------------------------------------------------------------
 
 .login-button {
+  background-color: white;
   display: inline-block;
-  width: auto;
+  font-size: 12px;
+  margin: 10px;
+  width: 75px;
 }
 
 .delete-button {
@@ -26,10 +29,27 @@
 
 input {
   display: block;
+  font-size: 14px;
+  color: black;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 2px 4px;
+  width: 50%;
 }
 
 .updateForm {
   position: relative;
+}
+
+.registerForm {
+  background-color: rgba(0,0,0,.1);
+  padding: 5px;
+  width: 100%;
+  @include responsive(harding) {
+    grid-column: 2;
+    grid-row: 1;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -112,13 +132,16 @@ p {
 
 .legends {
   background: white;
+  display: grid;
   border: 1px solid black;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
 }
 
-li {
+div {
   .legends & {
     border: 1px solid gray;
     color: red;
+    text-align: center;
   }
 }
 

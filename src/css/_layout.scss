@@ -1,4 +1,7 @@
 .y-banner {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
     margin-top: 50px;
     overflow: hidden;
     position: relative;
@@ -18,6 +21,7 @@
     }
     @include responsive(harding) {
         height: 460px;
+        grid-template-columns: 1fr 1fr;
     }
     @include responsive(hoover) {
         height: 600px;
@@ -36,12 +40,11 @@
 
 .y-grid {
     align-items: center;
-    background-color: #796f75;
+    background-color: #BBB8B5;
     display: grid;
     grid-template-columns: 1fr;
     justify-items: center;
-    margin-top: 20px;
-    padding: 10px;
+    padding: 20px;
     @include responsive(truman) {
         grid-template-columns: 1fr 1fr;
     }
@@ -58,9 +61,12 @@
 
 footer {
   bottom: 0;
-  background: white;
+  background: #403D3B;
   padding: 15px;
   position: relative;
   text-align: center;
   width: 100%;
+  & div {
+    color: white;
+  }
 }
