@@ -2,22 +2,23 @@ extends 1layout
 
 block content
   div.y-template
-    h2 Dashboard
-    each habit, index in habits
-      div.habitTile.cf
-        div.habitQuestionInput
-          h2 #{habit.question}
-        //- form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
-        //-   input(type='text' name='question' placeholder='Change Habit Question' required)
-        //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
-        div.habitChart
-          canvas(id= ("myChart-"+ index) width="400" height="400")
-        div.legends
-          div.success #{habit.success}
-          div.fail #{habit.fail}
-          div.miss #{habit.miss}
-          div.remain #{habit.remain}
-          
+    div.habitDashboard
+      h2 Dashboard  
+      each habit, index in habits
+        div.habitTile.cf
+          div.habitQuestionInput
+            h2 #{habit.question}
+          //- form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
+          //-   input(type='text' name='question' placeholder='Change Habit Question' required)
+          //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
+          div.habitChart
+            canvas(id= ("myChart-"+ index) width="400" height="400")
+          div.legends
+            div.success #{habit.success}
+            div.fail #{habit.fail}
+            div.miss #{habit.miss}
+            div.remain #{habit.remain}
+            
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
       window.onload = function() {

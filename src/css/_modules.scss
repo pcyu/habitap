@@ -101,10 +101,15 @@ li {
 //  HabitTile
 //------------------------------------------------------------------------------
 
+.habitDashboard {
+  display: grid;
+  grid-gap: 20px;
+}
+
 .habitTile {
   border: 1px solid #CCC;
   background: #c1f2eb;
-  margin: 0 auto 20px;
+  margin: 0 auto;
   padding: 10px;
   width: 200px;
 }
