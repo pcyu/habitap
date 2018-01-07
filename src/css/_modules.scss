@@ -105,8 +105,9 @@ li {
   border: 1px solid #CCC;
   background: #c1f2eb;
   display: grid;
-  margin: 24px 0;
-  padding: 16px;
+  margin: 0 auto;
+  padding: 10px;
+  width: 240px;
 }
 
 .habitDate {
@@ -122,19 +123,23 @@ p {
 }
 
 .habitChart {
-  height: 100px;
-  width: 100px;
+  height: 150px;
+  margin: 0 auto;
+  width: 150px;
 }
 
 .habitQuestionInput {
-  margin-bottom: 20px;
+  background: blue;
+  margin: 0 auto;
   text-align: center;
+  width: 150px;
 }
 
 .legends {
   background: white;
   display: grid;
   border: 1px solid black;
+  margin: 0 auto;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100px;
 }
@@ -151,9 +156,6 @@ div {
 .success {
   background-color: #2471A3;
   &:after {
-    position: relative;
-    top: 20px;
-    color: black;
     content: " Pass";
   }
 }
