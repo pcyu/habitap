@@ -104,10 +104,9 @@ li {
 .habitTile {
   border: 1px solid #CCC;
   background: #c1f2eb;
-  display: grid;
-  margin: 0 auto;
+  margin: 0 auto 20px;
   padding: 10px;
-  width: 240px;
+  width: 200px;
 }
 
 .habitDate {
@@ -124,13 +123,14 @@ p {
 
 .habitChart {
   height: 150px;
-  margin: 0 auto;
+  margin: 0 auto 15px;
   width: 150px;
 }
 
 .habitQuestionInput {
   background: blue;
-  margin: 0 auto;
+  margin: 10px auto 15px;
+  padding: 5px;
   text-align: center;
   width: 150px;
 }
