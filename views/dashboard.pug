@@ -10,7 +10,8 @@ block content
         //- form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
         //-   input(type='text' name='question' placeholder='Change Habit Question' required)
         //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
-        canvas(id= ("myChart-"+ index) width="400" height="400")
+        div.habitChart
+          canvas(id= ("myChart-"+ index) width="400" height="400")
         div.legends
           div.success #{habit.success}
           div.fail #{habit.fail}

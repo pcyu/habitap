@@ -129,10 +129,11 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
        return value.active === true
     }))
     todayAnswerTrueArray.forEach((item) => {
-      item.success = item.dailyCheck.filter(yes => yes === 1).length;
-      item.fail = item.dailyCheck.filter(no => no === 0).length;
-      item.miss = item.dailyCheck.filter(miss => miss === -1).length;
-      item.remain = 15 - (item.success + item.fail + item.miss);
+				item.success = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(yes => yes === 1).length : 0;
+				item.fail = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(no => no === 0).length : 0;
+				item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss === -1).length : 0;
+        item.remain = 15 - (item.success + item.fail + item.miss);
+    })
       if (user.habits.length === 0) {
         res.render(
           'nodashboard', {
@@ -148,8 +149,7 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
             token: req.app.get('loggedIn'),
         });
       }
-    })
-  });
+  })
 });
 
 app.get('/users/update', verifyUser, (req, res) => {
