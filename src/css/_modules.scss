@@ -104,6 +104,9 @@ li {
 .habitDashboard {
   display: grid;
   grid-gap: 20px;
+  @include responsive(harding) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 .habitTile {
@@ -112,6 +115,15 @@ li {
   margin: 0 auto;
   padding: 10px;
   width: 200px;
+  @include responsive(froosevelt) {
+    width: 300px;
+  }
+  @include responsive(johnson) {
+    width: 400px;
+  }
+  @include responsive(reagan) {
+    width: 700px;
+  }
 }
 
 .habitDate {
