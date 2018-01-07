@@ -104,6 +104,7 @@ li {
 .habitTile {
   border: 1px solid #CCC;
   background: #c1f2eb;
+  display: grid;
   margin: 24px 0;
   padding: 16px;
 }
@@ -121,8 +122,8 @@ p {
 }
 
 .habitChart {
-  height: 200px;
-  width: 200px;
+  height: 100px;
+  width: 100px;
 }
 
 .habitQuestionInput {
@@ -135,6 +136,7 @@ p {
   display: grid;
   border: 1px solid black;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+  width: 100px;
 }
 
 div {
@@ -148,20 +150,32 @@ div {
 
 .success {
   background-color: #2471A3;
+  &:after {
+    position: relative;
+    top: 20px;
+    color: black;
+    content: " Pass";
+  }
 }
 
 .fail {
   background-color: #A93226;
+  &:after {
+    content: " Fail";
+  }
 }
 
 .miss {
   background-color: #D3D3D3;
+  &:after {
+    content: " Miss";
+  }
 }
 
 .remain {
   background-color: #001000;
   &:after {
-    content: "Days Left";
+    content: " Left";
   }
 }
 //------------------------------------------------------------------------------
