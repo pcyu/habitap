@@ -135,8 +135,7 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
         item.remain = 15 - (item.success + item.fail + item.miss);
     })
       if (user.habits.length === 0) {
-        res.render(
-          'nodashboard', {
+        res.render('nodashboard', {
           username: user.username,
           token: req.app.get('loggedIn'),
         })

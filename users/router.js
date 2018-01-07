@@ -91,7 +91,7 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 				item.remain = 15 - (item.success + item.fail + item.miss);
 			})
 			if (_habits.length === 0) {
-				res.render('dashboard',{
+				res.render('nodailycheck',{
 					username: user.username,
 					id: user.id,
 					habits: todayAnswerTrueArray,

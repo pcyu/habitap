@@ -117,12 +117,13 @@ li {
   width: 200px;
   @include responsive(froosevelt) {
     width: 300px;
+    height: 350px;
   }
   @include responsive(johnson) {
     width: 400px;
   }
   @include responsive(reagan) {
-    width: 700px;
+    width: 600px;
   }
 }
 
@@ -142,14 +143,23 @@ p {
   height: 150px;
   margin: 0 auto 15px;
   width: 150px;
+  @include responsive(froosevelt) {
+    width: 200px;
+  }
 }
 
 .habitQuestionInput {
   background: blue;
   margin: 10px auto 15px;
-  padding: 5px;
+  padding: 1px;
   text-align: center;
   width: 150px;
+  @include responsive(froosevelt) {
+    width: 200px;
+  }
+  @include responsive(johnson) {
+    width: 300px;
+  }
 }
 
 .legends {
@@ -157,8 +167,19 @@ p {
   display: grid;
   border: 1px solid black;
   margin: 0 auto;
+  position: relative;
   grid-template-columns: 1fr 1fr 1fr 1fr;
   width: 100px;
+  @include responsive(froosevelt) {
+    width: 150px;
+    top: 20%;
+  }
+  @include responsive(johnson) {
+    width: 250px;
+  }
+  @include responsive(reagan) {
+    width: 300px;
+  }
 }
 
 div {
