@@ -202,68 +202,7 @@ p {
     margin-bottom: 40px;
   }
 }
-a {
-  .updateForm & {
-    color: white;
-  }
-}
 
-.legends {
-  background: white;
-  display: grid;
-  border: 1px solid black;
-  margin: 0 auto;
-  position: relative;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  width: 100px;
-  @include responsive(froosevelt) {
-    width: 150px;
-    top: 20%;
-  }
-  @include responsive(johnson) {
-    width: 250px;
-  }
-  @include responsive(reagan) {
-    width: 300px;
-  }
-}
-
-div {
-  .legends & {
-    border: 1px solid gray;
-    color: white;
-    padding: 5%;
-    text-align: center;
-  }
-}
-
-.success {
-  background-color: #2471A3;
-  &:after {
-    content: " Pass";
-  }
-}
-
-.fail {
-  background-color: #A93226;
-  &:after {
-    content: " Fail";
-  }
-}
-
-.miss {
-  background-color: #D3D3D3;
-  &:after {
-    content: " Miss";
-  }
-}
-
-.remain {
-  background-color: #001000;
-  &:after {
-    content: " Left";
-  }
-}
 //------------------------------------------------------------------------------
 //  Images
 //------------------------------------------------------------------------------
