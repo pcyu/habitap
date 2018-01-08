@@ -48,6 +48,21 @@ input {
   }
 }
 
+.text-box {
+  .updateForm & {
+    background-color: green;
+    border: 0px;
+    width: 100px;
+  }
+}
+
+input::placeholder {
+  .updateForm & {
+    font-size: 10px;
+    color: white;
+  }
+}
+
 input {
   .newForm & {
   display: block;

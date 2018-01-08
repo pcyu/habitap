@@ -9,7 +9,7 @@ block content
           div.habitQuestionInput
             div.updateForm
               form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
-                input(type='text' name='question' placeholder= `${habit.question}` required)
+                input(type='text',name='question',class='text-box',placeholder= `${habit.question}`)
                 input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
           canvas(id= ("myChart-"+ index) width="50" height="25")
             
