@@ -27,7 +27,7 @@ block content
           var chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-              labels: [`${yes}`+" Yes", `${no}`+" No", `${miss}`+" Undocumented", `${daysLeft}`+" Remaining"],
+              labels: [`${yes}`+" Pass", `${no}`+" Fail", `${miss}`+" Miss", `${daysLeft}`+" Left"],
               datasets: [{
                 label: 'Days',
                 data: item.data,
