@@ -30,6 +30,7 @@ agenda.define('reset dailyCheck', function(job, done) {
       for (var user of users) {
         for (var habit of user.habits) {
           habit.todayAnswer = false;
+          habit.active = (habit.dailyCheck.length < 15);
         }
       user.save();
       }
