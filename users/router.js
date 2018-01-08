@@ -66,12 +66,6 @@ const verifyUser = (req, res, next) => {
 	}
 };
 
-router.get('/blog-posts', (req, res) => {  //c029
-  return Blog.find()
-    .then(blogs => res.json(users.map(user => user.apiRepr())))
-    .catch(err => res.status(500).json({message: 'Internal server error'}));
-});
-
 router.get('/:username/dailycheck', verifyUser, (req, res) => {
 	if (req.validUser) {
 		User
@@ -136,6 +130,27 @@ router.get('/:username/habitstart', verifyUser, (req, res) => {
 		return res.status(500).json({message: 'Internal server error'});
 	}
 })
+
+router.get('/update/:id', verifyUser, (req, res) => {
+  User.update(
+    {username: req.params.username, "habits.habitId": req.params.id},
+    { 
+			$push: {
+			"habits.$.questionArray": {question: req.body.question, revisionDate: moment().format("LL")}
+			},
+			$set:{
+			"habits.$.question": req.body.question
+			}
+		}
+  )
+	.then(
+		res.redirect(`/users/dashboard`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
 
 //  ===========================================================================
 //                                      POST
@@ -309,6 +324,27 @@ router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
 	return res.status(500).json({message: 'Internal server error'});
 	});
 });
+
+// router.post('/:username/update/:id', verifyUser, (req, res) => {
+//   User.update(
+//     {username: req.params.username, "habits.habitId": req.params.id},
+//     { 
+// 			$push: {
+// 			"habits.$.questionArray": {question: req.body.question, revisionDate: moment().format("LL")}
+// 			},
+// 			$set:{
+// 			"habits.$.question": req.body.question
+// 			}
+// 		}
+//   )
+// 	.then(
+// 		res.redirect(`/users/dashboard`)
+// 	)
+// 	.catch(err => {
+// 	console.error(err);
+// 	return res.status(500).json({message: 'Internal server error'});
+// 	});
+// });
 
 router.put('/:username/record/:habitId', verifyUser, (req, res) => {
 	User.update(

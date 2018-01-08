@@ -26,8 +26,8 @@
 //------------------------------------------------------------------------------
 //  Forms
 //------------------------------------------------------------------------------
-
 input {
+  .registerForm & {
   display: block;
   font-size: 14px;
   color: black;
@@ -35,11 +35,36 @@ input {
   margin-bottom: 10px;
   margin-top: 10px;
   padding: 2px 4px;
-  width: 50%;
+  }
 }
+
+input {
+  .updateForm & {
+  display: inline;
+  font-size: 14px;
+  color: black;
+  margin: 0 auto;
+  padding: 2px 4px;
+  }
+}
+
+input {
+  .newForm & {
+  display: block;
+  font-size: 14px;
+  color: black;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 2px 4px;
+  }
+}
+
+
 
 .updateForm {
   position: relative;
+  text-align: center;
 }
 
 .registerForm {
@@ -153,6 +178,11 @@ p {
   }
   @include responsive(reagan) {
     margin-bottom: 40px;
+  }
+}
+a {
+  .habitQuestionInput & {
+    color: white;
   }
 }
 

@@ -3,6 +3,7 @@ extends 1layout
 block content
   div.y-template
     h2 New Habit Entry
-      form.new-habit-entry(action='/users/new' method='POST')
-        input(type='text' name='question' placeholder='Habit Question' required)
-        input(type='submit' class='login-button' value='Post')
+      div.newForm
+        form.new-habit-entry(action='/users/new' method='POST')
+          input(type='text' name='question' placeholder='Habit Question' required)
+          input(type='submit' class='login-button' value='Post')
