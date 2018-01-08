@@ -104,7 +104,7 @@ li {
 .habitDashboard {
   display: grid;
   grid-gap: 20px;
-  @include responsive(harding) {
+  @include responsive(coolidge) {
     grid-template-columns: 1fr 1fr;
   }
 }
@@ -117,13 +117,13 @@ li {
   width: 250px;
   @include responsive(froosevelt) {
     width: 300px;
-    height: 350px;
   }
   @include responsive(johnson) {
     width: 400px;
   }
   @include responsive(reagan) {
     width: 600px;
+    padding-bottom: 25px;
   }
 }
 
@@ -139,15 +139,6 @@ p {
   }
 }
 
-.habitChart {
-  height: 150px;
-  margin: 0 auto 15px;
-  width: 300px;
-  @include responsive(froosevelt) {
-    width: 200px;
-  }
-}
-
 .habitQuestionInput {
   background: blue;
   margin: 10px auto 15px;
@@ -159,6 +150,9 @@ p {
   }
   @include responsive(johnson) {
     width: 300px;
+  }
+  @include responsive(reagan) {
+    margin-bottom: 40px;
   }
 }
 
