@@ -25,9 +25,9 @@ block content
           item.data = [yes, no, miss, daysLeft];
           var ctx = document.getElementById("myChart-"+index).getContext('2d');
           var chart = new Chart(ctx, {
-            type: 'pie',
+            type: 'doughnut',
             data: {
-              labels: [`${yes}`+" Success", `${no}`+" Fail", `${miss}`+" Missed", `${daysLeft}`+" Days Remaining"],
+              labels: [`${yes}`+" Yes", `${no}`+" No", `${miss}`+" Undocumented", `${daysLeft}`+" Remaining"],
               datasets: [{
                 label: 'Days',
                 data: item.data,
@@ -37,10 +37,13 @@ block content
               }],
             },
             options: {
+              tooltips: {enabled: false},
+              hover: {mode: null},
               legend: {
                 display: true,
                 position: 'left'
               },
+              
             }
           });
         })
