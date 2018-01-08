@@ -52,7 +52,14 @@ input {
   .updateForm & {
     background-color: green;
     border: 0px;
-    width: 100px;
+    align-self: center;
+    min-width: 100px;
+  }
+}
+
+.edit-button {
+  .updateForm & {
+    display: none;
   }
 }
 
