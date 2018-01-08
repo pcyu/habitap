@@ -8,22 +8,15 @@ block content
         div.habitTile
           div.habitQuestionInput
             h2 #{habit.question}
+          canvas(id= ("myChart-"+ index) width="50" height="25")
           //- form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
           //-   input(type='text' name='question' placeholder='Change Habit Question' required)
           //-   input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
-          div.habitChart
-            canvas(id= ("myChart-"+ index) width="400" height="400")
-          div.legends
-            div.success #{habit.success}
-            div.fail #{habit.fail}
-            div.miss #{habit.miss}
-            div.remain #{habit.remain}
             
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
       window.onload = function() {
         var habits = !{JSON.stringify(habits)};
-        console.log(habits, "clienthabits")
         habits.forEach((item, index) => {
           const yes = item.dailyCheck.filter(yes => yes === 1).length;
           const no = item.dailyCheck.filter(no => no === 0).length;
@@ -36,7 +29,7 @@ block content
             data: {
               labels: ["Success", "Fail", "Missed Days", "Days Remaining"],
               datasets: [{
-                label: 'Number of votes',
+                label: 'Days',
                 data: item.data,
                 backgroundColor: ["#2471A3", "#A93226", "#D3D3D3", "#001000"],
                 borderColor: ["#17202A"],
@@ -44,10 +37,9 @@ block content
               }],
             },
             options: {
-              tooltips: {enabled: false},
-              hover: {mode: null},
               legend: {
-                display: false
+                display: true,
+                position: 'left'
               },
             }
           });

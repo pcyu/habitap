@@ -114,7 +114,7 @@ li {
   background: #c1f2eb;
   margin: 0 auto;
   padding: 10px;
-  width: 200px;
+  width: 250px;
   @include responsive(froosevelt) {
     width: 300px;
     height: 350px;
@@ -142,7 +142,7 @@ p {
 .habitChart {
   height: 150px;
   margin: 0 auto 15px;
-  width: 150px;
+  width: 300px;
   @include responsive(froosevelt) {
     width: 200px;
   }
