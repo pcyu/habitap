@@ -20,6 +20,7 @@
   "homepage": "https://github.com/pcyu/habitap#readme",
   "dependencies": {
     "agenda": "^1.0.3",
+    "autosize-input": "^0.4.0",
     "bcrypt-nodejs": "latest",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.15.2",
@@ -35,13 +36,9 @@
     "mongoose": "~4.4",
     "morgan": "^1.7.0",
     "passport": "~0.3.2",
-    "passport-facebook": "~1.0.2",
-    "passport-google-oauth": "~0.1.5",
     "passport-http": "^0.3.0",
     "passport-jwt": "^3.0.1",
     "passport-local": "~1.0.0",
-    "passport-twitter": "~1.0.2",
-    "pluralize": "^7.0.0",
     "pug": "^2.0.0-rc.4",
     "uuid": "^3.1.0"
   },

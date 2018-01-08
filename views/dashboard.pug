@@ -8,8 +8,9 @@ block content
         div.habitTile
           div.habitQuestionInput
             div.updateForm
+              h2 #{habit.question}
               form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
-                input(type='text',name='question',class='text-box',placeholder= `${habit.question}`)
+                input(type='text',name='question',class='text-box',placeholder= "click here to edit")
                 input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
           canvas(id= ("myChart-"+ index) width="50" height="25")
             
