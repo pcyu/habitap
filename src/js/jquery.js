@@ -2,13 +2,24 @@
 
   var app = {
     init: function() {
-      app.unhideEdit();
+      app.unhideBox();
+      app.hideBox();
     },
-    unhideEdit: () => {
+    unhideBox: () => {
       for (let i = 0; i < 100; i++) {
-        $('#text-box-'+i).keyup(function () {
-          if ($.trim(this.value).length > 0) $('#edit-button-'+i).show()
-          else $('#edit-button-'+i).hide()
+        $('#updateForm-'+i).mouseover(function () {
+          $('#text-box-'+i).css("display", "inline");
+          $('#habit-question-'+i).css("display", "none");
+          $('#edit-button-'+i).show()
+        });
+      }
+    },
+    hideBox: () => {
+      for (let i = 0; i < 100; i++) {
+        $('#updateForm-'+i).mouseout(function () {
+          $('#text-box-'+i).css("display", "none");
+          $('#habit-question-'+i).css("display", "block");
+          $('#edit-button-'+i).hide()
         });
       }
     }

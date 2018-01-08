@@ -50,10 +50,10 @@ input {
 
 .text-box {
   .updateForm & {
-    background-color: green;
-    border: 0px;
+    background-color: blue;
+    display: none;
     align-self: center;
-    min-width: 100px;
+    width: 100px;
   }
 }
 
@@ -186,7 +186,7 @@ p {
   }
 }
 
-.habitQuestionInput {
+.updateForm {
   background: blue;
   margin: 10px auto 15px;
   padding: 1px;
@@ -203,7 +203,7 @@ p {
   }
 }
 a {
-  .habitQuestionInput & {
+  .updateForm & {
     color: white;
   }
 }
