@@ -5,10 +5,12 @@
       app.unhideEdit();
     },
     unhideEdit: () => {
-      $('.text-box').keyup(function () {
-        if ($.trim(this.value).length > 0) $('.edit-button').show()
-        else $('.edit-button').hide()
-      });
+      for (let i = 0; i < 100; i++) {
+        $('#text-box-'+i).keyup(function () {
+          if ($.trim(this.value).length > 0) $('#edit-button-'+i).show()
+          else $('#edit-button-'+i).hide()
+        });
+      }
     }
   };
 

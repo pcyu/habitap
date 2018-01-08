@@ -10,8 +10,8 @@ block content
             div.updateForm
               h2 #{habit.question}
               form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
-                input(type='text',name='question',class='text-box',placeholder= "click here to edit")
-                input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',value='Edit')
+                input(type='text',name='question',class='text-box',id=('text-box-'+index),placeholder= "click here to edit")
+                input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Edit')
           canvas(id= ("myChart-"+ index) width="50" height="25")
             
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
