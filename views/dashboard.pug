@@ -27,7 +27,7 @@ block content
           var chart = new Chart(ctx, {
             type: 'pie',
             data: {
-              labels: ["Success", "Fail", "Missed Days", "Days Remaining"],
+              labels: [`${yes}`+" Success", `${no}`+" Fail", `${miss}`+" Missed", `${daysLeft}`+" Days Remaining"],
               datasets: [{
                 label: 'Days',
                 data: item.data,
