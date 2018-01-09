@@ -8,7 +8,7 @@
     unhideBox: () => {
       for (let i = 0; i < 100; i++) {
         $('#updateForm-'+i).mouseover(function () {
-          $('#text-box-'+i).css("display", "inline");
+          $('#text-box-'+i).css("display", "block");
           $('#habit-question-'+i).css("display", "none");
           $('#edit-button-'+i).show()
         });

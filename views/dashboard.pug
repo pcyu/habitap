@@ -10,8 +10,9 @@ block content
             h2(id=("habit-question-"+index)) #{habit.question}
             form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
               input(type='text',name='question',class='text-box',id=('text-box-'+index),placeholder= "type here to edit")
-              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Edit')
-          canvas(id= ("myChart-"+ index) width="50" height="25")
+              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Save')
+          canvas(id= ("myChart-"+ index), class="myChart", width="50", height="25")
+          div.legend 15 Day Habit Journey
             
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
@@ -29,7 +30,6 @@ block content
             data: {
               labels: [`${yes}`+" Pass", `${no}`+" Fail", `${miss}`+" Miss", `${daysLeft}`+" Left"],
               datasets: [{
-                label: 'Days',
                 data: item.data,
                 backgroundColor: ["#2471A3", "#A93226", "#D3D3D3", "#001000"],
                 borderColor: ["#17202A"],
@@ -41,7 +41,10 @@ block content
               hover: {mode: null},
               legend: {
                 display: true,
-                position: 'left'
+                position: 'left',
+                labels: {
+                  text: 'Days',
+                }
               },
               
             }

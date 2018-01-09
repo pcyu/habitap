@@ -21,10 +21,15 @@
     }
     @include responsive(harding) {
         height: 460px;
-        grid-template-columns: 1fr 1fr;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 1fr 1fr 1fr;
     }
     @include responsive(hoover) {
         height: 600px;
+        grid-template-columns: 1fr 1fr 1fr;
+    }
+    @include responsive(truman) {
+        grid-template-columns: 1fr 350px ;
     }
     @include responsive(nixon) {
         &:after {

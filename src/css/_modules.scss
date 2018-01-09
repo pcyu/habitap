@@ -7,6 +7,7 @@
   display: inline-block;
   font-size: 12px;
   margin: 10px;
+  padding: 4px;
   width: 75px;
 }
 
@@ -26,34 +27,100 @@
 //------------------------------------------------------------------------------
 //  Forms
 //------------------------------------------------------------------------------
-input {
+
+// input:-webkit-autofill { 
+//   -webkit-box-shadow: 0 0 0 30px rgba(0,0,0,.3) !important; 
+// }
+
+input[type=text], input[type=password] {
   .registerForm & {
-  display: block;
-  font-size: 14px;
-  color: black;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  padding: 2px 4px;
+    padding: 8px 6px;
+    @include responsive(truman) {
+      width: 100px;
+      margin: 5px;
+      display: inline-block;
+    }
   }
+  width: 220px;
 }
 
 input {
+  .registerForm & {
+    display: block;
+    border: 1px solid transparent;
+    font-size: 12px;
+    color: black;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    @include responsive(truman) {
+      display: inline-block;
+    }
+  }
+  .newForm & {
+    display: block;
+    font-size: 14px;
+    color: black;
+    margin: 0 auto;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    padding: 2px 4px;
+    }
   .updateForm & {
-  display: inline;
-  font-size: 14px;
-  color: black;
-  margin: 0 auto;
-  padding: 2px 4px;
+    border: 0px;
+    display: inline;
+    font-size: 14px;
+    color: white;
+    padding: 10px;
+  }
+}
+
+.registerForm {
+  padding: 5px;
+  grid-row: 2;
+  @include responsive(harding) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  @include responsive(truman) {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  // @include responsive(ford) {
+  //   grid-column-start: 3;
+  //   grid-column-end: 5;
+  // }
+  // @include responsive(reagan) {
+  //   grid-column-start: 3;
+  //   grid-column-end: 5;
+  // }
+}
+
+.updateForm {
+  background: #c1f2eb;
+  margin: 10px auto 15px;
+  padding: 1px;
+  position: relative;
+  text-align: center;
+  width: 150px;
+  @include responsive(froosevelt) {
+    width: 200px;
+  }
+  @include responsive(johnson) {
+    width: 300px;
+  }
+  @include responsive(reagan) {
+    margin-bottom: 40px;
   }
 }
 
 .text-box {
   .updateForm & {
-    background-color: blue;
+    background-color: #c1f2eb;
     display: none;
     align-self: center;
-    width: 100px;
+    margin: 10px 0;
+    width: 120px;
   }
 }
 
@@ -66,38 +133,10 @@ input {
 input::placeholder {
   .updateForm & {
     font-size: 10px;
-    color: white;
+    color: black;
   }
 }
 
-input {
-  .newForm & {
-  display: block;
-  font-size: 14px;
-  color: black;
-  margin: 0 auto;
-  margin-bottom: 10px;
-  margin-top: 10px;
-  padding: 2px 4px;
-  }
-}
-
-
-
-.updateForm {
-  position: relative;
-  text-align: center;
-}
-
-.registerForm {
-  background-color: rgba(0,0,0,.1);
-  padding: 5px;
-  width: 100%;
-  @include responsive(harding) {
-    grid-column: 2;
-    grid-row: 1;
-  }
-}
 
 //------------------------------------------------------------------------------
 //  Navigation – Logo
@@ -115,7 +154,7 @@ input {
   text-align: center;
   top: 18%;
   @include responsive(coolidge) {
-    left: 25%;
+    left: 35%;
     position: relative;
     padding-top: 8px;
     top: 0%;
@@ -174,34 +213,31 @@ li {
   }
 }
 
-.habitDate {
-  font-size: 1.5rem;
-  float: left;
-  text-align: center;
-  width: 50%;
-}
-p {
-  .habitDate & {
-    margin: 10px 0;
+.legend {
+  position: relative;
+  bottom: 15px;
+  @include responsive(froosevelt) {
+    bottom: 40px;
+  }
+  @include responsive(johnson) {
+    bottom: 90px;
+  }
+  @include responsive(reagan) {
+    bottom: 190px;
   }
 }
 
-.updateForm {
-  background: blue;
-  margin: 10px auto 15px;
-  padding: 1px;
-  text-align: center;
-  width: 150px;
-  @include responsive(froosevelt) {
-    width: 200px;
-  }
-  @include responsive(johnson) {
-    width: 300px;
-  }
-  @include responsive(reagan) {
-    margin-bottom: 40px;
-  }
-}
+// .habitDate {
+//   font-size: 1.5rem;
+//   float: left;
+//   text-align: center;
+//   width: 50%;
+// }
+// p {
+//   .habitDate & {
+//     margin: 10px 0;
+//   }
+// }
 
 //------------------------------------------------------------------------------
 //  Images

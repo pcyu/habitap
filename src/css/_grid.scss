@@ -13,17 +13,18 @@
 
 .grid-caption {
     font-size: 15px;
-    padding: 10px;
-    width: auto;
+		padding: 10px;
+		margin-bottom: 20px;
+		width: auto;
+		@include responsive(harding) {
+			padding: 10px 40px;
+		}
 }
 
 .grid-nimg {
-    height: 150px;
+    height: 190px;
     width: 100%;
     @include responsive(harding) {
-        height: 250px;
-    }
-    @include responsive(hoover) {
         height: 300px;
     }
     @include responsive(truman) {
