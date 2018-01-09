@@ -5,16 +5,26 @@ block content
     h2 Habit History
     div.historyGrid
       each habit, index in habits
-        div.habitTile
+        div.historyTile
           h2 #{habit.question}
+          div.habitScore
+            h3 Habit Score
+            div #{habit.composite}
+          br
+          div.habitDate
+            h3 Habit Journey
+            div #{habit.success}
+            div #{habit.fail}
+            div #{habit.miss}
+            br
+            div #{habit.startDate} - #{habit.endDate}
+          br
+          h3 Habit Question History
+          each item in questions
+            div #{item.question}
+            div Documented on #{item.revisionDate}
+            br
+          br
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
               input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete')
-          div.habitDate
-            div #{habit.startDate}
-            p to
-            div #{habit.endDate}
-          h2 Previously named questions
-          each item in questions
-            div #{item.question}
-            div #{item.revisionDate}

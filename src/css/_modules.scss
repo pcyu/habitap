@@ -13,9 +13,7 @@
 
 .delete-button {
   display: inline-block;
-  position: absolute;
-  top: 44%;
-  left: 60px;
+  position: relative;
   width: auto;
 }
 
@@ -234,7 +232,7 @@ li {
   }
 }
 
-.habitTile {
+.historyTile {
   border: 1px solid #CCC;
   background: #c1f2eb;
   margin: 0 auto;

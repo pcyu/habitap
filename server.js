@@ -91,14 +91,16 @@ app.get('/users/history', verifyUser, (req, res) => {
     var previousQuestions = [];
     for (var item of todayAnswerFalseArray) {
       for (var question of item.questionArray) {
+        console.log(question, "question")
         previousQuestions.push(question)
       }
     }
-    previousQuestions.pop()
+    previousQuestions.reverse();
     todayAnswerFalseArray.forEach((item) => {
-      item.success = item.dailyCheck.filter(yes => yes === 1).length;
-      item.fail = item.dailyCheck.filter(no => no === 0).length;
-      item.miss = item.dailyCheck.filter(miss => miss === -1).length;
+      item.success = item.dailyCheck.filter(yes => yes === 1).length + " successful days";
+      item.fail = item.dailyCheck.filter(no => no === 0).length + " failed days";
+      item.miss = item.dailyCheck.filter(miss => miss === -1).length + " undocumented days";
+      item.composite = item.dailyCheck.reduce((a, b) => a + b, 0);
     })
       if (todayAnswerFalseArray.length === 0) {
         res.render(
