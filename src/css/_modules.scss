@@ -40,6 +40,9 @@ input[type=text], input[type=password] {
       margin: 5px;
       display: inline-block;
     }
+    @include responsive(ford) {
+      width: 120px;
+    }
   }
   width: 220px;
 }
@@ -86,14 +89,6 @@ input {
     grid-column: 2;
     grid-row: 1;
   }
-  // @include responsive(ford) {
-  //   grid-column-start: 3;
-  //   grid-column-end: 5;
-  // }
-  // @include responsive(reagan) {
-  //   grid-column-start: 3;
-  //   grid-column-end: 5;
-  // }
 }
 
 .updateForm {

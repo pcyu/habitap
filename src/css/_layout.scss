@@ -31,6 +31,9 @@
     @include responsive(truman) {
         grid-template-columns: 1fr 350px ;
     }
+    @include responsive(ford) {
+        grid-template-columns: 1fr 400px ;
+    }
     @include responsive(nixon) {
         &:after {
             background-position: left center;
