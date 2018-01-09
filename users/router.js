@@ -325,6 +325,27 @@ router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
 	});
 });
 
+router.post('/:username/update/:id', verifyUser, (req, res) => {
+  User.update(
+    {username: req.params.username, "habits.habitId": req.params.id},
+    { 
+			$push: {
+			"habits.$.questionArray": {question: req.body.question, revisionDate: moment().format("LL")}
+			},
+			$set:{
+			"habits.$.question": req.body.question
+			}
+		}
+  )
+	.then(
+		res.redirect(`/users/dashboard`)
+	)
+	.catch(err => {
+	console.error(err);
+	return res.status(500).json({message: 'Internal server error'});
+	});
+});
+
 router.put('/:username/record/:habitId', verifyUser, (req, res) => {
 	User.update(
     {username: req.params.username, "habits.habitId": req.params.habitId},
