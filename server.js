@@ -153,27 +153,6 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
   })
 });
 
-app.get('/users/update', verifyUser, (req, res) => {
-  User
-	.findOne({ "username": req.user.username})
-	.exec()
-	.then( user => {
-    if (user.habits.length === 0) {
-      res.render('noupdate', {
-        username: user.username,
-        habits: user.habits,
-        token: req.app.get('loggedIn')
-      })
-    } else {
-      res.render('update', {
-        username: user.username,
-        habits: user.habits,
-        token: req.app.get('loggedIn')
-      })
-    }
-  });
-});
-
 app.get('/users/new', verifyUser, (req, res) => {
   res.render('new', {
     token: req.app.get('loggedIn')

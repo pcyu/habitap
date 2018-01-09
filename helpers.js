@@ -4,7 +4,6 @@ exports.navs = [
   {name: 'Login', path: '/auth/login', type: ['public']},
   {name: 'Dashboard', path: '/users/dashboard', type: ['private']},
   {name: 'New Habit', path: '/users/new', type: ['private']},
-  {name: 'Update Habit', path: '/users/update', type: ['private']},
   {name: 'History', path: '/users/history', type: ['private']},
   {name: 'Logout', path: '/auth/logout', type: ['private']}
 ];
