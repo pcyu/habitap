@@ -3,7 +3,7 @@ extends 1layout
 block content
   div.y-template
     h2 Dashboard  
-    div.habitDashboard
+    div.dashboardGrid
       each habit, index in habits
         div.habitTile
           div(class="updateForm",id=("updateForm-"+index))
