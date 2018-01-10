@@ -66,20 +66,6 @@ app.get('/register', (req, res) => {
   res.render('register');
 });
 
-const verifyUser = (req, res, next) => {
-	try {
-		const token = req.headers.authorization || req.cookies.token;
-		// const token = req.cookies.auth;
-		const {user} = jwt.verify(token, JWT_SECRET);
-		req.user = user;
-		req.validUser = req.params.username === user.username ? true : false;
-		next();
-	} catch (e) {
-		console.log('error!');
-		next();
-	}
-};
-
 app.get('/users/leaderboard', passport.authenticate('jwt',
 {session: false}), (req, res) => {
   User.find()

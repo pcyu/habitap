@@ -52,20 +52,6 @@ function loggedIn(req, res, next) {
 			res.redirect('/login');
 	}
 }
-
-const verifyUser = (req, res, next) => {
-	try {
-		const token = req.headers.authorization || req.cookies.token;
-		const {user} = jwt.verify(token, JWT_SECRET);
-		req.user = user;
-		req.validUser = req.params.username === user.username ? true : false;
-		next();
-	} catch (e) {
-		console.log('error!');
-		next();
-	}
-};
-
 router.get('/:username/dailycheck', passport.authenticate('jwt',
 {session: false}), (req, res) => {
 	if (req.validUser) {
@@ -330,7 +316,8 @@ router.post('/:username/update/:id', passport.authenticate('jwt',
 	});
 });
 
-router.put('/:username/record/:habitId', verifyUser, (req, res) => {
+router.put('/:username/record/:habitId', passport.authenticate('jwt',
+{session: false}), (req, res) => {
 	User.update(
     {username: req.params.username, "habits.habitId": req.params.habitId},
     {
