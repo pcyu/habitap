@@ -89,7 +89,7 @@ app.get('/users/leaderboard', verifyUser, (req, res) => {
         return value.active === false
       }))
       for (var habit of todayAnswerFalseArray) {
-        // console.log(habit.dailyCheck, "habit");
+        console.log(habit.dailyCheck, "habit");
         habit.score = habit.dailyCheck.reduce((a, b) => a + b, 0);
         user.elo += habit.score;
       }
