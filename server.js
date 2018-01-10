@@ -91,7 +91,6 @@ app.get('/users/history', verifyUser, (req, res) => {
     var previousQuestions = [];
     for (var item of todayAnswerFalseArray) {
       for (var question of item.questionArray) {
-        console.log(question, "question")
         previousQuestions.push(question)
       }
     }
