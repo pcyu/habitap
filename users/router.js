@@ -66,7 +66,8 @@ const verifyUser = (req, res, next) => {
 	}
 };
 
-router.get('/:username/dailycheck', verifyUser, (req, res) => {
+router.get('/:username/dailycheck', passport.authenticate('jwt',
+{session: false}), (req, res) => {
 	if (req.validUser) {
 		User
 		.findOne({ "username": req.params.username})
@@ -110,7 +111,8 @@ router.get('/:username/dailycheck', verifyUser, (req, res) => {
 	}
 })
 
-router.get('/:username/habitstart', verifyUser, (req, res) => {
+router.get('/:username/habitstart', passport.authenticate('jwt',
+{session: false}), (req, res) => {
 	if (req.validUser) {
 		User
 		.findOne({username: req.params.username})
@@ -240,7 +242,8 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 });
 
-router.post('/new', verifyUser, (req, res) => {
+router.post('/new', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   const requiredFields = ['question'];
 	for(let i = 0; i < requiredFields.length; i++) {
 	  const field = requiredFields[i];
@@ -283,7 +286,8 @@ router.post('/new', verifyUser, (req, res) => {
 //  ===========================================================================
 
 // Change Habit Question
-router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
+router.post('/:username/update/:id/:question', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   User.update(
     {username: req.params.username, "habits.habitId": req.params.id},
     { 
@@ -304,7 +308,8 @@ router.post('/:username/update/:id/:question', verifyUser, (req, res) => {
 	});
 });
 
-router.post('/:username/update/:id', verifyUser, (req, res) => {
+router.post('/:username/update/:id', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   User.update(
     {username: req.params.username, "habits.habitId": req.params.id},
     { 

@@ -107,7 +107,8 @@ app.get('/users/leaderboard', passport.authenticate('jwt',
   });
 })
 
-app.get('/users/history', verifyUser, (req, res) => {
+app.get('/users/history', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   User
 	.findOne({ "username": req.user.username})
 	.exec()
@@ -141,7 +142,8 @@ app.get('/users/history', verifyUser, (req, res) => {
   });
 });
 
-app.get('/users/dashboard', verifyUser, (req, res) => {
+app.get('/users/dashboard', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   User
 	.findOne({ "username": req.user.username})
 	.exec()
