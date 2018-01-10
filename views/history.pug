@@ -20,7 +20,7 @@ block content
             div #{habit.startDate} - #{habit.endDate}
           br
           h3 Habit Question History
-          each item in questions
+          each item in habit.questionArray
             div #{item.question}
             div Documented on #{item.revisionDate}
             br

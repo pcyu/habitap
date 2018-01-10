@@ -88,18 +88,13 @@ app.get('/users/history', verifyUser, (req, res) => {
     const todayAnswerFalseArray = (user.habits.filter( function(value){
       return value.active === false
     }))
-    var previousQuestions = [];
-    for (var item of todayAnswerFalseArray) {
-      for (var question of item.questionArray) {
-        previousQuestions.push(question)
-      }
-    }
-    previousQuestions.reverse();
     todayAnswerFalseArray.forEach((item) => {
-      item.success = item.dailyCheck.filter(yes => yes === 1).length + " successful days";
-      item.fail = item.dailyCheck.filter(no => no === 0).length + " failed days";
-      item.miss = item.dailyCheck.filter(miss => miss === -1).length + " undocumented days";
+      console.log(item.questionArray, "questionarray")
+      item.success = item.dailyCheck.filter(yes => yes === 1).length === 1 ? 1 + " successful day" : item.dailyCheck.filter(yes => yes === 1).length + " successful days";
+      item.fail = item.dailyCheck.filter(no => no === 0).length === 1 ? 1 + " failed day" : item.dailyCheck.filter(no => no === 0).length + " failed days";
+      item.miss = item.dailyCheck.filter(miss => miss === -1).length === 1 ? 1 + " undocumented day" : item.dailyCheck.filter(miss => miss === -1).length + " undocumented days";
       item.composite = item.dailyCheck.reduce((a, b) => a + b, 0);
+      item.questionArray.reverse();
     })
       if (todayAnswerFalseArray.length === 0) {
         res.render(
@@ -114,7 +109,6 @@ app.get('/users/history', verifyUser, (req, res) => {
             username: user.username,
             id: user.id,
             habits: todayAnswerFalseArray,
-            questions: previousQuestions,
             token: req.app.get('loggedIn'),
         });
       }
