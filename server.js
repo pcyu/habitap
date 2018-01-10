@@ -80,7 +80,8 @@ const verifyUser = (req, res, next) => {
 	}
 };
 
-app.get('/users/leaderboard', verifyUser, (req, res) => {
+app.get('/users/leaderboard', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   User.find()
   .then(users => {
     for (var user of users) {
@@ -171,7 +172,8 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
   })
 });
 
-app.get('/users/new', verifyUser, (req, res) => {
+app.get('/users/new', passport.authenticate('jwt',
+{session: false}), (req, res) => {
   res.render('new', {
     token: req.app.get('loggedIn')
   });
