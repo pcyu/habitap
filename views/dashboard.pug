@@ -12,7 +12,6 @@ block content
               input(type='text',name='question',class='text-box',id=('text-box-'+index),placeholder= "type here to edit")
               input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Save')
           canvas(id= ("myChart-"+ index), class="myChart", width="50", height="25")
-          div.legend 15 Day Habit Journey
             
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
   script.
