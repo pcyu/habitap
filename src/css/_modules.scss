@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 .login-button {
-  background-color: white;
+  background-color: lightblue;
   display: inline-block;
   font-size: 12px;
   margin: 10px;
@@ -35,8 +35,8 @@ input[type=text], input[type=password] {
     padding: 8px 6px;
     @include responsive(truman) {
       width: 100px;
-      margin: 5px;
       display: inline-block;
+      padding: 4px 6px;
     }
     @include responsive(ford) {
       width: 120px;
@@ -51,11 +51,10 @@ input {
     border: 1px solid transparent;
     font-size: 12px;
     color: black;
-    margin: 0 auto;
-    margin-bottom: 10px;
-    margin-top: 10px;
+    margin: 10px auto;
     @include responsive(truman) {
       display: inline-block;
+      margin: 10px 5px;
     }
   }
   .newForm & {
@@ -129,7 +128,6 @@ input::placeholder {
     color: black;
   }
 }
-
 
 //------------------------------------------------------------------------------
 //  Navigation – Logo
