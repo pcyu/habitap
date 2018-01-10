@@ -16,6 +16,7 @@ const userSchema = mongoose.Schema({
             revisionDate: String,
           } 
         ],
+        score: Number,
         startDate: String,
         todayAnswer: Boolean,
         timeStamp: {

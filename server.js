@@ -80,6 +80,24 @@ const verifyUser = (req, res, next) => {
 	}
 };
 
+app.get('/users/leaderboard', verifyUser, (req, res) => {
+  User.find()
+  .then(users => {
+    for (var user of users) {
+      const todayAnswerFalseArray = (user.habits.filter( function(value){
+        return value.active === false
+      }))
+      for (var habit of todayAnswerFalseArray) {
+        // console.log(habit.dailyCheck, "habit");
+        habit.score = habit.dailyCheck.reduce((a, b) => a + b, 0);
+        // console.log(habit.score, "score");
+      }
+    user.save();  
+    }
+    console.log(user.habits)
+  })
+})
+
 app.get('/users/history', verifyUser, (req, res) => {
   User
 	.findOne({ "username": req.user.username})
@@ -89,11 +107,10 @@ app.get('/users/history', verifyUser, (req, res) => {
       return value.active === false
     }))
     todayAnswerFalseArray.forEach((item) => {
-      console.log(item.questionArray, "questionarray")
       item.success = item.dailyCheck.filter(yes => yes === 1).length === 1 ? 1 + " successful day" : item.dailyCheck.filter(yes => yes === 1).length + " successful days";
       item.fail = item.dailyCheck.filter(no => no === 0).length === 1 ? 1 + " failed day" : item.dailyCheck.filter(no => no === 0).length + " failed days";
       item.miss = item.dailyCheck.filter(miss => miss === -1).length === 1 ? 1 + " undocumented day" : item.dailyCheck.filter(miss => miss === -1).length + " undocumented days";
-      item.composite = item.dailyCheck.reduce((a, b) => a + b, 0);
+      item.score = item.dailyCheck.reduce((a, b) => a + b, 0);
       item.questionArray.reverse();
     })
       if (todayAnswerFalseArray.length === 0) {
@@ -129,7 +146,7 @@ app.get('/users/dashboard', verifyUser, (req, res) => {
 				item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss === -1).length : 0;
         item.remain = 15 - (item.success + item.fail + item.miss);
     })
-      if (user.habits.length === 0) {
+      if (todayAnswerTrueArray.length === 0) {
         res.render('nodashboard', {
           username: user.username,
           token: req.app.get('loggedIn'),
