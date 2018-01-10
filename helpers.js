@@ -1,6 +1,6 @@
 exports.navs = [
   {name: 'Home', path: '/', type: ['public']},
-  {name: 'Register', path: '/register', type: ['public']},
+  {name: 'Register', path: '/auth/register', type: ['public']},
   {name: 'Login', path: '/auth/login', type: ['public']},
   {name: 'Dashboard', path: '/users/dashboard', type: ['private']},
   {name: 'New Habit', path: '/users/new', type: ['private']},

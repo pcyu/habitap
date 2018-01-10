@@ -150,7 +150,6 @@ router.get('/new', passport.authenticate('jwt', {session: false}), (req, res) =>
   });
 });
 
-
 router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false}), (req, res) => {
 	if (req.validUser) {
 		User

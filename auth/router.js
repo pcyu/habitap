@@ -26,6 +26,10 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
+router.get('/register', (req, res) => {
+  res.render('register');
+});
+
 router.get('/logout', (req, res) => {
   res.cookie("token", "", { expires: new Date() });
   loggedIn = false;
@@ -34,7 +38,6 @@ router.get('/logout', (req, res) => {
     token: loggedIn
   });
 });
-
 
 //  ===========================================================================
 //                                      POST

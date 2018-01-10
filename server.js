@@ -62,10 +62,6 @@ app.get('/', (req, res) => {
   res.render('landing');
 });
 
-app.get('/register', (req, res) => {
-  res.render('register');
-});
-
 app.use('/auth', authRouter);
 app.use('/users', userRouter);
 
