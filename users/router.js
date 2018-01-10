@@ -45,14 +45,6 @@ router.delete('/:username/delete/:habit', passport.authenticate('jwt',
 //                                       GET
 //  ===========================================================================
 
-function loggedIn(req, res, next) {
-	if (req.user) {
-			next();
-	} else {
-			res.redirect('/login');
-	}
-}
-
 router.get('/leaderboard', passport.authenticate('jwt', {session: false}), (req, res) => {
   User.find()
   .then(users => {
@@ -71,7 +63,6 @@ router.get('/leaderboard', passport.authenticate('jwt', {session: false}), (req,
     users.sort(function(a, b) {
       return b.elo - a.elo
     })
-    console.log(users, "users")
     res.render('leaderboard', {
       token: req.app.get('loggedIn'),
       users: users
