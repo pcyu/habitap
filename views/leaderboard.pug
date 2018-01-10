@@ -3,4 +3,5 @@ extends 1layout
 block content
   div.y-template
     h2 Leaderboard
-    p hello world
+    each user in users
+      p #{user.username}: #{user.elo}
