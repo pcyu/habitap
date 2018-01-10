@@ -16,7 +16,7 @@ agenda.define('catch missed days', function(job, done) {
           habit.dailyCheck.push(-1);
         }
       }
-    user.save();
+      user.save();
     }
   });
   done();

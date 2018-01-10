@@ -83,6 +83,7 @@ const verifyUser = (req, res, next) => {
 app.get('/users/leaderboard', verifyUser, (req, res) => {
   User.find()
   .then(users => {
+    var leaderboard = [];
     for (var user of users) {
       const todayAnswerFalseArray = (user.habits.filter( function(value){
         return value.active === false
@@ -90,12 +91,16 @@ app.get('/users/leaderboard', verifyUser, (req, res) => {
       for (var habit of todayAnswerFalseArray) {
         // console.log(habit.dailyCheck, "habit");
         habit.score = habit.dailyCheck.reduce((a, b) => a + b, 0);
-        // console.log(habit.score, "score");
+        user.elo += habit.score;
       }
-    user.save();  
+      user.save();
+      leaderboard.push({username: user.username, elo: user.elo})
+      console.log(leaderboard,"leaderboard")
     }
-    console.log(user.habits)
-  })
+    res.render('leaderboard', {
+      token: req.app.get('loggedIn')
+    });
+  });
 })
 
 app.get('/users/history', verifyUser, (req, res) => {

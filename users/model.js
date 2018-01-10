@@ -33,14 +33,16 @@ const userSchema = mongoose.Schema({
       required: true,
       type: String,
       unique: true
-    }
+    },
+    elo: Number,
 });
 
 userSchema.methods.apiRepr = function() {
     return {
         id: this._id,
         username: this.username || '',
-        habits: this.habits || ''
+        habits: this.habits || '',
+        elo: this.elo || ''
     };
 };
 
