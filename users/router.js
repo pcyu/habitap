@@ -142,70 +142,51 @@ router.get('/new', passport.authenticate('jwt', {session: false}), (req, res) =>
 });
 
 router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false}), (req, res) => {
-	if (req.validUser) {
-		User
-		.findOne({ "username": req.params.username})
-		.exec()
-		.then( user => {
-			let _habits = user.habits.filter((item, index) => {
-				return item.todayAnswer != true && item.active != false;
-			});
-			const todayAnswerTrueArray = (user.habits.filter( function(value){
-				return value.active === true
-			}));	
-			todayAnswerTrueArray.forEach((item) => {
-				item.success = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(yes => yes === 1).length : 0;
-				item.fail = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(no => no === 0).length : 0;
-				item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss === -1).length : 0;
-				item.remain = 15 - (item.success + item.fail + item.miss);
-			})
-			if (_habits.length === 0) {
-				res.render('nodailycheck',{
-					username: user.username,
-					id: user.id,
-					habits: todayAnswerTrueArray,
-					token: req.app.get('loggedIn')
-				})
-			} else {
-				res.render('dailycheck', {
-					username: user.username,
-					id: user.id,
-					habits: _habits,
-					token: req.app.get('loggedIn')
-				})};
+	User
+	.findOne({ "username": req.params.username})
+	.exec()
+	.then( user => {
+		let _habits = user.habits.filter((item, index) => {
+			return item.todayAnswer != true && item.active != false;
+		});
+		const todayAnswerTrueArray = (user.habits.filter( function(value){
+			return value.active === true
+		}));	
+		todayAnswerTrueArray.forEach((item) => {
+			item.success = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(yes => yes === 1).length : 0;
+			item.fail = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(no => no === 0).length : 0;
+			item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss === -1).length : 0;
+			item.remain = 15 - (item.success + item.fail + item.miss);
 		})
-
-		.catch(err => {
-			console.log(err);
-			return res.status(500).json({message: 'Internal server error'});
-		});
-	} else {
-		console.log('You are not authorized to view this page.')
-		return res.status(500).json({message: 'Internal server error'});
-	}
+		if (_habits.length === 0) {
+			res.render('nodailycheck',{
+				username: user.username,
+				id: user.id,
+				habits: todayAnswerTrueArray,
+				token: req.app.get('loggedIn')
+			})
+		} else {
+			res.render('dailycheck', {
+				username: user.username,
+				id: user.id,
+				habits: _habits,
+				token: req.app.get('loggedIn')
+			})};
+	})
 })
 
-router.get('/:username/habitstart', passport.authenticate('jwt',
-{session: false}), (req, res) => {
-	if (req.validUser) {
-		User
-		.findOne({username: req.params.username})
-		.exec()
-		.then(
-				res.render('habitstart', {
-					username: req.params.username,
-					token: req.app.get('loggedIn')
-				})
-		)
-		.catch(err => {
-			console.log(err);
-			return res.status(500).json({message: 'Internal server error'});
-		});
-	} else {
-		console.log('You are not authorized to view this page.')
-		return res.status(500).json({message: 'Internal server error'});
-	}
+router.get('/:username/habitstart', passport.authenticate('jwt', {session: false}), (req, res) => {
+	User
+	.findOne({username: req.params.username})
+	.exec()
+	.then(
+			res.render('habitstart', {
+				username: req.params.username,
+				token: req.app.get('loggedIn')
+			})
+	)
 })
+
 
 //  ===========================================================================
 //                                      POST

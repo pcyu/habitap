@@ -141,11 +141,23 @@ input::placeholder {
   text-align: center;
   top: 18%;
   @include responsive(coolidge) {
-    left: 35%;
+    left: 13%;
     position: relative;
     padding-top: 8px;
     top: 0%;
   }
+  @include responsive(froosevelt) {
+    left: 20%;
+  }
+  @include responsive(johnson) {
+    left: 25%;
+  }
+  @include responsive(ford) {
+    left: 26%;
+  }
+  // @include responsive(johnson) {
+  //   left: 20%;
+  // }
 }
 
 a {

@@ -56,7 +56,7 @@ label {
   }
   
   input:checked ~ nav { 
-    height: 150px;
+    height: 250px;
     transition-delay: 0s;
     @include responsive(coolidge) {
       height: 50px;
