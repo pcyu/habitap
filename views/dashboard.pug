@@ -18,9 +18,9 @@ block content
       window.onload = function() {
         var habits = !{JSON.stringify(habits)};
         habits.forEach((item, index) => {
-          const yes = item.dailyCheck.filter(yes => yes === 1).length;
-          const no = item.dailyCheck.filter(no => no === 0).length;
-          const miss = item.dailyCheck.filter(miss => miss === -1).length;
+          const yes = item.dailyCheck.filter(yes => yes.points === 1).length;
+          const no = item.dailyCheck.filter(no => no.points === 0).length;
+          const miss = item.dailyCheck.filter(miss => miss.points === -1).length;
           const daysLeft = 15 - (yes + no + miss);
           item.data = [yes, no, miss, daysLeft];
           var ctx = document.getElementById("myChart-"+index).getContext('2d');

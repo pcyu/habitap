@@ -13,7 +13,7 @@ agenda.define('catch missed days', function(job, done) {
       for (var habit of user.habits) {
         if (habit.todayAnswer===false && habit.active===true) {
         console.log(moment().format('LLL'), "Pushed missed dailyCheck values into respective arrays")
-          habit.dailyCheck.push(-1);
+          habit.dailyCheck.push({points: -1, date: moment().format('LL')});
         }
       }
       user.save();

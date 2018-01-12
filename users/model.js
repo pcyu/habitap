@@ -8,7 +8,7 @@ const userSchema = mongoose.Schema({
         dailyCheck: [
           { 
             _id: false,
-            points: Number,
+            points: Number || String,
             date: String
           }
         ],

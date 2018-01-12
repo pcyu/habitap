@@ -54,7 +54,7 @@ router.get('/leaderboard', passport.authenticate('jwt', {session: false}), (req,
       }))
       var sum = 0;
       for (var habit of todayAnswerFalseArray) {
-        habit.score = habit.dailyCheck.reduce((a, b) => a + b, 0);
+        habit.score = habit.dailyCheck.map(item=>item.points).reduce((a, b) => a + b, 0);
         sum += habit.score;
       }
       user.elo = sum;
@@ -77,14 +77,16 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 	.then( user => {
     const todayAnswerFalseArray = (user.habits.filter( function(value){
       return value.active === false
-    }))
+		}))
+		var habitHistoryArray = [];
     todayAnswerFalseArray.forEach((item) => {
-      item.success = item.dailyCheck.filter(yes => yes === 1).length === 1 ? 1 + " successful day" : item.dailyCheck.filter(yes => yes === 1).length + " successful days";
-      item.fail = item.dailyCheck.filter(no => no === 0).length === 1 ? 1 + " failed day" : item.dailyCheck.filter(no => no === 0).length + " failed days";
-      item.miss = item.dailyCheck.filter(miss => miss === -1).length === 1 ? 1 + " undocumented day" : item.dailyCheck.filter(miss => miss === -1).length + " undocumented days";
-      item.score = item.dailyCheck.reduce((a, b) => a + b, 0);
-      item.questionArray.reverse();
-    })
+			item.dailyCheck.map((object) => {
+				if (object.points === 1) {habitHistoryArray.push({score:"+1", date: object.date})
+				} else if (object.points === 0) {habitHistoryArray.push({score:"+0", date:object.date})
+				} else if (object.points === -1) {habitHistoryArray.push({score:"-1", date: object.date})
+				}
+			})
+		})
       if (todayAnswerFalseArray.length === 0) {
         res.render(
           'nohistory', {
@@ -97,7 +99,8 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
         res.render('history', {
             username: user.username,
             id: user.id,
-            habits: todayAnswerFalseArray,
+						habits: todayAnswerFalseArray,
+						dailyCheck: habitHistoryArray,
             token: req.app.get('loggedIn'),
         });
       }
@@ -113,11 +116,12 @@ router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, r
        return value.active === true
     }))
     todayAnswerTrueArray.forEach((item) => {
-				item.success = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(yes => yes === 1).length : 0;
-				item.fail = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(no => no === 0).length : 0;
-				item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss === -1).length : 0;
-        item.remain = 15 - (item.success + item.fail + item.miss);
-    })
+				item.success = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(yes => yes.points === 1).length : 0;
+				item.fail = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(no => no.points === 0).length : 0;
+				item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss.points === -1).length : 0;
+				item.remain = 15 - (item.success + item.fail + item.miss);
+		})
+
       if (todayAnswerTrueArray.length === 0) {
         res.render('nodashboard', {
           username: user.username,

@@ -8,23 +8,20 @@ block content
         div.historyTile
           h2 #{habit.question}
           div.habitScore
-            h3 Habit Score
+            h3 Final Habit Score
             div #{habit.score}
           br
-          div.habitDate
-            h3 Habit Journey
-            div #{habit.success}
-            div #{habit.fail}
-            div #{habit.miss}
-            br
-            div #{habit.startDate} - #{habit.endDate}
+          h3 Habit Log  
+          each object in dailyCheck
+            div #{object.date}
+            div #{object.score}
+            br  
           br
           h3 Habit Question History
           each item in habit.questionArray
             div #{item.question}
             div Documented on #{item.revisionDate}
             br
-          br
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
               input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete')
