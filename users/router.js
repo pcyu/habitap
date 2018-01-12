@@ -87,7 +87,8 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 					return {points: element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
 				}
 			});
-			console.log(habit.historyArray)
+			console.log(habit.historyArray.reverse())
+			habit.historyArray.reverse();
 		})
       if (valueFalseArray.length === 0) {
         res.render(
@@ -325,7 +326,6 @@ router.post('/new', passport.authenticate('jwt',
 					endDate: endTime,
 					habitId: uuidv1(),
 					question: req.body.question,
-					questionArray: {question: req.body.question, revisionDate: moment().format("LL")},
 					startDate: beginTime,
 					todayAnswer: true
 				}

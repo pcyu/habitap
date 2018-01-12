@@ -25,10 +25,6 @@ const userSchema = mongoose.Schema({
         score: Number,
         startDate: String,
         todayAnswer: Boolean,
-        timeStamp: {
-          default: Date.now,
-          type : Date
-        }
       }
     ],
     password: {
