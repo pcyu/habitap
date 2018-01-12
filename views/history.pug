@@ -16,7 +16,7 @@ block content
             div #{object.date}
             div #{object.score}
             each item in object.revisedQuestions
-              div #{item.question}
+              div Habit Question is now: #{item.question}
             br  
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
