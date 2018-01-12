@@ -146,6 +146,12 @@ router.get('/new', passport.authenticate('jwt', {session: false}), (req, res) =>
   });
 });
 
+router.get('/maxhabits', passport.authenticate('jwt', {session: false}), (req, res) => {
+  res.render('max', {
+    token: req.app.get('loggedIn')
+  });
+});
+
 router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false}), (req, res) => {
 	User
 	.findOne({ "username": req.params.username})
@@ -295,29 +301,37 @@ router.post('/register', jsonParser, (req, res) => {
 		});
 });
 
-router.post('/new', passport.authenticate('jwt',
-{session: false}), (req, res) => {
-	User.update(
-		{"username": req.user.username},
-		{
-			$push: {
-				"habits": {
-					active: true,
-					habitId: uuidv1(),
-					question: req.body.question,
-					todayAnswer: true
+router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
+	User.find({"username": req.user.username})
+	.then(user=>{
+		for (element of user) {
+			var currentHabits = element.habits.filter(item => item.active === true);
+			(currentHabits.length > 5) ? res.redirect(`/users/maxhabits`) : 
+			User.update(
+				{"username": req.user.username},
+				{
+					$push: {
+						"habits": {
+							active: true,
+							habitId: uuidv1(),
+							question: req.body.question,
+							todayAnswer: true
+						}
+					}
 				}
-			}
+			)
+		.then(
+			res.redirect(`/users/${req.user.username}/habitstart`)
+		)
+		.catch(err => {
+			console.error(err);
+			return res.status(500).json({message: 'Internal server error'});
+		})
 		}
-	)
-	.then(
-		res.redirect(`/users/${req.user.username}/habitstart`)
-	)
-	.catch(err => {
-		console.error(err);
-		return res.status(500).json({message: 'Internal server error'});
-	});
+	})
 });
+
+
 
 //  ===========================================================================
 //                                       PUT
