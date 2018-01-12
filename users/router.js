@@ -14,7 +14,6 @@ const {User} = require('./model');
 const app = express();  //c038
 const methodOverride = require('method-override');
 const uuidv1 = require('uuid/v1');
-const {timer} = require('../helpers');
 app.use(methodOverride('_method'));
 router.use(cookieParser());
 
@@ -298,28 +297,14 @@ router.post('/register', jsonParser, (req, res) => {
 
 router.post('/new', passport.authenticate('jwt',
 {session: false}), (req, res) => {
-  const requiredFields = ['question'];
-	for(let i = 0; i < requiredFields.length; i++) {
-	  const field = requiredFields[i];
-	  if(!(field in req.body)) {
-			const message = `The value for \`${field}\` is missing.`
-			console.error(message);
-			return res.status(400).send(message);
-	  }
-	}
-	const tracker = timer(true);
-	const beginTime = moment(tracker.goalBegin).format("LL");
-	const endTime = moment(tracker.goalEnd).format("LL");
 	User.update(
 		{"username": req.user.username},
 		{
 			$push: {
 				"habits": {
 					active: true,
-					endDate: endTime,
 					habitId: uuidv1(),
 					question: req.body.question,
-					startDate: beginTime,
 					todayAnswer: true
 				}
 			}

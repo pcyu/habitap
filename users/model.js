@@ -8,11 +8,10 @@ const userSchema = mongoose.Schema({
         dailyCheck: [
           { 
             _id: false,
-            points: Number || String,
+            points: Number,
             date: String
           }
         ],
-        endDate: String,
         habitId: String,
         question: String,
         questionArray: [ 
@@ -23,7 +22,6 @@ const userSchema = mongoose.Schema({
           } 
         ],
         score: Number,
-        startDate: String,
         todayAnswer: Boolean,
       }
     ],
