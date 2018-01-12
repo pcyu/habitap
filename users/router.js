@@ -75,24 +75,21 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 	.findOne({ "username": req.user.username})
 	.exec()
 	.then( user => {
-    const todayAnswerFalseArray = (user.habits.filter( function(value){
+    const valueFalseArray = (user.habits.filter( function(value){
       return value.active === false
 		}))
-		var habitHistoryArray = [];
-    todayAnswerFalseArray.forEach((item) => {
-			item.score = item.dailyCheck.reduce((total, element) => total + element.points, 0);
-			item.dailyCheck.map((object) => {
-				if (object.points === 1) {habitHistoryArray.push({score:"+1", date: object.date, revisedQuestions: item.questionArray.filter(element => element.revisionDate === object.date)})
-				} else if (object.points === 0) {habitHistoryArray.push({score:"+0", date:object.date, revisedQuestions: item.questionArray.filter(element => element.revisionDate === object.date)})
-				} else if (object.points === -1) {habitHistoryArray.push({score:"-1", date: object.date, revisedQuestions: item.questionArray.filter(element => element.revisionDate === object.date)})
+    valueFalseArray.forEach((habit) => {
+			habit.score = habit.dailyCheck.reduce((total, element) => total + element.points, 0);
+			habit.stringScoreArray = habit.dailyCheck.map(function(element) {
+				if(element.points > -1 ) {
+					return {points: "+"+element.points.toString(), date: element.date}
+				} else {
+					return {points: element.points.toString(), date: element.date}
 				}
-			})
-			habitHistoryArray.forEach((item)=> {
-				console.log(item.revisedQuestions)
-			})
-			// console.log(item.questionArray.filter(element => element.question==='Peter has the meme.'), "filter")
+			});
+			console.log(habit.stringScoreArray)
 		})
-      if (todayAnswerFalseArray.length === 0) {
+      if (valueFalseArray.length === 0) {
         res.render(
           'nohistory', {
           username: user.username,
@@ -104,8 +101,7 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
         res.render('history', {
             username: user.username,
             id: user.id,
-						habits: todayAnswerFalseArray,
-						dailyCheck: habitHistoryArray,
+						habits: valueFalseArray,
             token: req.app.get('loggedIn'),
         });
       }
