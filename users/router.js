@@ -155,20 +155,13 @@ router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false
 		let _habits = user.habits.filter((item, index) => {
 			return item.todayAnswer != true && item.active != false;
 		});
-		const todayAnswerTrueArray = (user.habits.filter( function(value){
-			return value.active === true
-		}));	
-		todayAnswerTrueArray.forEach((item) => {
-			item.success = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(yes => yes === 1).length : 0;
-			item.fail = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(no => no === 0).length : 0;
-			item.miss = (item.dailyCheck.length !== 0) ? item.dailyCheck.filter(miss => miss === -1).length : 0;
-			item.remain = 15 - (item.success + item.fail + item.miss);
-		})
+		for (habit of _habits) {
+			habit.day = habit.dailyCheck.length
+		}
 		if (_habits.length === 0) {
 			res.render('nodailycheck',{
 				username: user.username,
 				id: user.id,
-				habits: todayAnswerTrueArray,
 				token: req.app.get('loggedIn')
 			})
 		} else {
