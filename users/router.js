@@ -391,7 +391,7 @@ router.put('/:username/record/:habitId', passport.authenticate('jwt',
     {username: req.params.username, "habits.habitId": req.params.habitId},
     {
 			$push: {
-				"habits.$.dailyCheck": req.body.habit
+				"habits.$.dailyCheck": {points: req.body.habit, date: moment().format("LL")}
 			},
 			$set: {
 				"habits.$.todayAnswer": true

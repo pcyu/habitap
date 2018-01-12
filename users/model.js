@@ -5,7 +5,12 @@ const userSchema = mongoose.Schema({
     habits: [
       { _id: false,
         active: Boolean,
-        dailyCheck: [ Number ],
+        dailyCheck: [
+          {
+            points: Number,
+            date: String
+          }
+        ],
         endDate: String,
         habitId: String,
         question: String,
