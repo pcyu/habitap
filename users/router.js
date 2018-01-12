@@ -80,12 +80,17 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 		}))
 		var habitHistoryArray = [];
     todayAnswerFalseArray.forEach((item) => {
+			item.score = item.dailyCheck.reduce((total, element) => total + element.points, 0);
 			item.dailyCheck.map((object) => {
-				if (object.points === 1) {habitHistoryArray.push({score:"+1", date: object.date})
-				} else if (object.points === 0) {habitHistoryArray.push({score:"+0", date:object.date})
-				} else if (object.points === -1) {habitHistoryArray.push({score:"-1", date: object.date})
+				if (object.points === 1) {habitHistoryArray.push({score:"+1", date: object.date, revisedQuestions: item.questionArray.filter(element => element.revisionDate === object.date)})
+				} else if (object.points === 0) {habitHistoryArray.push({score:"+0", date:object.date, revisedQuestions: item.questionArray.filter(element => element.revisionDate === object.date)})
+				} else if (object.points === -1) {habitHistoryArray.push({score:"-1", date: object.date, revisedQuestions: item.questionArray.filter(element => element.revisionDate === object.date)})
 				}
 			})
+			habitHistoryArray.forEach((item)=> {
+				console.log(item.revisedQuestions)
+			})
+			// console.log(item.questionArray.filter(element => element.question==='Peter has the meme.'), "filter")
 		})
       if (todayAnswerFalseArray.length === 0) {
         res.render(
