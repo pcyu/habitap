@@ -80,14 +80,14 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 		}))
     valueFalseArray.forEach((habit) => {
 			habit.score = habit.dailyCheck.reduce((total, element) => total + element.points, 0);
-			habit.stringScoreArray = habit.dailyCheck.map(function(element) {
+			habit.historyArray = habit.dailyCheck.map(function(element) {
 				if(element.points > -1 ) {
-					return {points: "+"+element.points.toString(), date: element.date}
+					return {points: "+"+element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
 				} else {
-					return {points: element.points.toString(), date: element.date}
+					return {points: element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
 				}
 			});
-			console.log(habit.stringScoreArray)
+			console.log(habit.historyArray)
 		})
       if (valueFalseArray.length === 0) {
         res.render(
