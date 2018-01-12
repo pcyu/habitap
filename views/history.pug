@@ -15,13 +15,9 @@ block content
           each object in dailyCheck
             div #{object.date}
             div #{object.score}
+            each item in object.revisedQuestions
+              div #{item.question}
             br  
-          br
-          h3 Habit Question History
-          each item in habit.questionArray
-            div #{item.question}
-            div Documented on #{item.revisionDate}
-            br
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
               input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete')
