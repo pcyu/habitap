@@ -6,7 +6,8 @@ const userSchema = mongoose.Schema({
       { _id: false,
         active: Boolean,
         dailyCheck: [
-          {
+          { 
+            _id: false,
             points: Number,
             date: String
           }
