@@ -5,14 +5,14 @@ block content
     h2 Daily Check
     div So #{username}, how did you do with your goals today?
     each index in habits
-      br
-      div Day: #{index.day}
-      div #{index.question}
-        form.daily(action=`/users/${username}/record/${index.habitId}/?_method=PUT` method='post')
-          div
-            p Yes
-            input(type='radio',name='habit',value=1)
-          div
-            p No
-            input(type='radio',name='habit',value=0)
-          input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Submit')
+      div.dailyCheckBox
+        div Day: #{index.day+1}
+        div #{index.question}
+          form.daily(action=`/users/${username}/record/${index.habitId}/?_method=PUT` method='post')
+            div
+              p Yes
+              input(type='radio',name='habit',value=1)
+            div
+              p No
+              input(type='radio',name='habit',value=0)
+            input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Record')

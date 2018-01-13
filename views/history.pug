@@ -16,7 +16,7 @@ block content
             div #{object.date}
             div #{object.points}
             each item in object.questions
-              div Habit Question changed to: #{item.question}
+              div Habit Question set to:#{item.question}
             br  
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')

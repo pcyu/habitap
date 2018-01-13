@@ -51,16 +51,12 @@ router.post(
   }),
 (req, res, next) => {
     const _token = createAuthToken(req.user.apiRepr());
+    console.log(req.user, "req")
     res.cookie('token', _token);        
     loggedIn = true;
     // c041
-    let trueAnswers = req.user.habits.filter((item, index) => {
-      return item.todayAnswer === true;
-    });
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
-    } else if (req.user.habits.length === trueAnswers.length){
-      res.redirect(`/users/dashboard`)
     } else {
       res.redirect(`/users/${req.body.username}/dailycheck`)
     }
