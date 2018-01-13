@@ -7,7 +7,7 @@ const app = express();
 app.use(cookieParser());
 
 const createAuthToken = user => {
-  return jwt.sign({user}, config.JWT_SECRET, {
+  return jwt.sign({"user": user.username}, config.JWT_SECRET, {
     subject: user.username,
     expiresIn: config.JWT_EXPIRY,
     algorithm: 'HS256'
@@ -51,10 +51,9 @@ router.post(
   }),
 (req, res, next) => {
     const _token = createAuthToken(req.user.apiRepr());
-    console.log(req.user, "req")
-    res.cookie('token', _token);        
+    res.cookie('token', _token);      
     loggedIn = true;
-    // c041
+    console.log("koopa")
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
     } else {

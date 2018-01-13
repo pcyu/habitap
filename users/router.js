@@ -152,10 +152,12 @@ router.get('/maxhabits', passport.authenticate('jwt', {session: false}), (req, r
 });
 
 router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false}), (req, res) => {
+	console.log("kappa")
 	User
 	.findOne({ "username": req.params.username})
 	.exec()
 	.then( user => {
+		console.log(user, "dailycheckgetpoint")
 		let _habits = user.habits.filter((item, index) => {
 			return item.todayAnswer != true && item.active != false;
 		});
