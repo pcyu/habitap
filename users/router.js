@@ -301,13 +301,13 @@ router.post('/register', jsonParser, (req, res) => {
 });
 
 router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
-	User.find({"username": req.user.username})
+	User.find({"username": req.user})
 	.then(user=>{
 		for (element of user) {
 			var currentHabits = element.habits.filter(item => item.active === true);
 			(currentHabits.length > 5) ? res.redirect(`/users/maxhabits`) : 
 			User.update(
-				{"username": req.user.username},
+				{"username": req.user},
 				{
 					$push: {
 						"habits": {
@@ -321,7 +321,7 @@ router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) =
 				}
 			)
 		.then(
-			res.redirect(`/users/${req.user.username}/habitstart`)
+			res.redirect(`/users/${req.user}/habitstart`)
 		)
 		.catch(err => {
 			console.error(err);
