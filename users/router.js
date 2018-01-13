@@ -305,7 +305,7 @@ router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) =
 	.then(user=>{
 		for (element of user) {
 			var currentHabits = element.habits.filter(item => item.active === true);
-			(currentHabits.length > 5) ? res.redirect(`/users/maxhabits`) : 
+			(currentHabits.length > 20) ? res.redirect(`/users/maxhabits`) : 
 			User.update(
 				{"username": req.user.username},
 				{
