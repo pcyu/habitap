@@ -74,7 +74,6 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 	.findOne({ "username": req.user})
 	.exec()
 	.then( user => {
-		console.log(user, "user")
     const valueFalseArray = (user.habits.filter( function(value){
       return value.active === false
 		}))

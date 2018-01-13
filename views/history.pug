@@ -13,10 +13,11 @@ block content
           br
           h3 Habit Log  
           each object in habit.historyArray
-            div #{object.date}
-            div #{object.points}
+            div.habitLog
+              div.habitDate #{object.date}
+              div.habitPoints #{object.points}
             each item in object.questions
-              div Habit Question set to:#{item.question}
+              div.revisedQuestion Habit Question set to:#{item.question}
             br  
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')

@@ -251,18 +251,21 @@ li {
   }
 }
 
-.legend {
-  position: relative;
-  bottom: 15px;
-  @include responsive(froosevelt) {
-    bottom: 40px;
-  }
-  @include responsive(johnson) {
-    bottom: 90px;
-  }
-  @include responsive(reagan) {
-    bottom: 190px;
-  }
+.habitLog {
+}
+
+.habitDate {
+  border: 1px solid black;
+  display: inline;
+}
+
+.habitPoints {
+  border: 1px solid black;
+  display: inline;
+}
+
+.revisedQuestions {
+
 }
 
 //------------------------------------------------------------------------------
