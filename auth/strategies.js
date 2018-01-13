@@ -30,7 +30,6 @@ User.findOne({username: username})
       return callback(null, user);
   })
   .catch(err => {
-    console.log(err, "err")
       if (err.reason === 'LoginError') {
           return callback(null, false, err);
       }
@@ -42,13 +41,11 @@ const jwtStrategy = new JwtStrategy(
   {
     secretOrKey: JWT_SECRET,
     jwtFromRequest: function(req) {
-        console.log(req, "jwtreq.user")
       var token = null;
       if (req && req.cookies)
       {
         token = req.cookies['token'];
       }
-      console.log(token, "token")
       return token;
     },
     // Only allow HS256 tokens - the same as the ones we issue

@@ -53,7 +53,6 @@ router.post(
     const _token = createAuthToken(req.user.apiRepr());
     res.cookie('token', _token);      
     loggedIn = true;
-    console.log("koopa")
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
     } else {
