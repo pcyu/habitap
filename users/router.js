@@ -71,9 +71,10 @@ router.get('/leaderboard', passport.authenticate('jwt', {session: false}), (req,
 
 router.get('/history', passport.authenticate('jwt', {session: false}), (req, res) => {
   User
-	.findOne({ "username": req.user.username})
+	.findOne({ "username": req.user})
 	.exec()
 	.then( user => {
+		console.log(user, "user")
     const valueFalseArray = (user.habits.filter( function(value){
       return value.active === false
 		}))
@@ -92,7 +93,6 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
         res.render(
           'nohistory', {
           username: user.username,
-          habits: user.habits,
           token: req.app.get('loggedIn'),
         })
       } 
@@ -109,7 +109,7 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 
 router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, res) => {
   User
-	.findOne({ "username": req.user.username})
+	.findOne({ "username": req.user})
 	.exec()
 	.then( user => {
     const todayAnswerTrueArray = (user.habits.filter( function(value){
