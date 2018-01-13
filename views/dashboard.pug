@@ -7,7 +7,7 @@ block content
       each habit, index in habits
         div.habitTile
           div(class="updateForm",id=("updateForm-"+index))
-            h2(id=("habit-question-"+index)) #{habit.question}
+            div(class="habit-question-heading", id=("habit-question-"+index)) #{habit.question}
             form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
               input(type='text',name='question',class='text-box',id=('text-box-'+index),value= "fasdfasdfadsf")
               input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Save')

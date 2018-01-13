@@ -85,7 +85,7 @@ input {
 }
 
 .updateForm {
-  background: #403d3b;
+  background: #929CB2;
   margin: 10px auto 15px;
   padding: 1px;
   position: relative;
@@ -100,6 +100,12 @@ input {
   @include responsive(reagan) {
     margin-bottom: 40px;
   }
+}
+
+.habit-question-heading {
+  font-size: 1.5em;
+  color: white;
+  padding: 5px;
 }
 
 .text-box {
