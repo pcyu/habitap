@@ -2,8 +2,8 @@
 
   var app = {
     init: function() {
-      app.unhideBox();
-      app.hideBox();
+      // app.unhideBox();
+      // app.hideBox();
     },
     unhideBox: () => {
       for (let i = 0; i < 100; i++) {
