@@ -9,7 +9,7 @@ block content
           div(class="updateForm",id=("updateForm-"+index))
             h2(id=("habit-question-"+index)) #{habit.question}
             form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
-              input(type='text',name='question',class='text-box',id=('text-box-'+index),placeholder= "type here to edit")
+              input(type='text',name='question',class='text-box',id=('text-box-'+index),value= "fasdfasdfadsf")
               input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Save')
           canvas(id= ("myChart-"+ index), class="myChart", width="50", height="25")
             
@@ -42,6 +42,8 @@ block content
                 display: true,
                 position: 'left',
                 labels: {
+                  fontSize: 16,
+                  fontColor: '#000000',
                   text: 'Days',
                 }
               },
