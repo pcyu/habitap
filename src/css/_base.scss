@@ -9,7 +9,7 @@ a {
 //  Body
 //------------------------------------------------------------------------------
 body {
-  background-color: #7F98B2;
+  background-color: #FAFFFB;
   font-family: "Roboto Condensed";
   font-style: normal;
   position: relative;
@@ -19,6 +19,7 @@ body {
 //  Headings
 //------------------------------------------------------------------------------
 h1 {
+  color: white;
   position: fixed;
   top: 10px;
   left: 40px;
@@ -98,7 +99,7 @@ p {
 //------------------------------------------------------------------------------
 
 nav {
-  background: white;
+  background: #403d3b;
   position: fixed;
   top: 0;
   left: 0;
