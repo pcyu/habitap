@@ -27,10 +27,12 @@ block content
           var chart = new Chart(ctx, {
             type: 'doughnut',
             data: {
-              labels: [`${yes}`+" Pass", `${no}`+" Fail", `${miss}`+" Miss", `${daysLeft}`+" Left"],
+              labels: [`${yes}`+" Pass", `${no}`+" Fail", `${miss}`+" Absent", `${daysLeft}`+" Left"],
               datasets: [{
                 data: item.data,
-                backgroundColor: ["#2471A3", "#A93226", "#7F5979", "#D3D3D3"]
+                backgroundColor: ["#2ecc71", "#f1c40f", "#e74c3c", "#9b59b6"],
+                borderColor: ["#ffffff", "#ffffff", "#ffffff", "#ffffff"],
+                borderWidth: 3
               }],
             },
             options: {
