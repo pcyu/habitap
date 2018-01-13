@@ -314,6 +314,7 @@ router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) =
 							active: true,
 							habitId: uuidv1(),
 							question: req.body.question,
+							questionArray: {question: req.body.question, revisionDate: moment().format("LL")},
 							todayAnswer: true
 						}
 					}
