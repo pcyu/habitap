@@ -2,27 +2,39 @@
 
   var app = {
     init: function() {
-      // app.unhideBox();
-      // app.hideBox();
+      app.activateEdit();
+      app.deactivateEdit();
+      app.showEditMode();
     },
-    unhideBox: () => {
+    activateEdit: function() {
       for (let i = 0; i < 100; i++) {
-        $('#updateForm-'+i).mouseover(function () {
-          $('#text-box-'+i).css("display", "block");
-          $('#habit-question-'+i).css("display", "none");
-          $('#edit-button-'+i).show()
-        });
+    	$(document).on('mousedown', '#habit-question-'+i, function(event) {
+        event.stopPropagation();
+        console.log("active");
+        return app.editToggle();
+      });
       }
     },
-    hideBox: () => {
+    deactivateEdit: function() {
       for (let i = 0; i < 100; i++) {
-        $('#updateForm-'+i).mouseout(function () {
-          $('#text-box-'+i).css("display", "none");
-          $('#habit-question-'+i).css("display", "block");
-          $('#edit-button-'+i).hide()
-        });
+      $(document).on("mousedown", function(event) {
+        event.stopPropagation();
+        console.log("deactive");
+      	if(!$(event.target).closest('#text-box-'+i).length) {
+          return app.editToggle();
+        }
+      });
       }
-    }
+    },
+    editToggle: function(status) {
+      for (let i = 0; i < 100; i++) {
+      if (status === true) {
+      	$('#habit-question-'+i).addClass('hide');
+      } else {
+        $('#text-box-'+i).removeClass('hide');
+      }
+      }
+    },
   };
 
   $(window).on('load', () => {
