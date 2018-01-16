@@ -161,7 +161,6 @@ router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false
 		for (habit of _habits) {
 			habit.day = habit.dailyCheck.length
 		}
-		console.log(_habits, "habits")
 		if (_habits.length === 0) {
 			res.render('nodailycheck',{
 				username: user.username,
