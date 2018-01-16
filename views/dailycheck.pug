@@ -11,8 +11,8 @@ block content
           form.daily(action=`/users/${username}/record/${index.habitId}/?_method=PUT` method='post')
             div
               p Yes
-              input(type='radio',name='habit',value=1)
+              input(type='radio',name='habit',value=1, required)
             div
               p No
-              input(type='radio',name='habit',value=0)
+              input(type='radio',name='habit',value=0, required)
             input(type='submit',habit=`${index.habitId}`,question=`${index.question}`,class='login-button',value='Record')

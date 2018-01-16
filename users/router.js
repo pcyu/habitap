@@ -156,11 +156,12 @@ router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false
 	.exec()
 	.then( user => {
 		let _habits = user.habits.filter((item, index) => {
-			return item.todayAnswer != true && item.active != false;
+			return item.todayAnswer !== true && item.active !== false;
 		});
 		for (habit of _habits) {
 			habit.day = habit.dailyCheck.length
 		}
+		console.log(_habits, "habits")
 		if (_habits.length === 0) {
 			res.render('nodailycheck',{
 				username: user.username,
@@ -381,8 +382,7 @@ router.post('/:username/update/:id', passport.authenticate('jwt',
 	});
 });
 
-router.put('/:username/record/:habitId', passport.authenticate('jwt',
-{session: false}), (req, res) => {
+router.put('/:username/record/:habitId', passport.authenticate('jwt', {session: false}), (req, res) => {
 	User.update(
     {username: req.params.username, "habits.habitId": req.params.habitId},
     {
@@ -396,6 +396,7 @@ router.put('/:username/record/:habitId', passport.authenticate('jwt',
 	)
 	.then((results) => {
 		User.findOne({username: req.params.username}).then(user => {
+			console.log(user.habits, "user")
 				for (var habit of user.habits) {
 					habit.active = (habit.dailyCheck.length < 15);
 				}
@@ -403,7 +404,7 @@ router.put('/:username/record/:habitId', passport.authenticate('jwt',
 			})
 	})
 	.then( ()=> {
-		res.redirect(`/users/${req.user.username}/dailycheck`)
+		res.redirect(`/users/${req.user}/dailycheck`)
 	})
 	.catch(err => {
 		console.error(err);
