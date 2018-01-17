@@ -13,12 +13,22 @@ block content
           br
           h3 Habit Log  
           each object in habit.historyArray
-            div.habitLog
-              div.habitDate #{object.date}
-              div.habitPoints #{object.points}
+            -if (object.points === "+1") {
+              div.habitLog
+                div.habitDatePass #{object.date}
+                div.habitPointsPass #{object.points}
+            -} else if (object.points === "+0") { 
+              div.habitLog
+                div.habitDateFail #{object.date}
+                div.habitPointsFail #{object.points}
+            -} else if (object.points === "-1") {
+              div.habitLog
+                div.habitDateMiss #{object.date}
+                div.habitPointsMiss #{object.points}
+            -}
             each item in object.questions
               div.revisedQuestion Habit Question set to:#{item.question}
             br  
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
-              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete')
+              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete?')
