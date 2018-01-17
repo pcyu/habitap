@@ -85,7 +85,7 @@ input {
 }
 
 .updateForm {
-  background: gray;
+  background: #929CB2;
   margin: 10px auto 15px;
   padding: 1px;
   position: relative;
@@ -248,6 +248,16 @@ li {
     width: 600px;
     padding-bottom: 25px;
   }
+}
+
+.historyTitle {
+  background: #929cb2;
+}
+
+.historyQuestion {
+  font-size: 1.5em;
+  color: white;
+  padding: 5px;
 }
 
 .habitLog {
