@@ -244,6 +244,7 @@ li {
 .historyTitle {
   background: #929cb2;
   border: 1px solid #ccc;
+  border-radius: 5%;
 }
 
 .historyQuestion {
@@ -255,7 +256,7 @@ li {
 
 .historyDelete {
   position: relative;
-  bottom: 20px;
+  bottom: 25px;
   left: 155px;
 }
 
@@ -267,14 +268,15 @@ li {
 }
 
 .historyLog {
-  margin-top: 20px;
+  margin-top: 15px;
 }
 
 .historyDatePass {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  border: 1px solid black;
+  border: 1.5px solid white;
+  border-radius: 5%;
   background: #2ecc71;
   padding: 5px 36px;
   display: inline;
@@ -284,17 +286,23 @@ li {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  border: 1px solid black;
+  border: 1.5px solid white;
+  border-radius: 5%;
   background: #208C4E;
   padding: 5px;
   display: inline;
+}
+
+.historyScore {
+  font-size: 20px;
 }
 
 .historyDateFail {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  border: 1px solid black;
+  border: 1.5px solid white;
+  border-radius: 5%;
   background: #f1c40f;
   padding: 5px 36px;
   display: inline;
@@ -304,7 +312,8 @@ li {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  border: 1px solid black;
+  border: 1.5px solid white;
+  border-radius: 5%;
   background: #B2910B;
   padding: 5px;
   display: inline;
@@ -314,9 +323,10 @@ li {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  border: 1px solid black;
   background: #e74c3c;
-  padding: 5px 36px; 
+  padding: 5px 36px;
+  left: 2px;
+  position: relative; 
   display: inline;
 }
 
@@ -324,24 +334,28 @@ li {
   color: white;
   font-size: 18px;
   font-weight: 700;
-  border: 1px solid black;
+  border: 3px solid white;
+  border-radius: 5%;
   background: #B23B2E;
   padding: 5px 6px;
+  left: 2px;
+  position: relative;
   display: inline;
 }
 
 .revisedQuestion {
   background: #929cb2;
-  border: 1px solid black;
+  border: 1.5px solid white;
+  border-radius: 5%;
   color: white;
   font-size: 14px;
-  margin-top: 4px;
+  margin-top: 6px;
   margin-bottom: -6px;
   padding: 10px 0;
   position: relative;
   text-align: center;
   height: auto;
-  width: 226px;
+  width: 230px;
 }
 
 //------------------------------------------------------------------------------
