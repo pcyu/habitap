@@ -85,7 +85,7 @@ input {
 }
 
 .updateForm {
-  background: #929CB2;
+  background: gray;
   margin: 10px auto 15px;
   padding: 1px;
   position: relative;
@@ -250,56 +250,72 @@ li {
   }
 }
 
+.habitLog {
+  margin-top: 10px;
+}
+
 .habitDatePass {
   color: white;
+  font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #2ecc71;
+  padding: 5px;
   display: inline;
 }
 
 .habitPointsPass {
   color: white;
+  font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #2ecc71;
+  padding: 5px;
   display: inline;
 }
 
 .habitDateFail {
   color: white;
+  font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #f1c40f;
+  padding: 5px;
   display: inline;
 }
 
 .habitPointsFail {
   color: white;
+  font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #f1c40f;
+  padding: 5px;
   display: inline;
 }
 
 .habitDateMiss {
   color: white;
+  font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #e74c3c;
+  padding: 5px;
   display: inline;
 }
 
 .habitPointsMiss {
   color: white;
+  font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #e74c3c;
+  padding: 5px 6px;
   display: inline;
 }
 
 .revisedQuestion {
-  padding: 10px 20px;
+  padding-top: 10px;
 }
 
 //------------------------------------------------------------------------------

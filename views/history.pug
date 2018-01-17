@@ -27,7 +27,7 @@ block content
                 div.habitPointsMiss #{object.points}
             -}
             each item in object.questions
-              div.revisedQuestion Habit Question set to:#{item.question}
+              div.revisedQuestion #{item.question}
             br  
           div.updateForm
             form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
