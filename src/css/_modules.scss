@@ -250,21 +250,56 @@ li {
   }
 }
 
-.habitLog {
-}
-
-.habitDate {
+.habitDatePass {
+  color: white;
+  font-weight: 700;
   border: 1px solid black;
+  background: #2ecc71;
   display: inline;
 }
 
-.habitPoints {
+.habitPointsPass {
+  color: white;
+  font-weight: 700;
   border: 1px solid black;
+  background: #2ecc71;
   display: inline;
 }
 
-.revisedQuestions {
+.habitDateFail {
+  color: white;
+  font-weight: 700;
+  border: 1px solid black;
+  background: #f1c40f;
+  display: inline;
+}
 
+.habitPointsFail {
+  color: white;
+  font-weight: 700;
+  border: 1px solid black;
+  background: #f1c40f;
+  display: inline;
+}
+
+.habitDateMiss {
+  color: white;
+  font-weight: 700;
+  border: 1px solid black;
+  background: #e74c3c;
+  display: inline;
+}
+
+.habitPointsMiss {
+  color: white;
+  font-weight: 700;
+  border: 1px solid black;
+  background: #e74c3c;
+  display: inline;
+}
+
+.revisedQuestion {
+  padding: 10px 20px;
 }
 
 //------------------------------------------------------------------------------
