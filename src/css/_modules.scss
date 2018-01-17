@@ -254,7 +254,16 @@ li {
 }
 
 .historyDelete {
-  display: inline-block;
+  position: relative;
+  bottom: 20px;
+  left: 155px;
+}
+
+.delete-button {
+  background-color: #add8e6;
+  font-size: 12px;
+  width: 75px;
+  padding: 5px;
 }
 
 .historyLog {
