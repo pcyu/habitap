@@ -235,46 +235,43 @@ li {
 .historyTile {
   border: 1px solid #CCC;
   background: #fff;
+  height: auto;
   margin: 0 auto;
   padding: 10px;
   width: 250px;
-  @include responsive(froosevelt) {
-    width: 300px;
-  }
-  @include responsive(johnson) {
-    width: 400px;
-  }
-  @include responsive(reagan) {
-    width: 600px;
-    padding-bottom: 25px;
-  }
 }
 
 .historyTitle {
   background: #929cb2;
+  border: 1px solid #ccc;
 }
 
 .historyQuestion {
   font-size: 1.5em;
   color: white;
   padding: 5px;
+  display: inline-block;
 }
 
-.habitLog {
-  margin-top: 10px;
+.historyDelete {
+  display: inline-block;
 }
 
-.habitDatePass {
+.historyLog {
+  margin-top: 20px;
+}
+
+.historyDatePass {
   color: white;
   font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #2ecc71;
-  padding: 5px;
+  padding: 5px 36px;
   display: inline;
 }
 
-.habitPointsPass {
+.historyPointsPass {
   color: white;
   font-size: 18px;
   font-weight: 700;
@@ -284,17 +281,17 @@ li {
   display: inline;
 }
 
-.habitDateFail {
+.historyDateFail {
   color: white;
   font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #f1c40f;
-  padding: 5px;
+  padding: 5px 36px;
   display: inline;
 }
 
-.habitPointsFail {
+.historyPointsFail {
   color: white;
   font-size: 18px;
   font-weight: 700;
@@ -304,17 +301,17 @@ li {
   display: inline;
 }
 
-.habitDateMiss {
+.historyDateMiss {
   color: white;
   font-size: 18px;
   font-weight: 700;
   border: 1px solid black;
   background: #e74c3c;
-  padding: 5px;
+  padding: 5px 36px; 
   display: inline;
 }
 
-.habitPointsMiss {
+.historyPointsMiss {
   color: white;
   font-size: 18px;
   font-weight: 700;
@@ -325,7 +322,17 @@ li {
 }
 
 .revisedQuestion {
-  padding-top: 10px;
+  background: #929cb2;
+  border: 1px solid black;
+  color: white;
+  font-size: 14px;
+  margin-top: 4px;
+  margin-bottom: -6px;
+  padding: 10px 0;
+  position: relative;
+  text-align: center;
+  height: auto;
+  width: 226px;
 }
 
 //------------------------------------------------------------------------------

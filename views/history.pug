@@ -6,27 +6,25 @@ block content
     div.historyGrid
       each habit, index in habits
         div.historyTile
+          div.historyHeading
+            div.historyScore Habit Score: #{habit.score}
+            form.historyDelete(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
+              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete?')
           div.historyTitle
             div.historyQuestion #{habit.question}
-            form.daily(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
-              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete?')
-          div.habitScore
-            h3 Final Habit Score
-            div #{habit.score}
-          h3 Habit Log  
           each object in habit.historyArray
             -if (object.points === "+1") {
-              div.habitLog
-                div.habitDatePass #{object.date}
-                div.habitPointsPass #{object.points}
+              div.historyLog
+                div.historyDatePass #{object.date}
+                div.historyPointsPass #{object.points}
             -} else if (object.points === "+0") { 
-              div.habitLog
-                div.habitDateFail #{object.date}
-                div.habitPointsFail #{object.points}
+              div.historyLog
+                div.historyDateFail #{object.date}
+                div.historyPointsFail #{object.points}
             -} else if (object.points === "-1") {
-              div.habitLog
-                div.habitDateMiss #{object.date}
-                div.habitPointsMiss #{object.points}
+              div.historyLog
+                div.historyDateMiss #{object.date}
+                div.historyPointsMiss #{object.points}
             -}
             each item in object.questions
-              li.revisedQuestion #{item.question}
+              div.revisedQuestion #{item.question}
