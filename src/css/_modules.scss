@@ -131,12 +131,22 @@ input {
 .dailyCheckBox {
   background-color: #EAFFFF;
   border: 1px solid black;
-  margin: 30px auto;
+  margin: 30px;
   padding: 20px;
   width: 200px;
 }
 
+.dailyCheckGrid {
+  display: grid;
+  justify-items: center;
+  @include responsive(coolidge) {
+  grid-template-columns: 1fr 1fr;
+  }
+}
 
+.dailyCheckHeading {
+  text-align: center;
+}
 
 //------------------------------------------------------------------------------
 //  Navigation – Items
@@ -384,11 +394,6 @@ li {
   @include responsive(nixon) {
     font-size: 35px;
     width: 750px;
-  }
-  @include responsive(reagan) {
-    font-size: 40px;
-    width: 900px;
-
   }
 }
 
