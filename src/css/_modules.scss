@@ -33,6 +33,29 @@
   margin: 10px;
   padding: 4px;
   width: 75px;
+  position: relative;
+  top: 25px;
+  left: 35px;
+  @include responsive(truman) {
+    top: 25px;
+    left: 60px;
+  }
+  @include responsive(kennedy) {
+    top: 25px;
+    left: 84px;
+  }
+  @include responsive(ford) {
+    top: 25px;
+    left: 60px;
+  }
+  @include responsive(reagan) {
+    top: 25px;
+    left: 84px;
+  }
+  @include responsive(clinton) {
+    top: 25px;
+    left: 110px;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -144,16 +167,35 @@ input {
 .dailyCheckBox {
   background-color: white;
   border: 1px solid black;
-  margin: 30px;
   padding: 20px;
-  width: 200px;
+  width: 250px;
+  @include responsive(truman) {
+    width: 300px;
+  }
+  @include responsive(kennedy) {
+    width: 350px;
+  }
+  @include responsive(ford) {
+    width: 300px;
+  }
+  @include responsive(reagan) {
+    width: 350px;
+  }
+  @include responsive(clinton) {
+    width: 400px;
+  }
 }
 
 .dailyCheckGrid {
   display: grid;
+  grid-gap: 20px;
   justify-items: center;
+  margin-top: 10px; 
   @include responsive(coolidge) {
-  grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
+  }
+  @include responsive(ford) {
+    grid-template-columns: 1fr 1fr 1fr;
   }
 }
 
@@ -161,12 +203,34 @@ input {
   text-align: center;
 }
 
-.dailyCheckBottom {
-
+.dailyCheckQuestion {
+  text-align: center;
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 20px;
 }
 
 .dailyCheckDay {
-  
+  font-size: 20px;
+  position: relative;
+  right: 45px;
+  top: 35px;
+  @include responsive(truman) {
+    right: 55px;
+    top: 40px;
+  }
+  @include responsive(kennedy) {
+    right: 68px;
+  }
+  @include responsive(ford) {
+    right: 55px;
+  }
+  @include responsive(reagan) {
+    right: 68px;
+  }
+  @include responsive(clinton) {
+    right: 80px;
+  }
 }
 
 //------------------------------------------------------------------------------
@@ -479,7 +543,7 @@ li {
 
 p {
   .daily & {
-    border: 1px solid blue;
+    margin-right: 2px;
     display: inline-block;
   }
 }
