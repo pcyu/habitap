@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------------
 
 .login-button {
-  background-color: lightblue;
+  background-color: #add8e6;
   display: inline-block;
   font-size: 12px;
   margin: 10px;
@@ -11,15 +11,28 @@
   width: 75px;
 }
 
+
 .delete-button {
   display: inline-block;
   position: relative;
-  width: auto;
+  width: 75px;
+  background-color: #add8e6;
+  font-size: 12px;
+  padding: 5px;
 }
 
 .edit-button {
   display: inline-block;
   width: auto;
+}
+
+.record-button {
+  background-color: #add8e6;
+  display: inline-block;
+  font-size: 12px;
+  margin: 10px;
+  padding: 4px;
+  width: 75px;
 }
 
 //------------------------------------------------------------------------------
@@ -129,7 +142,7 @@ input {
 //------------------------------------------------------------------------------
 
 .dailyCheckBox {
-  background-color: #EAFFFF;
+  background-color: white;
   border: 1px solid black;
   margin: 30px;
   padding: 20px;
@@ -146,6 +159,14 @@ input {
 
 .dailyCheckHeading {
   text-align: center;
+}
+
+.dailyCheckBottom {
+
+}
+
+.dailyCheckDay {
+  
 }
 
 //------------------------------------------------------------------------------
@@ -268,13 +289,6 @@ li {
   position: relative;
   bottom: 25px;
   left: 155px;
-}
-
-.delete-button {
-  background-color: #add8e6;
-  font-size: 12px;
-  width: 75px;
-  padding: 5px;
 }
 
 .historyLog {
