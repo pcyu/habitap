@@ -3,5 +3,12 @@ extends 1layout
 block content
   div.y-template
     h2 Leaderboard
-    each user in users
-      p #{user.username}: #{user.elo}
+  div.leaderboardTable
+    div.leaderboardRank Rank
+    div.leaderboardUser User
+    div.leaderboardElo Elo
+    each user, index in users
+      div.leaderboardRankData #{index+1}
+      div.leaderboardUserData #{user.username}
+      div.leaderboardEloData #{user.elo}
+    

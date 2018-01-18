@@ -359,6 +359,60 @@ li {
 }
 
 //------------------------------------------------------------------------------
+//  Leaderboard
+//------------------------------------------------------------------------------
+
+.leaderboardTable {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  width: 280px;
+  margin: 0 auto;
+  border: 1px solid gray;
+}
+
+.leaderboardData {
+
+}
+
+.leaderboardRank {
+  background-color: #403d3b;
+  color: white;
+  text-align: center;
+  align-self: stretch;
+}
+
+.leaderboardRankData {
+  text-align: center;
+  border: .5px solid black;
+}
+
+.leaderboardUser {
+  background-color: #403d3b;
+  color: white;
+  text-align: center;
+  align-self: stretch;
+}
+
+.leaderboardUserData {
+  text-align: center;
+  border: .5px solid black;
+}
+
+.leaderboardElo {
+  background-color: #403d3b;
+  color: white;
+  text-align: center;
+  align-self: stretch;
+}
+
+.leaderboardEloData {
+  text-align: center;
+  border: .5px solid black;  
+}
+
+
+//------------------------------------------------------------------------------
 //  Images
 //------------------------------------------------------------------------------
 .imgrow {
