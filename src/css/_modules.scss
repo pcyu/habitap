@@ -364,11 +364,32 @@ li {
 
 .leaderboardTable {
   display: grid;
+  font-size: 15px;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   width: 280px;
   margin: 0 auto;
-  border: 1px solid gray;
+  @include responsive(harding) {
+    font-size: 17px;
+    width: 330px;
+  }
+  @include responsive(coolidge) {
+    font-size: 22px;
+    width: 400px;
+  }
+  @include responsive(froosevelt) {
+    font-size: 30px;
+    width: 500px;
+  }
+  @include responsive(nixon) {
+    font-size: 35px;
+    width: 750px;
+  }
+  @include responsive(reagan) {
+    font-size: 40px;
+    width: 900px;
+
+  }
 }
 
 .leaderboardData {
@@ -384,7 +405,7 @@ li {
 
 .leaderboardRankData {
   text-align: center;
-  border: .5px solid black;
+  border: .5px solid #403d3b;
 }
 
 .leaderboardUser {
@@ -396,7 +417,7 @@ li {
 
 .leaderboardUserData {
   text-align: center;
-  border: .5px solid black;
+  border: .5px solid #403d3b;
 }
 
 .leaderboardElo {
@@ -408,9 +429,8 @@ li {
 
 .leaderboardEloData {
   text-align: center;
-  border: .5px solid black;  
+  border: .5px solid #403d3b;  
 }
-
 
 //------------------------------------------------------------------------------
 //  Images
