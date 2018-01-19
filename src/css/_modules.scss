@@ -11,7 +11,6 @@
   width: 75px;
 }
 
-
 .delete-button {
   display: inline-block;
   position: relative;
@@ -22,8 +21,23 @@
 }
 
 .edit-button {
-  display: inline-block;
-  width: auto;
+  background-color: #add8e6;
+  font-size: 12px;
+  height: 20px;
+  width: 50px;
+  position: relative;
+  left: 48px;
+  @include responsive(froosevelt) {
+    left: 72px;
+  }
+  @include responsive(johnson) {
+    left: 122px;
+  }
+}
+
+.save-button {
+  bottom: 20px;
+  z-index: -1;
 }
 
 .record-button {
@@ -97,13 +111,6 @@ input {
     margin-bottom: 10px;
     margin-top: 10px;
     padding: 2px 4px;
-    }
-  .updateForm & {
-    border: 0px;
-    display: inline;
-    font-size: 14px;
-    color: white;
-    padding: 10px;
   }
 }
 
@@ -151,12 +158,6 @@ input {
     align-self: center;
     margin: 10px 0;
     width: 120px;
-  }
-}
-
-.edit-button {
-  .updateForm & {
-    display: none;
   }
 }
 
@@ -313,6 +314,10 @@ li {
     width: 600px;
     padding-bottom: 25px;
   }
+}
+
+.daily {
+  display: none;
 }
 
 //------------------------------------------------------------------------------

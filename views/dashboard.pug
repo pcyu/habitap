@@ -2,15 +2,16 @@ extends 1layout
 
 block content
   div.y-template
-    h2 Dashboard  
+    h2 Dashboard
     div.dashboardGrid
       each habit, index in habits
         div.habitTile
           div(class="updateForm",id=("updateForm-"+index))
-            div(class="habit-question-heading", id=("habit-question-"+index)) #{habit.question}
+            button(class="edit-button", id=("edit-button-"+index)) Edit
             form.daily(action=`/users/${username}/update/${habit.habitId}/${habit.question}` method='post')
               input(type='text',name='question',class='text-box',id=('text-box-'+index),value= "fasdfasdfadsf")
-              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button',id=('edit-button-'+index),value='Save')
+              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='edit-button save-button',id=('save-button-'+index),value='Save')
+            div(class="habit-question-heading", id=("habit-question-"+index)) #{habit.question}
           canvas(id= ("myChart-"+ index), class="myChart", width="50", height="25")
             
   script(src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.js")
