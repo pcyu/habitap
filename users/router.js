@@ -143,6 +143,18 @@ router.get('/dashboard', passport.authenticate('jwt', {session: false}), (req, r
   })
 });
 
+router.get('/update/:habitId', passport.authenticate('jwt', {session: false}), (req, res) => {
+	User
+	.findOne({ "username": req.user})
+	.exec()
+	.then( user => {
+		res.render('update', {
+			token: req.app.get('loggedIn'),
+			habits: user.habits
+		});
+	});
+});
+
 router.get('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
   res.render('new', {
     token: req.app.get('loggedIn')

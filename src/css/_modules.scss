@@ -25,14 +25,6 @@
   font-size: 12px;
   height: 20px;
   width: 50px;
-  position: relative;
-  left: 48px;
-  @include responsive(froosevelt) {
-    left: 72px;
-  }
-  @include responsive(johnson) {
-    left: 122px;
-  }
 }
 
 .record-button {
@@ -148,7 +140,6 @@ input {
 
 .text-box {
   .updateForm & {
-    background-color: #4a4a4a;
     align-self: center;
     margin: 10px 0;
     width: 120px;
@@ -343,12 +334,6 @@ li {
   display: inline-block;
 }
 
-.historyDelete {
-  position: relative;
-  bottom: 25px;
-  left: 155px;
-}
-
 .historyLog {
   margin-top: 15px;
 }
@@ -377,6 +362,7 @@ li {
 
 .historyScore {
   font-size: 20px;
+  margin-left: 20px;
 }
 
 .historyDateFail {
@@ -388,6 +374,12 @@ li {
   background: #f1c40f;
   padding: 5px 36px;
   display: inline;
+}
+
+.historyHeading {
+  display: grid;
+  margin-bottom: 10px;
+  grid-template-columns: 80px 1fr;
 }
 
 .historyPointsFail {
