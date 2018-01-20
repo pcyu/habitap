@@ -6,7 +6,8 @@ block content
     div.dashboardGrid
       each habit, index in habits
         div.habitTile
-          button(class="edit-button", id=("edit-button-"+index)) Edit?
+          form.habitEdit(action=`/users/update/${habit.habitId}` method='get')
+            input(type='submit',class='edit-button',value='Edit?')
           div(class="updateForm",id=("updateForm-"+index))
             div(class="habit-question-heading", id=("habit-question-"+index)) #{habit.question}
           canvas(id= ("myChart-"+ index), class="myChart", width="50", height="25")
