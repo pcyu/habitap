@@ -376,10 +376,11 @@ router.post('/:username/update/:id/:question', passport.authenticate('jwt',
 	});
 });
 
-router.post('/:username/update/:id', passport.authenticate('jwt',
+router.post('/update/', passport.authenticate('jwt',
 {session: false}), (req, res) => {
+	console.log(req.params)
   User.update(
-    {username: req.params.username, "habits.habitId": req.params.id},
+    {username: req.user, "habits.habitId": req.params.id},
     { 
 			$push: {
 			"habits.$.questionArray": {question: req.body.question, revisionDate: moment().format("LL")}
