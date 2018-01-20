@@ -148,9 +148,13 @@ router.get('/update/:habitId', passport.authenticate('jwt', {session: false}), (
 	.findOne({ "username": req.user})
 	.exec()
 	.then( user => {
+		let habitInformation = user.habits.filter(function(element){
+			return element.habitId === req.params.habitId
+		})
 		res.render('update', {
 			token: req.app.get('loggedIn'),
-			habits: user.habits
+			habitInfo: habitInformation,
+			id: req.params.habitId
 		});
 	});
 });
@@ -376,11 +380,10 @@ router.post('/:username/update/:id/:question', passport.authenticate('jwt',
 	});
 });
 
-router.post('/update/', passport.authenticate('jwt',
+router.post('/update/:habitId', passport.authenticate('jwt',
 {session: false}), (req, res) => {
-	console.log(req.params)
   User.update(
-    {username: req.user, "habits.habitId": req.params.id},
+    {username: req.user, "habits.habitId": req.params.habitId},
     { 
 			$push: {
 			"habits.$.questionArray": {question: req.body.question, revisionDate: moment().format("LL")}
@@ -391,7 +394,7 @@ router.post('/update/', passport.authenticate('jwt',
 		}
   )
 	.then(
-		res.redirect(`/users/dashboard`)
+		res.redirect(`/users/update/`+req.params.habitId)
 	)
 	.catch(err => {
 	console.error(err);
