@@ -35,11 +35,6 @@
   }
 }
 
-.save-button {
-  bottom: 20px;
-  z-index: -1;
-}
-
 .record-button {
   background-color: #add8e6;
   display: inline-block;
@@ -154,7 +149,6 @@ input {
 .text-box {
   .updateForm & {
     background-color: #4a4a4a;
-    display: none;
     align-self: center;
     margin: 10px 0;
     width: 120px;
