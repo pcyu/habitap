@@ -41,6 +41,15 @@ h2 {
   font-size: 1.5em;
   margin: 12px 0;
   text-align: center;
+  @include responsive(coolidge) {
+    font-size: 2em;
+  }
+  @include responsive(froosevelt) {
+    font-size: 3em;
+  }
+  @include responsive(nixon) {
+    font-size: 3.5em;
+  }
 }
 
 h4 {
