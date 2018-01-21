@@ -150,7 +150,10 @@ router.get('/update/:habitId', passport.authenticate('jwt', {session: false}), (
 	.then( user => {
 		let habitInformation = user.habits.filter(function(element){
 			return element.habitId === req.params.habitId
-		})
+		});
+		for (element of habitInformation) {
+			element.questionArray.reverse();
+		};
 		res.render('update', {
 			token: req.app.get('loggedIn'),
 			habitInfo: habitInformation,
