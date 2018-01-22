@@ -7,7 +7,7 @@ block content
       div.updateBlock
         form.daily(action="/users/update/"+ `${id}` method='post')
           input(type='text',name='question',class='text-box',id=('text-box-'+index),placeholder="Habit Question", autocomplete="off" required)
-          input(type='submit',class='edit-button',id=('save-button-'+index),value='Save')
+          input(type='submit',class='login-button',id=('save-button-'+index),value='Save')
         div.revisedQuestionHistory
           h3 Question History
           h3 Date Revised
