@@ -8,6 +8,9 @@ block content
         div.habitTile
           form.habitEdit(action=`/users/update/${habit.habitId}` method='get')
             input(type='submit',class='edit-button',value='Edit?')
+          form.habitDelete(action=`/users/${username}/del/${habit.habitId}/?_method=DELETE` method='post')
+            input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete?')
+          
           div(class="updateForm",id=("updateForm-"+index))
             div(class="habit-question-heading", id=("habit-question-"+index)) #{habit.question}
           canvas(id= ("myChart-"+ index), class="myChart", width="50", height="25")

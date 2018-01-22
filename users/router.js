@@ -40,6 +40,26 @@ router.delete('/:username/delete/:habit', passport.authenticate('jwt',
 	})
 });
 
+router.delete('/:username/del/:habit', passport.authenticate('jwt',
+	{session: false}), (req, res) => {
+	User.update(
+		{username: req.params.username},
+		{
+			$pull: {
+				habits: {habitId: req.params.habit}
+			}
+		}
+	)
+	.exec()
+	.then(item => {
+		console.log(`204 / The habit has been deleted.`)
+		res.redirect(`/users/dashboard`)
+	})
+	.catch(err => {
+		return res.status(500).json({message: 'Internal server error.'});
+	})
+});
+
 //  ===========================================================================
 //                                       GET
 //  ===========================================================================
