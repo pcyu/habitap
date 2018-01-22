@@ -6,11 +6,11 @@ block content
     each item in habitInfo
       div.updateBlock
         form.daily(action="/users/update/"+ `${id}` method='post')
-          input(type='text',name='question',class='text-box',id=('text-box-'+index),value= `${item.question}`)
-          input(type='submit',class='save-button',id=('save-button-'+index),value='Save')
+          input(type='text',name='question',class='text-box',id=('text-box-'+index),placeholder="Habit Question",form autocomplete="off")
+          input(type='submit',class='edit-button',id=('save-button-'+index),value='Save')
         div.revisedQuestionHistory
           h3 Question History
           h3 Date Revised
           each question in item.questionArray
-            div #{question.question}
-            div #{question.revisionDate}
+            div.previousQuestionEntry #{question.question}
+            div.previousDateEntry #{question.revisionDate}

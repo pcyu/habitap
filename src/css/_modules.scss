@@ -89,6 +89,7 @@ input {
     font-size: 12px;
     color: black;
     margin: 10px auto;
+    padding: 4px 8px;
     @include responsive(truman) {
       display: inline-block;
       margin: 10px 5px;
@@ -101,7 +102,7 @@ input {
     margin: 0 auto;
     margin-bottom: 10px;
     margin-top: 10px;
-    padding: 2px 4px;
+    padding: 4px 8px;
   }
 }
 
@@ -143,11 +144,13 @@ input {
 }
 
 .text-box {
-  .updateForm & {
-    align-self: center;
-    margin: 10px 0;
-    width: 120px;
-  }
+  display: block;
+  font-size: 14px;
+  color: black;
+  margin: 0 auto;
+  margin-bottom: 10px;
+  margin-top: 10px;
+  padding: 4px 8px;
 }
 
 //------------------------------------------------------------------------------
@@ -220,6 +223,21 @@ input {
   }
   @include responsive(clinton) {
     right: 80px;
+  }
+}
+
+p {
+  .daily & {
+    margin-right: 2px;
+    display: inline-block;
+  }
+}
+
+div {
+  .daily & {
+    float: left;
+    text-align: center;
+    width: 50%;
   }
 }
 
@@ -532,28 +550,43 @@ li {
   }
 }
 
-p {
-  .daily & {
-    margin-right: 2px;
-    display: inline-block;
-  }
-}
-
-div {
-  .daily & {
-    float: left;
-    text-align: center;
-    width: 50%;
-  }
-}
+//------------------------------------------------------------------------------
+//  Update Question History
+//------------------------------------------------------------------------------
 
 .revisedQuestionHistory {
   display: grid;
-  grid-template-columns: 300px 100px;
-  width: 400px;
+  grid-template-columns: 200px 90px;
+  width: 290px;
   margin: 20px auto;
+  // border: 1px solid black;
+  @include responsive(wilson) {
+    grid-template-columns: 270px 110px;
+    width: 380px;
+  }
+  @include responsive(harding) {
+    grid-template-columns: 350px 110px;
+    width: 460px;
+  }
+  @include responsive(coolidge) {
+    grid-template-columns: 400px 110px;
+    width: 530px;
+  }
 }
 
-// .updateBlock {
-//   text-align: center;
-// }
+.previousQuestionEntry {
+  text-align: left;
+  @include responsive(wilson) {
+    font-size: 14px;
+  }
+}
+
+.previousDateEntry {
+  @include responsive(wilson) {
+    font-size: 14px;
+  }
+}
+
+.updateBlock {
+  text-align: center;
+}

@@ -52,6 +52,13 @@ h2 {
   }
 }
 
+h3 {
+  font-size: 1em;
+  @include responsive(wilson) {
+    font-size: 1.2em;
+  }
+}
+
 h4 {
   margin: 24px 0 6px;
   text-transform: uppercase;
