@@ -34,6 +34,16 @@
   font-size: 12px;
   padding: 4px 8px;
   width: 75px;
+  .demoLogin & {
+    width: 100px;
+    @include responsive(truman) {
+      position: relative;
+      left: 195px;
+    }
+    @include responsive(ford) {
+      left: 236px;
+    }
+  }
 }
 
 .record-button {
@@ -74,6 +84,7 @@
 //------------------------------------------------------------------------------
 
 input[type=text], input[type=password] {
+  width: 220px;
   .registerForm & {
     padding: 8px 6px;
     @include responsive(truman) {
@@ -85,8 +96,12 @@ input[type=text], input[type=password] {
       width: 120px;
     }
   }
-  width: 220px;
+  .demoLogin & {
+    display: none;
+  }
 }
+
+
 
 input {
   .registerForm & {
@@ -123,6 +138,22 @@ input {
     grid-column: 2;
     grid-row: 1;
   }
+}
+
+.demoUser {
+  background-color: #403d3b;
+  padding: 10px;
+  width: 200px;
+  color: white;
+  text-align: center;
+}
+
+.demoPassword {
+  background-color: #403d3b;
+  padding: 10px;
+  width: 200px;
+  color: white;
+  text-align: center;
 }
 
 .updateForm {
