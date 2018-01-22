@@ -30,10 +30,6 @@ router.get('/register', (req, res) => {
   res.render('register');
 });
 
-router.get('/demo', (req, res) => {
-  res.render('demo');
-});
-
 router.get('/logout', (req, res) => {
   res.cookie("token", "", { expires: new Date() });
   loggedIn = false;
