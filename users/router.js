@@ -344,6 +344,7 @@ router.post('/register', jsonParser, (req, res) => {
 });
 
 router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
+	console.log(req.body)
 	User.find({"username": req.user})
 	.then(user=>{
 		for (element of user) {
