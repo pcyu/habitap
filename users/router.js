@@ -96,23 +96,7 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 	.then( user => {
     const valueFalseArray = (user.habits.filter( function(value){
       return value.active === false
-		}))
-    valueFalseArray.forEach((habit) => {
-			habit.score = habit.dailyCheck.reduce((total, element) => total + element.points, 0);
-			habit.historyArray = habit.dailyCheck.map(function(element) {
-				if (element.points > -1 ) {
-					return {points: "+"+element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
-				} else {
-					return {points: element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
-				}
-			});
-			if (habit.questionArray.length === 1) {
-				for (element of habit.historyArray) {
-					element.questions = [];
-				};
-			}
-			habit.historyArray.reverse();
-		});
+		}));
 		if (valueFalseArray.length === 0) {
 			res.render(
 				'nohistory', {
@@ -120,7 +104,23 @@ router.get('/history', passport.authenticate('jwt', {session: false}), (req, res
 				token: req.app.get('loggedIn'),
 			})
 		} 
-		else {  
+		else {
+			valueFalseArray.forEach((habit) => {
+				habit.score = habit.dailyCheck.reduce((total, element) => total + element.points, 0);
+				habit.historyArray = habit.dailyCheck.map(function(element) {
+					if (element.points > -1 ) {
+						return {points: "+"+element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
+					} else {
+						return {points: element.points.toString(), date: element.date, questions: habit.questionArray.filter(question => question.revisionDate === element.date)}
+					}
+				});
+				if (habit.questionArray.length === 1) {
+					for (element of habit.historyArray) {
+						element.questions = [];
+					};
+				}
+				habit.historyArray.reverse();
+			});  
 			res.render('history', {
 					username: user.username,
 					id: user.id,
