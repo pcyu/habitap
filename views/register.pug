@@ -6,3 +6,7 @@ block signin
       input(type='text' name='username' placeholder='Username' required)
       input(type='password' name='password' id='password' placeholder='Password' required)
       input(type='submit' class='login-button' value='Register')
+    form.demoLogin(action=`/auth/login` method='POST')
+      input.demoText(type='text' name='username' value='habitap' required)
+      input.demoPassword(type='password' name='password' value='helloworld' required)
+      input(type='submit',class='edit-button',value='Demo Habitap?')

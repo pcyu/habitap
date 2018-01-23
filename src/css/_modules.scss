@@ -35,13 +35,19 @@
   padding: 4px 8px;
   width: 75px;
   .demoLogin & {
-    width: 100px;
+    width: 250px;
+    background-color: transparent;
+    color: #403d3b;
+    font-size: 30px;
+    font-weight: 700;
+    outline-style: none;
+    text-decoration: underline;
     @include responsive(truman) {
       position: relative;
       left: 195px;
     }
     @include responsive(ford) {
-      left: 236px;
+      left: 4px;
     }
   }
 }
