@@ -1,10 +1,10 @@
 exports.navs = [
-  {name: 'Home', path: '/', type: ['public']},
-  {name: 'Register', path: '/auth/register', type: ['public']},
-  {name: 'Login', path: '/auth/login', type: ['public']},
-  {name: 'Dashboard', path: '/users/dashboard', type: ['private']},
-  {name: 'New Habit', path: '/users/new', type: ['private']},
-  {name: 'History', path: '/users/history', type: ['private']},
-  {name: 'Leaderboard', path: '/users/leaderboard', type: ['private']},
-  {name: 'Logout', path: '/auth/logout', type: ['private']}
+  {name: 'Demo', path: '/', type: ['public'], id: 'demo'},
+  {name: 'Register', path: '/auth/register', type: ['public'], id: 'register'},
+  {name: 'Login', path: '/auth/login', type: ['public'], id: 'login'},
+  {name: 'Dashboard', path: '/users/dashboard', type: ['private'], id: 'dashboard'},
+  {name: 'New Habit', path: '/users/new', type: ['private'], id: 'new'},
+  {name: 'History', path: '/users/history', type: ['private'], id: 'history'},
+  {name: 'Leaderboard', path: '/users/leaderboard', type: ['private'], id: 'leaderboard'},
+  {name: 'Logout', path: '/auth/logout', type: ['private'], id: 'logout'}
 ];

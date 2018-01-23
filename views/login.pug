@@ -1,8 +1,6 @@
 extends landing
 
 block signin
-  div.overlay
-    p Change your life, one habit at a time.
   div.registerForm
     form.login(action='/auth/login' method='POST')
       input(type='text' name='username' placeholder='Username' required)

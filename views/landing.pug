@@ -2,9 +2,13 @@ extends 1layout
 
 block content
   div.y-banner
+    div.overlay
+      p Change your life, one habit at a time.
+    form.demoLogin(action=`/auth/login` method='Post' id='demoLogin')
+      input.demoText(type='text' name='username' value='habitap' required)
+      input.demoPassword(type='password' name='password' value='helloworld' required)
+      input(type='submit',class='edit-button', id='demo-button', value='Demo?')
     block signin
-      div.overlay
-        p Change your life, one habit at a time.
 
   section.y-grid
 

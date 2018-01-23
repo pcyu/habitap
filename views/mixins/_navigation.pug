@@ -9,4 +9,4 @@ mixin navigation( navs = [], type = 'public' )
       each link in navs
         if link.type.indexOf(type) >= 0
           li
-            a(href=`${link.path}`) #{link.name}
+            a(href=`${link.path}`, id=`${link.id}`) #{link.name}

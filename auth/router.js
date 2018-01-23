@@ -26,9 +26,6 @@ router.get('/login', (req, res) => {
   res.render('login');
 });
 
-router.get('/demo', (req, res) => {
-  res.render('demo');
-});
 
 router.get('/register', (req, res) => {
   res.render('register');
@@ -50,7 +47,7 @@ router.post(
   '/login',
   // The user provides a username and password to login
   passport.authenticate('local', {
-    failureRedirect: '/auth/login',
+    failureRedirect: '/failure',
     session: false
   }),
 (req, res, next) => {
