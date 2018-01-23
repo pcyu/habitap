@@ -1,6 +1,8 @@
 extends landing
 
 block signin
+  div.overlay
+    p Change your life, one habit at a time.
   div.registerForm
     form.register(action='/users/register' method='POST')
       input(type='text' name='username' placeholder='Username' required)
@@ -9,4 +11,4 @@ block signin
     form.demoLogin(action=`/auth/login` method='POST')
       input.demoText(type='text' name='username' value='habitap' required)
       input.demoPassword(type='password' name='password' value='helloworld' required)
-      input(type='submit',class='edit-button',value='Demo Habitap?')
+      input(type='submit',class='edit-button',value='?')
