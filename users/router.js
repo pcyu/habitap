@@ -332,9 +332,7 @@ router.post('/register', jsonParser, (req, res) => {
 				password: hash
 			});
 		})
-		.then(
-			res.redirect(`/auth/login`)
-		)
+		.then(user => {res.redirect(`/auth/login`)})
 		.catch(err => {  //c035
 				if (err.reason === 'ValidationError') {
 					return res.status(err.code).json(err);
