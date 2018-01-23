@@ -51,13 +51,15 @@ router.post(
     session: false
   }),
 (req, res, next) => {
+    res.cookie("token", "", { expires: new Date() });
+    loggedIn = false;
     const _token = createAuthToken(req.user.apiRepr());
     res.cookie('token', _token);      
     loggedIn = true;
 		if (req.user.habits.length < 1) {
 			res.redirect('/users/new')
     } else {
-      res.redirect(`/users/${req.body.username}/dailycheck`)
+      res.redirect(`/users/dailycheck`)
     }
   }
 );

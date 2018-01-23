@@ -392,6 +392,7 @@ li {
   background: #929cb2;
   border: 1px solid #ccc;
   border-radius: 5%;
+  margin-top: 10px;
 }
 
 .historyQuestion {
@@ -428,8 +429,8 @@ li {
 }
 
 .historyScore {
+  width: 300px;
   font-size: 20px;
-  margin-left: 20px;
 }
 
 .historyDateFail {

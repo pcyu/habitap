@@ -6,10 +6,7 @@ block content
     div.historyGrid
       each habit, index in habits
         div.historyTile
-          div.historyHeading
-            form.historyDelete(action=`/users/${username}/delete/${habit.habitId}/?_method=DELETE` method='post')
-              input(type='submit',habit=`${habit.habitId}`,question=`${habit.question}`,class='delete-button',value='Delete?')
-            div.historyScore Habit Score: #{habit.score}
+          div.historyScore Habit Score: #{habit.score}
           div.historyTitle
             div.historyQuestion #{habit.question}
           each object in habit.historyArray

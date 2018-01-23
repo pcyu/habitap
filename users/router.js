@@ -20,25 +20,25 @@ router.use(cookieParser());
 //  ===========================================================================
 //                                     DELETE
 //  ===========================================================================
-router.delete('/:username/delete/:habit', passport.authenticate('jwt',
-	{session: false}), (req, res) => {
-	User.update(
-		{username: req.params.username},
-		{
-			$pull: {
-				habits: {habitId: req.params.habit}
-			}
-		}
-	)
-	.exec()
-	.then(item => {
-		console.log(`204 / The habit has been deleted.`)
-		res.redirect(`/users/history`)
-	})
-	.catch(err => {
-		return res.status(500).json({message: 'Internal server error.'});
-	})
-});
+// router.delete('/:username/delete/:habit', passport.authenticate('jwt',
+// 	{session: false}), (req, res) => {
+// 	User.update(
+// 		{username: req.params.username},
+// 		{
+// 			$pull: {
+// 				habits: {habitId: req.params.habit}
+// 			}
+// 		}
+// 	)
+// 	.exec()
+// 	.then(item => {
+// 		console.log(`204 / The habit has been deleted.`)
+// 		res.redirect(`/users/history`)
+// 	})
+// 	.catch(err => {
+// 		return res.status(500).json({message: 'Internal server error.'});
+// 	})
+// });
 
 router.delete('/:username/del/:habit', passport.authenticate('jwt',
 	{session: false}), (req, res) => {
@@ -194,9 +194,9 @@ router.get('/maxhabits', passport.authenticate('jwt', {session: false}), (req, r
   });
 });
 
-router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.get('/dailycheck', passport.authenticate('jwt', {session: false}), (req, res) => {
 	User
-	.findOne({ "username": req.params.username})
+	.findOne({ "username": req.user})
 	.exec()
 	.then( user => {
 		let _habits = user.habits.filter((item, index) => {
@@ -221,13 +221,13 @@ router.get('/:username/dailycheck', passport.authenticate('jwt', {session: false
 	})
 })
 
-router.get('/:username/habitstart', passport.authenticate('jwt', {session: false}), (req, res) => {
+router.get('/habitstart', passport.authenticate('jwt', {session: false}), (req, res) => {
 	User
 	.findOne({username: req.params.username})
 	.exec()
 	.then(
 			res.render('habitstart', {
-				username: req.params.username,
+				username: req.user,
 				token: req.app.get('loggedIn')
 			})
 	)
@@ -342,7 +342,6 @@ router.post('/register', jsonParser, (req, res) => {
 });
 
 router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) => {
-	console.log(req.body)
 	User.find({"username": req.user})
 	.then(user=>{
 		for (element of user) {
@@ -363,7 +362,7 @@ router.post('/new', passport.authenticate('jwt', {session: false}), (req, res) =
 				}
 			)
 		.then(
-			res.redirect(`/users/${req.user}/habitstart`)
+			res.redirect(`/users/habitstart`)
 		)
 		.catch(err => {
 			console.error(err);
@@ -438,7 +437,6 @@ router.put('/:username/record/:habitId', passport.authenticate('jwt', {session: 
 	)
 	.then((results) => {
 		User.findOne({username: req.params.username}).then(user => {
-			console.log(user.habits, "user")
 				for (var habit of user.habits) {
 					habit.active = (habit.dailyCheck.length < 15);
 				}
@@ -446,7 +444,7 @@ router.put('/:username/record/:habitId', passport.authenticate('jwt', {session: 
 			})
 	})
 	.then( ()=> {
-		res.redirect(`/users/${req.user}/dailycheck`)
+		res.redirect(`/users/dailycheck`)
 	})
 	.catch(err => {
 		console.error(err);
