@@ -333,23 +333,13 @@ div {
   text-align: center;
   top: 18%;
   @include responsive(coolidge) {
-    left: 13%;
-    position: relative;
+    left: 0%;
+    right: 0;
+    margin-right: 40px;
     padding-top: 8px;
     top: 0%;
+    text-align: right;
   }
-  @include responsive(froosevelt) {
-    left: 20%;
-  }
-  @include responsive(johnson) {
-    left: 25%;
-  }
-  @include responsive(ford) {
-    left: 26%;
-  }
-  // @include responsive(johnson) {
-  //   left: 20%;
-  // }
 }
 
 a {
