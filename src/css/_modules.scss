@@ -103,6 +103,22 @@
   }
 }
 
+.errorMessage {
+  position: relative;
+  top: 200px;
+  font-size: 30px;
+  text-align: center;
+}
+
+.back {
+  display: block;
+  width: 150px;
+  padding: 10px;
+  border: 1px solid black;
+  background: lightblue;
+  margin: 20px auto;
+}
+
 //------------------------------------------------------------------------------
 //  Forms
 //------------------------------------------------------------------------------
@@ -124,8 +140,6 @@ input[type=text], input[type=password] {
     display: none;
   }
 }
-
-
 
 input {
   .registerForm & {
