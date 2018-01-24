@@ -37,8 +37,8 @@ router.get('/success', (req, res) => {
   res.render('success');
 })
 
-router.get('/failure', (req, res) => {
-  res.render('failure');
+router.get('/loginfailure', (req, res) => {
+  res.render('loginfailure');
 })
 
 router.get('/logout', (req, res) => {
@@ -161,7 +161,7 @@ router.post(
   '/login',
   // The user provides a username and password to login
   passport.authenticate('local', {
-    failureRedirect: '/auth/failure',
+    failureRedirect: '/auth/loginfailure',
     session: false
   }),
 (req, res, next) => {
