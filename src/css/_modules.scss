@@ -2,6 +2,23 @@
 //  Button
 //------------------------------------------------------------------------------
 
+.logo {
+  color: white;
+  position: fixed;
+  top: 10px;
+  left: 40px;
+  z-index: 6;
+  font-size: 20px;
+  font-family: "Cabin";
+  font-weight: normal;
+  font-style: normal;
+  text-transform: uppercase;
+}
+
+.logo:visited {
+  color: white;
+}
+
 .login-button {
   background-color: #add8e6;
   border-color: transparent;
