@@ -280,6 +280,8 @@ input {
 
 .dailyCheckHeading {
   text-align: center;
+  font-size: 16px;
+  margin: 30px 0;
 }
 
 .dailyCheckQuestion {
@@ -293,23 +295,23 @@ input {
 .dailyCheckDay {
   font-size: 20px;
   position: relative;
-  right: 45px;
+  right: 35px;
   top: 35px;
   @include responsive(truman) {
-    right: 55px;
+    right: 48px;
     top: 40px;
   }
   @include responsive(kennedy) {
-    right: 68px;
+    right: 60px;
   }
   @include responsive(ford) {
-    right: 55px;
+    right: 48px;
   }
   @include responsive(reagan) {
-    right: 68px;
+    right: 60px;
   }
   @include responsive(clinton) {
-    right: 80px;
+    right: 75px;
   }
 }
 
@@ -380,6 +382,12 @@ li {
   @include responsive(coolidge) {
     grid-template-columns: 1fr 1fr;
   }
+}
+
+.dashboardEntry {
+  text-align: center;
+  font-size: 16px;
+  margin: 30px 0;
 }
 
 .habitTile {
@@ -562,10 +570,6 @@ li {
   }
 }
 
-.leaderboardData {
-
-}
-
 .leaderboardRank {
   background-color: #403d3b;
   color: white;
@@ -667,4 +671,14 @@ li {
 
 .updateBlock {
   text-align: center;
+}
+
+.new-habit-entry {
+  margin-top: 50px;
+}
+
+.newHabitEntry {
+  text-align: center;
+  font-size: 16px;
+  margin: 30px 0;
 }

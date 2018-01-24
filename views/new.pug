@@ -3,6 +3,8 @@ extends 1layout
 block content
   div.y-template
     h2 New Habit Entry
+    div.newHabitEntry Form a positive habit question that you can answer with a yes or no.  
+      div For example, "Did I make my bed today?"
       div.newForm
         form.new-habit-entry(action='/users/new' method='POST')
           input(type='text' autocomplete="off" name='question' placeholder='Habit Question' required)
