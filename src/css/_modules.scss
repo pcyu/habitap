@@ -170,6 +170,15 @@ input {
   }
 }
 
+.form {
+  .habitDelete & {
+    display: inline-block;
+  }
+  .habitEdit & {
+    display: inline-block;
+  }
+}
+
 .registerForm {
   padding: 5px;
   grid-row: 2;
