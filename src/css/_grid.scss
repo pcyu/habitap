@@ -13,12 +13,25 @@
 
 .grid-caption {
     font-size: 15px;
-		padding: 10px;
-		margin-bottom: 20px;
-		width: 250px;
-		@include responsive(harding) {
-			padding: 10px 40px;
-		}
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 250px;
+    @include responsive(harding) {
+        font-size: 22px;
+        padding: 10px 40px;
+        width: 420px;
+    }
+    @include responsive(truman) {
+        width: 400px;
+    }
+    @include responsive(ford) {
+        font-size: 25px;
+        width: 500px;
+    }
+    @include responsive(reagan) {
+        font-size: 30px;
+        width: 600px;
+    }
 }
 
 .grid-nimg {
@@ -30,6 +43,12 @@
     }
     @include responsive(truman) {
         height: 190px;
+    }
+    @include responsive(ford) {
+        height: 250px;
+    }
+    @include responsive(reagan) {
+        height: 300px;
     }
 }
 
