@@ -15,7 +15,7 @@
     font-size: 15px;
 		padding: 10px;
 		margin-bottom: 20px;
-		width: auto;
+		width: 250px;
 		@include responsive(harding) {
 			padding: 10px 40px;
 		}
@@ -23,18 +23,15 @@
 
 .grid-nimg {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    height: 170px;
+    height: 140px;
     width: 100%;
     @include responsive(harding) {
-        height: 300px;
+        height: 220px;
     }
     @include responsive(truman) {
-        height: 250px;
+        height: 190px;
     }
-    @include responsive(kennedy) {
-        height: 300px;
-    }
-  }
+}
 
 .reverse {
     @include responsive(truman) {
